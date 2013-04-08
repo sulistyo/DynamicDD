@@ -19,6 +19,14 @@ selected, the last one will takes precedent. In the included example, "01" is th
 Therefore, if you select "A", then "01" and "01.3" are automatically selected. Likewise, "02.2" is the default value of "02". So if "02" is selected,
 "02.2" will be selected as well.
 
+To generate initial dropdown, you need to call generateDD() function.
+$dd->generateDD();
+
+if you want to force the dropdown to display specific value (useful for error handling) you can also specify the argument when generating the dropdown
+$dd->generateDD("A","",""));
+
+To generate json and javascript code, you need to call generateJS() function.
+$dd->generateJS();
 
 Hard Dependencies
 ---------------------------------------------
