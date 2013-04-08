@@ -1,6 +1,6 @@
 <?php 
-  require_once "config.php"; 
-  require_once "DynamicDD.php";  
+	require_once "config.php"; 
+ 	require_once "DynamicDD.php";  
   $dd = new DynamicDD();
     ?> 
 <!doctype html>
