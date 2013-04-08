@@ -1,0 +1,27 @@
+.row1{
+	float:left;
+	width:450px;
+}
+.field1{
+	width:150;
+	float:left;
+}
+.field2{
+	width:200;
+	float:right;
+}
+.select{
+	width:300px;
+	padding-bottom:3px;
+	padding-top:3px;
+}
+div fieldset{
+	width:450px; 
+}
+div fieldset div{
+	padding:5px;
+}
+
+select {
+  width:100%;
+}
