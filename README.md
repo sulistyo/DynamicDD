@@ -94,14 +94,18 @@ Example
    
     	<?php 
     	  require_once "DynamicDD.php";        
-    	  $dd1 = new DynamicDD("formone","");      
+    	  $dd1 = new DynamicDD();      
+				$dd1->generateDD());
+				$dd1->generateJS();
     	?> 
 
 2. [Single - 2 level](http://edy.li/DynamicDD/example/single2.php) drop down
    
     	<?php 
     	  require_once "DynamicDD.php";        
-    	  $dd1 = new DynamicDD("formone","");      
+				$dd1 = new DynamicDD(array("dropdown_level"=>2));
+				$dd1->generateDD());
+				$dd1->generateJS();
     	?> 
 
 3. [Multiple](http://edy.li/DynamicDD/example/multiple.php) drop down 
@@ -109,8 +113,14 @@ Example
     	<?php 
 	    require_once "DynamicDD.php";         
 	    $dd1 = new DynamicDD(array('formname'='form1'));   
+			$dd1->generateDD());
+			$dd1->generateJS();
 	    $dd2 = new DynamicDD(array('formname'='form2'));   
+			$dd2->generateDD());
+			$dd2->generateJS();
 	    $dd3 = new DynamicDD(array('formname'='form3'));   
+			$dd3->generateDD());
+			$dd3->generateJS();
 	    ?> 
 	    
 4. [Custom](http://edy.li/DynamicDD/example/custom.php) drop down
@@ -121,4 +131,6 @@ Example
         $option['formaction']    = 'customaction.php';
         $option['select_enable'] = false;
 	    $dd = new DynamicDD($option);    
+			$dd->generateDD());
+			$dd->generateJS();
 	    ?>
