@@ -140,8 +140,8 @@ Example
 5. [Pre-Populate](http://edy.li/DynamicDD/example/prepopulate.php) drop down
 
 		<?php 
-	    require_once "DynamicDD.php";         // include class DynamicDD.php
-	    $dd = new DynamicDD();    
-			$dd->generateDD("A");                 // select value A for dropdown 1 and display the corresponding value accordingly
-			$dd->generateJS();
+      require_once "DynamicDD.php";         // include class DynamicDD.php
+      $dd = new DynamicDD();    
+      $dd->generateDD("A");                 // select value A for dropdown 1 and display the corresponding value accordingly
+      $dd->generateJS();
     ?>
