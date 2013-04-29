@@ -46,6 +46,7 @@ $options['select_message_1']    | String           | Please Select | Custom sele
 $options['select_message_2']    | String           | Please Select | Custom select message for the 1st dropdown
 $options['select_message_3']    | String           | Please Select | Custom select message for the 1st dropdown
 $options['select_enable']       | Boolean          | True          | True to enable, False to disable
+$options['select_attribute']    | String 	         | <empty>       | Add any custom attribute that will be appended to select tag
 $options['dropdown_level']      | Integer          | 3             | 3 or 2
 
 ##### Custom Database Connection
