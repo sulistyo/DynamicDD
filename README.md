@@ -21,7 +21,7 @@ Demo: http://edy.li/dynamicdd/
 
 ### Overview 
 
-This class will only handle 3 level deep dropdown and using the db structure as described on the included sql file. 
+This class will only handle up to 3 level deep dropdown and using the db structure as described on the included sql file. 
 
 It will pull the data from mysql database, generate json object, and generate javascript code to automatically handle the on change event.
 This class also generate dropdown from php and handle the submission of the form.
@@ -46,6 +46,7 @@ $options['select_message_1']    | String           | Please Select | Custom sele
 $options['select_message_2']    | String           | Please Select | Custom select message for the 1st dropdown
 $options['select_message_3']    | String           | Please Select | Custom select message for the 1st dropdown
 $options['select_enable']       | Boolean          | True          | True to enable, False to disable
+$options['dropdown_level']      | Integer          | 3             | 3 or 2
 
 ##### Custom Database Connection
 
@@ -89,14 +90,21 @@ jQuery 1.8+
 Example
 -------------------------
 
-1. [Single](example/single.php) drop down
+1. [Single - 3 level](http://edy.li/DynamicDD/example/single.php) drop down
    
     	<?php 
     	  require_once "DynamicDD.php";        
     	  $dd1 = new DynamicDD("formone","");      
     	?> 
 
-2. [Multiple](example/multiple.php) drop down 
+2. [Single - 2 level](http://edy.li/DynamicDD/example/single.php) drop down
+   
+    	<?php 
+    	  require_once "DynamicDD.php";        
+    	  $dd1 = new DynamicDD("formone","");      
+    	?> 
+
+3. [Multiple](http://edy.li/DynamicDD/example/multiple.php) drop down 
 
     	<?php 
 	    require_once "DynamicDD.php";         
@@ -105,7 +113,7 @@ Example
 	    $dd3 = new DynamicDD(array('formname'='form3'));   
 	    ?> 
 	    
-3. [Custom](example/custom.php) drop down
+4. [Custom](http://edy.li/DynamicDD/example/custom.php) drop down
 
 		<?php 
 	    require_once "DynamicDD.php";         // include class DynamicDD.php
