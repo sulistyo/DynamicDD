@@ -8,6 +8,7 @@ class DynamicDD {
     private $_select_message_2 = "Please select";
     private $_select_message_3 = "Please select";
     private $_select_enable    = true;
+		private $_select_attribute = "";
 		private $_dropdown_level 	 = 3;
 
     // TABLE SETTINGS
@@ -54,8 +55,13 @@ class DynamicDD {
                 break;
                 case "select_enable":
                 $this->_select_enable = $value;
+								break;
                 case "dropdown_level":
                 $this->_dropdown_level = $value;
+								break;
+                case "select_attribute":
+                $this->_select_attribute = $value;
+								break;
                 default:
                 break;
             }
@@ -96,10 +102,10 @@ class DynamicDD {
             $value3 = $_REQUEST[$this->_formname+"_level3DD"];
         }
         if (empty($value1)){
-            $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\"><option value=\"\">$this->_select_message_1</option></select>");
+            $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_1</option></select>");
 
         } else {
-            $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\"><option value=\"\">$this->SELECT</option>");
+            $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\" ".$this->_select_attribute."><option value=\"\">$this->SELECT</option>");
             $q = "SELECT  DISTINCT `". $this->_level1 ."`, `". $this->_level1value ."` FROM `".$this->_tabledd."` ORDER BY 2";
             $sql = mysql_query($q);
             while ($row = mysql_fetch_array($sql)){
@@ -110,9 +116,9 @@ class DynamicDD {
         }
 
         if (empty($value2)){
-            $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\"><option value=\"\">$this->_select_message_2</option></select>");
+            $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_2</option></select>");
         } else {
-            $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\"><option value=\"\">$this->SELECT</option>");
+            $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\" ".$this->_select_attribute."><option value=\"\">$this->SELECT</option>");
             $q = "SELECT  DISTINCT `". $this->_level2 ."`, `". $this->_level2value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level1value."` = '".$value1."' ORDER BY 2";
             $sql = mysql_query($q);
             while ($row = mysql_fetch_array($sql)){
@@ -123,9 +129,9 @@ class DynamicDD {
         }
 				if ($this->_dropdown_level == 3){
 		        if (empty($value3)){
-    		        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\"><option value=\"\">$this->_select_message_3</option></select>");
+    		        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_3</option></select>");
 		        } else {
-    		        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\"><option value=\"\">$this->SELECT</option>");
+    		        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\" ".$this->_select_attribute."><option value=\"\">$this->SELECT</option>");
         		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
             		$sql = mysql_query($q);
 		            while ($row = mysql_fetch_array($sql)){
@@ -183,13 +189,13 @@ class DynamicDD {
         $(document).ready(function() {
             var data<?php echo "_",$this->_formname;?> = <?php echo json_encode($main); ?>;
             var next = 0;
-            if ($("select#level1DD > option").length <= 1){
+            if ($("select#<?php echo $this->_formname;?>_level1DD > option").length <= 1){
                 generateLevel(1);
             }
-            if ($("select#level2DD > option").length <= 1){
+            if ($("select#<?php echo $this->_formname;?>_level2DD > option").length <= 1){
                 generateLevel(2);
             }
-            if ($("select#level3DD > option").length <= 1){
+            if ($("select#<?php echo $this->_formname;?>_level3DD > option").length <= 1){
                 generateLevel(3);
             }
 

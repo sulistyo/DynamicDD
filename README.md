@@ -127,10 +127,20 @@ Example
 
 		<?php 
 	    require_once "DynamicDD.php";         // include class DynamicDD.php
-        $option['formname']      = 'customform';
-        $option['formaction']    = 'customaction.php';
-        $option['select_enable'] = false;
+      $option['formname']      = 'customform';
+      $option['formaction']    = 'customaction.php';
+      $option['select_enable'] = false;
+      $option['select_attribute'] = 'class="green-apple"';
 	    $dd = new DynamicDD($option);    
 			$dd->generateDD());
 			$dd->generateJS();
-	    ?>
+    ?>
+
+5. [Pre-Populate](http://edy.li/DynamicDD/example/prepopulate.php) drop down
+
+		<?php 
+	    require_once "DynamicDD.php";         // include class DynamicDD.php
+	    $dd = new DynamicDD();    
+			$dd->generateDD("A");                 // select value A for dropdown 1 and display the corresponding value accordingly
+			$dd->generateJS();
+    ?>
