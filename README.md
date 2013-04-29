@@ -97,7 +97,7 @@ Example
     	  $dd1 = new DynamicDD("formone","");      
     	?> 
 
-2. [Single - 2 level](http://edy.li/DynamicDD/example/single.php) drop down
+2. [Single - 2 level](http://edy.li/DynamicDD/example/single2.php) drop down
    
     	<?php 
     	  require_once "DynamicDD.php";        
