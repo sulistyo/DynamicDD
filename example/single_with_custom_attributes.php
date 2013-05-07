@@ -6,7 +6,7 @@ if (!empty($_POST)){
   print_r($_POST);
   echo "</pre>";
 }
-$dd1 = new DynamicDD(['select_attribute' => 'class="shinny gold" style="z-index:1;"']);
+$dd1 = new DynamicDD(['on_select_change' => 'none', 'select_attribute' => 'class="shinny gold" style="z-index:1;"']);
 ?>
 <!doctype html>
 <html>
