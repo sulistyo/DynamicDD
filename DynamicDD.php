@@ -91,7 +91,6 @@ class DynamicDD {
         $this->_select_enable = false;
     }
     public function generateDD($value1 = "", $value2 = "", $value3 = ""){
-        $this->echoln('<form id="'.$this->_formname.'" method="post" action="'.$this->_formaction.'">');
         if (!empty($_REQUEST[$this->_formname+"_level1DD"])) {
             $value1 = $_REQUEST[$this->_formname+"_level1DD"];
         }
@@ -141,9 +140,6 @@ class DynamicDD {
 		            $this->echoln("</select>");
 						}
         }
-        $this->echoln('  <input type="submit" value="Send" name="submit" />');
-
-        $this->echoln('</form>');
     }
 
     public function generateJS(){
@@ -199,11 +195,11 @@ class DynamicDD {
                 generateLevel(3);
             }
 
-            $("form#<?php echo $this->_formname;?>").on("change","select#<?php echo $this->_formname;?>_level1DD",function(){
+            $("select#<?php echo $this->_formname;?>_level1DD").on("change",function(){
                 generateLevel(2);
                 generateLevel(3);
             });
-            $("form#<?php echo $this->_formname;?>").on("change","select#<?php echo $this->_formname;?>_level2DD",function(){
+            $("select#<?php echo $this->_formname;?>_level2DD").on("change",function(){
                 generateLevel(3);
             });
             function generateLevel(level){
@@ -221,9 +217,8 @@ class DynamicDD {
                         var sel = "";
                         if(j.default > 0) {
                             genNext = 1;
-                            sel ="selected";
                         }
-                        options += '<option value="' + j.value + '" '+sel+'>' + j.title + '<\/option>';
+                        options += '<option value="' + j.value + '" >' + j.title + '<\/option>';
                     });
                     $("select#<?php echo $this->_formname;?>_level1DD").html(options);
                 }
@@ -237,12 +232,10 @@ class DynamicDD {
                         var d = data<?php echo "_",$this->_formname;?>.level1[index];
                         if (index > 0) {
                             $.each(d.level2, function(i,j){
-                                var sel = "";
                                 if(j.default > 0) {
                                     genNext = 1;
-                                    sel ="selected";
                                 }
-                                options += '<option value="' + j.value + '" '+sel+'>' + j.title + '<\/option>';
+                                options += '<option value="' + j.value + '" >' + j.title + '<\/option>';
                             });
                         }
                     }
@@ -258,12 +251,10 @@ class DynamicDD {
                         var d = data<?php echo "_",$this->_formname;?>.level1[index].level2[index2];
                         if (index2 > 0) {
                             $.each(d.level3, function(i,j){
-                                var sel = "";
                                 if(j.default > 0) {
                                     genNext = 1;
-                                    sel ="selected";
                                 }
-                                options += '<option value="' + j.value + '" '+sel+'>' + j.title + '<\/option>';
+                                options += '<option value="' + j.value + '" >' + j.title + '<\/option>';
                             });
                         }
                     }

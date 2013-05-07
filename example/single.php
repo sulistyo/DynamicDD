@@ -19,9 +19,12 @@ $dd1 = new DynamicDD();
 <body>
 <div>
 <p>Dropdown Demo - Single</p>
+<form method="post">
 <fieldset>
 <?php echo ($dd1->generateDD());?>
+<input type="submit" value="Send" name="submit" />
 </fieldset>
 <?php echo $dd1->generateJS(); ?>
+</form>
 </body>
 </html>

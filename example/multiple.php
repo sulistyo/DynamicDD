@@ -20,13 +20,16 @@ $dd3 = new DynamicDD(array("formname"=>"form3"));
 <body>
 <div>
 <p>Dropdown Demo - Multiple</p>
+<form method="post">
 <fieldset>
 <?php echo ($dd1->generateDD());?>
 <?php echo ($dd2->generateDD());?>
 <?php echo ($dd3->generateDD());?>
+<input type="submit" value="Send" name="submit" />
 </fieldset>
 <?php echo $dd1->generateJS(); ?>
 <?php echo $dd2->generateJS(); ?>
 <?php echo $dd3->generateJS(); ?>
+</form>
 </body>
 </html>
