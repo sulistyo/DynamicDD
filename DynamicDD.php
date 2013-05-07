@@ -204,6 +204,9 @@ class DynamicDD {
 
             $("select#<?php echo $this->_formname;?>_level1DD").on("change",function(){
                 generateLevel(2);
+
+                // reset level 3 dropdown
+                generateLevel(3);
             });
             $("select#<?php echo $this->_formname;?>_level2DD").on("change",function(){
                 generateLevel(3);
