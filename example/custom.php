@@ -22,7 +22,7 @@ $dd = new DynamicDD($option);
     <p>Dropdown Demo - Custom</p>
     <form method="post">
         <fieldset>
-            <?= $dd->generateDD(null, null, null, $data) ?>
+            <?= $dd->generateDD($data, null, null, null) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
         <?= $dd->generateJS() ?>

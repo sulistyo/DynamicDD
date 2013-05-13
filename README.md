@@ -75,14 +75,23 @@ Option `$message` Accepted any HTML encoded string.
 #### disableSelect()
 Disable select message.
 
+### Data Source
+
+The data needed should be supplied as associative array.
+
+```php
+$sql = mysql_query("SELECT `title`, `value` FROM siccode");
+while ($row = mysql_fetch_array($sql)) $data[] = $row;
+```
+
 ### Generate Dropdown
 
-#### generateDD()
-To generate initial dropdown, you need to call `generateDD()` function.
+#### generateDD($data = [], $value1 = "", $value2 = "", $value3 = "")
+To generate initial dropdown, you need to call `generateDD($data)` function.
 
-If you want to force the dropdown to display specific value (useful for error handling) you can also specify the argument when generating the dropdown
+If you want to force the dropdown to display specific value (useful for error handling) you can also specify the value when generating the dropdown
 
-    $dd->generateDD("A","",""));
+    $dd->generateDD($data, "A","",""));
 
 #### generateJS()
 To generate json and javascript code, you need to call generateJS() function.
@@ -102,7 +111,7 @@ Example
 require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD();
-$dd1->generateDD());
+$dd1->generateDD($data));
 $dd1->generateJS();
 ```
 
@@ -113,7 +122,7 @@ $dd1->generateJS();
 require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD(array("dropdown_level"=>2));
-$dd1->generateDD());
+$dd1->generateDD($data));
 $dd1->generateJS();
 ```
 
@@ -124,15 +133,15 @@ $dd1->generateJS();
 require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD(array('formname'='form1'));
-$dd1->generateDD());
+$dd1->generateDD($data));
 $dd1->generateJS();
 
 $dd2 = new DynamicDD(array('formname'='form2'));
-$dd2->generateDD());
+$dd2->generateDD($data));
 $dd2->generateJS();
 
 $dd3 = new DynamicDD(array('formname'='form3'));
-$dd3->generateDD());
+$dd3->generateDD($data));
 $dd3->generateJS();
 ```
 
@@ -148,7 +157,7 @@ $option['select_enable']    = false;
 $option['select_attribute'] = 'class="green-apple"';
 
 $dd = new DynamicDD($option);
-$dd->generateDD());
+$dd->generateDD($data));
 $dd->generateJS();
 ```
 
@@ -160,6 +169,6 @@ require_once "DynamicDD.php";
 
 $dd = new DynamicDD();
 // select value A for dropdown 1 and display the corresponding value accordingly
-$dd->generateDD("A");
+$dd->generateDD($data, "A");
 $dd->generateJS();
 ```

@@ -25,9 +25,9 @@ $dd3 = new DynamicDD(array("formname"=>"form3"));
     <p>Dropdown Demo - Multiple</p>
     <form method="post">
         <fieldset>
-            <?= $dd1->generateDD(null, null, null, $data) ?>
-            <?= $dd2->generateDD(null, null, null, $data) ?>
-            <?= $dd3->generateDD(null, null, null, $data) ?>
+            <?= $dd1->generateDD($data, null, null, null) ?>
+            <?= $dd2->generateDD($data, null, null, null) ?>
+            <?= $dd3->generateDD($data, null, null, null) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
         <?= $dd1->generateJS() ?>

@@ -86,13 +86,13 @@ class DynamicDD {
     /**
      * Generate dynamic dropdown field.
      *
+     * @param $data Array Data for options.
      * @param $value1 String Selected value for dropdown level 1.
      * @param $value2 String Selected value for dropdown level 2.
      * @param $value3 String Selected value for dropdown level 3.
-     * @param $data Array Data for options.
      * @return String
      */
-    public function generateDD($value1 = "", $value2 = "", $value3 = "", $data = [])
+    public function generateDD($data = [], $value1 = "", $value2 = "", $value3 = "", )
     {
         $output = '';
 
