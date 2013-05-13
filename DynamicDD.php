@@ -78,38 +78,51 @@ class DynamicDD {
         $this->_select_enable = false;
     }
     public function generateDD($value1 = "", $value2 = "", $value3 = ""){
+        $output = '';
+
         if ($this->_dropdown_level >= 1){
-            $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_1</option>");
+            $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_1 . '</option>';
+
             $q = "SELECT  DISTINCT `". $this->_level1 ."`, `". $this->_level1value ."` FROM `".$this->_tabledd."` ORDER BY 2";
             $sql = mysql_query($q);
+
             while ($row = mysql_fetch_array($sql)){
                 $sel = ($row[$this->_level1value] == $value1)?"selected":"";
-                $this->echoln("<option value =\"".$row[$this->_level1value]."\" ".$sel.">".$row[$this->_level1]."</option>");
+                $output .= '<option value="' . $row[$this->_level1value] . '" ' . $sel . '>' . $row[$this->_level1] . '</option>';
             }
-            $this->echoln("</select>");
+
+            $output .= '</select>';
         }
 
         if ($this->_dropdown_level >= 2){
-            $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_2</option>");
+            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_2 '</option>';
+
             $q = "SELECT  DISTINCT `". $this->_level2 ."`, `". $this->_level2value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level1value."` = '".$value1."' ORDER BY 2";
             $sql = mysql_query($q);
+
             while ($row = mysql_fetch_array($sql)){
                 $sel = ($this->$row[$this->_level2value] == $value2)?"selected":"";
-                $this->echoln("  <option value =\"".$row[$this->_level2value]."\" ".$sel.">".$row[$this->_level2]."x</option>");
+                $output .= '<option value="' . $row[$this->_level2value] . '" ' . $sel . '>' . $row[$this->_level2] . '</option>';
             }
-            $this->echoln("</select>");
+
+            $output .= '</select>';
         }
 
 		if ($this->_dropdown_level >= 3){
-	        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_3</option>");
+            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_3 '</option>';
+
 		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
     		$sql = mysql_query($q);
+
             while ($row = mysql_fetch_array($sql)){
 	            $sel = ($row[$this->_level3value] == $value3)?"selected":"";
-		        echo "  <option value=\"".$row[$this->_level3value]."\" ".$sel.">".$row[$this->_level3]."</option>";
+                $output .= '<option value="' . $row[$this->_level3value] . '" ' . $sel . '>' . $row[$this->_level3] . '</option>';
     		}
-            $this->echoln("</select>");
+
+            $output .= '</select>';
         }
+
+        return $output;
     }
 
     public function generateJS(){
@@ -257,10 +270,5 @@ class DynamicDD {
         </script>
 <?php
     }
-
-    private function echoln($text) {
-        echo "\n",$text;
-    }
-
 }
 ?>
