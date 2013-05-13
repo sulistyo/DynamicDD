@@ -98,15 +98,6 @@ class DynamicDD {
         $this->_select_enable = false;
     }
     public function generateDD($value1 = "", $value2 = "", $value3 = ""){
-        if (!empty($_REQUEST[$this->_formname+"_level1DD"])) {
-            $value1 = $_REQUEST[$this->_formname+"_level1DD"];
-        }
-        if (!empty($_REQUEST[$this->_formname+"_level2DD"])){
-            $value2 = $_REQUEST[$this->_formname+"_level2DD"];
-        }
-        if (!empty($_REQUEST[$this->_formname+"_level3DD"])){
-            $value3 = $_REQUEST[$this->_formname+"_level3DD"];
-        }
         if (empty($value1)){
             $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_1</option></select>");
 
