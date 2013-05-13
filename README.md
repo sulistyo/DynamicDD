@@ -4,20 +4,19 @@ This is a PHP class that will generate json and javascript code to read the json
 
 [Click here](http://edy.li/dynamicdd/) for demo.
 
-## Installation
+## Example Installation
 
 1. Run sql files inside database folder
-2. [**Optional**] Open class DynamicDD.php and modify the default database connection. This can also be set during the object creation.
+2. [**Optional**] Open example/data/seed.php and modify the default database connection.
 
 ```php
-private $db_default = array(
+$db = array(
     'host' => 'localhost',
     'user' => 'root',
     'pass' => '',
     'db'   => 'db_siccode',
 );
 ```
-
 
 ## Class Documentation
 
@@ -36,7 +35,7 @@ In the included example, "01" is the default value of "A" and "01.3" is the defa
 
 #### Object Creation
 
-    __construct($options=array(), $db=null)
+    __construct($options=array())
 
 #### Accepted options. These are all optionals.
 
@@ -50,17 +49,6 @@ Elements                          | Accepted Value     | Default Value     | Des
 `$options['select_attribute']`    | `String`           | `null`            | Add any custom attribute that will be appended to select tag
 `$options['dropdown_level']`      | `Integer`          | `3`               | 3 or 2
 `$options['on_parent_change']`    | `none` or `hide`   | `hide`            | State of current field on parent change
-
-### Custom Database Connection
-
-```php
-$customdb = array(
-    'host' => 'localhost',
-    'user' => 'customuser',
-    'pass' => 'custompass',
-    'db'   => 'customdatabase',
-);
-```
 
 ### Object Manipulation
 

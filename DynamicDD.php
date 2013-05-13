@@ -27,21 +27,8 @@ class DynamicDD {
     private $_level3           = 'dropdown3_name';
     private $_level3value      = 'dropdown3_value';
 
-    // DB SETTINGS
-    private $con;
-    private $db_default = array(
-        'host' => 'localhost',
-        'user' => 'edyli_siccode',
-        'pass' => '12qwaszx',
-        'db'   => 'edyli_db_siccode',
-        );
-
-    function __construct($options=array(), $db=null)
+    function __construct($options=array())
     {
-        if(is_null($db)) {
-            $db = $this->db_default;
-        }
-
         extract($options);
 
         if (isset($formname)) $this->_formname = $formname;
@@ -56,14 +43,6 @@ class DynamicDD {
             $this->_select_enable = $select_enable;
             if (!$this->_select_enable) $this->_select_message_1 = $this->_select_message_2 = $this->_select_message_3 = '';
         }
-
-        $this->con  = mysql_connect($db['host'],$db['user'],$db['pass'],true) or die ('Error connecting to MySQL');
-        mysql_select_db($db['db'],$this->con) or die('Database '.$db['db'].' does not exist!');
-    }
-
-    function __destruct()
-    {
-        mysql_close($this->con);
     }
 
     public function setSelectMessage($which, $select_message)
@@ -97,9 +76,12 @@ class DynamicDD {
             $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
             $output .= '<option>' . $this->_select_message_1 . '</option>';
 
+            $index = 0;
             foreach ($data as $row) {
-                $sel = ($row[$this->_level1value] == $value1)?"selected":"";
-                $output .= '<option value="' . $row[$this->_level1value] . '" ' . $sel . '>' . $row[$this->_level1] . '</option>';
+                $index++;
+
+                $sel = ($row[$index]['value'] == $value1)?"selected":"";
+                $output .= '<option value="' . $row[$index]['value'] . '" ' . $sel . '>' . $row[$index]['title'] . '</option>';
             }
 
             $output .= '</select>';
@@ -117,56 +99,20 @@ class DynamicDD {
             $output .= '</select>';
         }
 
-        return $output . $this->generateJS();
+        return $output . $this->generateJS($data);
     }
 
     /**
      * Generate javascript for content binding.
+     *
+     * @param $data Array Data for options.
      */
-    public function generateJS()
+    protected function generateJS($data = [])
     {
-        $q = "SELECT `". $this->_level1 ."`, `". $this->_level1value ."`, `". $this->_level2 ."`, `". $this->_level2value ."`, `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` ORDER BY 2,4,6";
-        $sql = mysql_query($q);
-
-        // error checking query
-        if (!$sql) {
-            die('Query error:'.mysql_error());
-        }
-
-        $main = array();
-        $prev1 = $prev2 = "";
-        $index1 = $index2 = $index3 = 0;
-
-        while ($row = mysql_fetch_array($sql)){
-            if ($prev1 != $row[$this->_level1value]){
-                $index1++;
-                $index2 = 0;
-
-                $main["level1"][$index1]["title"] = $row[$this->_level1];
-                $main["level1"][$index1]["value"] = $row[$this->_level1value];
-            }
-
-            if ($prev2 != $row[$this->_level2value]){
-                $index2++;
-                $index3 = 0;
-
-                $main["level1"][$index1]["level2"][$index2]["title"] = $row[$this->_level2];
-                $main["level1"][$index1]["level2"][$index2]["value"] = $row[$this->_level2value];
-            }
-
-            $index3++;
-
-            $main["level1"][$index1]["level2"][$index2]["level3"][$index3]["title"] = $row[$this->_level3];
-            $main["level1"][$index1]["level2"][$index2]["level3"][$index3]["value"] = $row[$this->_level3value];
-
-            $prev1 = $row[$this->_level1value];
-            $prev2 = $row[$this->_level2value];
-        }
-
         $data_name = "data_" . $this->_formname;
-        $json = json_encode($main);
+        $json = json_encode($data);
 
-        $output = <<<EOT
+        $output = <<<"EOT"
         <script type="text/javascript">
         $(document).ready(function() {
             var {$data_name} = {$json};
