@@ -187,12 +187,10 @@ class DynamicDD {
 
                 var genNext = 0;
                 if (level == 1){
-                <?php if($this->_select_enable) { ?>
-                var options = '<option value=""><?php echo $this->_select_message_1;?><\/option>';
-                <?php } else { ?>
-                var options = '<option value="">&nbsp;<\/option>';
-                <?php } ?>
-                $.each(data<?php echo "_",$this->_formname;?>.level1, function(i,j){
+                    <?php $select_message = ($this->_select_enable)? $this->_select_message_2 : '' ?>
+                    var options = '<option value=""><?= $select_message ?><\/option>';
+
+                    $.each(data<?php echo "_",$this->_formname;?>.level1, function(i,j){
                         var sel = "";
                         if(j.default > 0) {
                             genNext = 1;
@@ -208,11 +206,9 @@ class DynamicDD {
                     <?php }; ?>
                 }
                 if (level == 2){
-                    <?php if($this->_select_enable) { ?>
-                    var options = '<option value=""><?php echo $this->_select_message_2;?><\/option>';
-                    <?php } else { ?>
-                    var options = '<option value="">&nbsp;<\/option>';
-                    <?php } ?>
+                    <?php $select_message = ($this->_select_enable)? $this->_select_message_2 : '' ?>
+                    var options = '<option value=""><?= $select_message ?><\/option>';
+
                     if (index !== 0){
                         var d = data<?php echo "_",$this->_formname;?>.level1[index];
                         if (index > 0) {
@@ -235,11 +231,9 @@ class DynamicDD {
                     <?php }; ?>
                 }
                 if (level == 3){
-                    <?php if($this->_select_enable) { ?>
-                    var options = '<option value=""><?php echo $this->_select_message_3;?><\/option>';
-                    <?php } else { ?>
-                    var options = '<option value="">&nbsp;<\/option>';
-                    <?php } ?>
+                    <?php $select_message = ($this->_select_enable)? $this->_select_message_3 : '' ?>
+                    var options = '<option value=""><?= $select_message ?><\/option>';
+
                     if (index2 !== 0){
                         var d = data<?php echo "_",$this->_formname;?>.level1[index].level2[index2];
                         if (index2 > 0) {
