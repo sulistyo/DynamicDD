@@ -61,18 +61,12 @@ class DynamicDD {
         mysql_close($this->con);
     }
 
-    public function setSelectMessage($which, $select_message) {
-        switch($which) {
-            case "1":
-            $this->_select_message_1 = $select_message;
-            break;
-            case "2":
-            $this->_select_message_2 = $select_message;
-            break;
-            case "3":
-            $this->_select_message_3 = $select_message;
-            break;
-        }
+    public function setSelectMessage($which, $select_message){
+        // valid value only 1 to 3
+        if ($which > 3 || $which < 1) return;
+
+        $var = '_select_message_' . $which;
+        $this->$var = $select_message;
     }
     public function disableSelectMessage() {
         $this->_select_enable = false;
