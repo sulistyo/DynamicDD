@@ -74,12 +74,8 @@ while ($row = mysql_fetch_array($sql)) $data[] = $row;
 
 ### Generate Dropdown
 
-#### generateDD($data = [], $value1 = "", $value2 = "", $value3 = "")
+#### generateDD($data)
 To generate initial dropdown, you need to call `generateDD($data)` function.
-
-If you want to force the dropdown to display specific value (useful for error handling) you can also specify the value when generating the dropdown
-
-    $dd->generateDD($data, "A","",""));
 
 ### Hard Dependencies
 jQuery 1.8+
@@ -136,15 +132,4 @@ $option['select_attribute'] = 'class="green-apple"';
 
 $dd = new DynamicDD($option);
 $dd->generateDD($data));
-```
-
-### Pre-populate drop down
-[Click here](http://edy.li/DynamicDD/example/prepopulate.php) for demo.
-
-```php
-require_once "DynamicDD.php";
-
-$dd = new DynamicDD();
-// select value A for dropdown 1 and display the corresponding value accordingly
-$dd->generateDD($data, "A");
 ```

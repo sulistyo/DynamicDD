@@ -61,14 +61,12 @@ class DynamicDD {
 
     /**
      * Generate dynamic dropdown field.
+     * TODO: Assign selected value.
      *
      * @param $data Array Data for options.
-     * @param $value1 String Selected value for dropdown level 1.
-     * @param $value2 String Selected value for dropdown level 2.
-     * @param $value3 String Selected value for dropdown level 3.
      * @return String
      */
-    public function generateDD($data = [], $value1 = "", $value2 = "", $value3 = "")
+    public function generateDD($data = [])
     {
         $output = '';
 
@@ -79,9 +77,7 @@ class DynamicDD {
             $index = 0;
             foreach ($data as $row) {
                 $index++;
-
-                $sel = ($row[$index]['value'] == $value1)?"selected":"";
-                $output .= '<option value="' . $row[$index]['value'] . '" ' . $sel . '>' . $row[$index]['title'] . '</option>';
+                $output .= '<option value="' . $row[$index]['value'] . '">' . $row[$index]['title'] . '</option>';
             }
 
             $output .= '</select>';

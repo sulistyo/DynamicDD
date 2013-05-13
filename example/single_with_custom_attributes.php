@@ -23,7 +23,7 @@ $dd = new DynamicDD(['on_select_change' => 'none', 'select_attribute' => 'class=
     <p>Dropdown Demo - Single</p>
     <form method="post">
         <fieldset>
-            <?= $dd->generateDD($data, null, null, null) ?>
+            <?= $dd->generateDD($data) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
     </form>
