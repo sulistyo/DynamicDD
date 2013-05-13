@@ -22,13 +22,10 @@ class DynamicDD {
     private $_tabledd          = 'siccode';
     private $_level1           = 'dropdown1_name';
     private $_level1value      = 'dropdown1_value';
-    private $_level1default    = 'dropdown1_default';
     private $_level2           = 'dropdown2_name';
     private $_level2value      = 'dropdown2_value';
-    private $_level2default    = 'dropdown2_default';
     private $_level3           = 'dropdown3_name';
     private $_level3value      = 'dropdown3_value';
-    private $_level3default    = 'dropdown3_default';
 
     // DB SETTINGS
     private $con;
@@ -125,40 +122,40 @@ class DynamicDD {
 
     public function generateJS()
     {
-        $q = "SELECT `". $this->_level1 ."`, `". $this->_level1value ."`, `". $this->_level1default ."`, `". $this->_level2 ."`, `". $this->_level2value ."`, `". $this->_level2default ."`, `". $this->_level3 ."`, `". $this->_level3value ."`, `". $this->_level3default ."` FROM `". $this->_tabledd ."` ORDER BY 2,5,8";
+        $q = "SELECT `". $this->_level1 ."`, `". $this->_level1value ."`, `". $this->_level2 ."`, `". $this->_level2value ."`, `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` ORDER BY 2,4,6";
         $sql = mysql_query($q);
+
         // error checking query
         if (!$sql) {
             die('Query error:'.mysql_error());
         }
+
         $main = array();
         $prev1 = $prev2 = "";
         $index1 = $index2 = $index3 = 0;
+
         while ($row = mysql_fetch_array($sql)){
             if ($prev1 != $row[$this->_level1value]){
                 $index1++;
                 $index2 = 0;
+
                 $main["level1"][$index1]["title"] = $row[$this->_level1];
                 $main["level1"][$index1]["value"] = $row[$this->_level1value];
-                $main["level1"][$index1]["default"] = $row[$this->_level1default];
             }
+
             if ($prev2 != $row[$this->_level2value]){
                 $index2++;
                 $index3 = 0;
+
                 $main["level1"][$index1]["level2"][$index2]["title"] = $row[$this->_level2];
                 $main["level1"][$index1]["level2"][$index2]["value"] = $row[$this->_level2value];
-                $main["level1"][$index1]["level2"][$index2]["default"] = $row[$this->_level2default];
             }
-            if ($row[$this->_level2default] == 1){
-                $main["level1"][$index1]["level2"][$index2]["default"] = $row[$this->_level2default];
-            }
-            if ($row[$this->_level1default] == 1){
-                $main["level1"][$index1]["default"] = $row[level1default];
-            }
+
             $index3++;
+
             $main["level1"][$index1]["level2"][$index2]["level3"][$index3]["title"] = $row[$this->_level3];
             $main["level1"][$index1]["level2"][$index2]["level3"][$index3]["value"] = $row[$this->_level3value];
-            $main["level1"][$index1]["level2"][$index2]["level3"][$index3]["default"] = $row[$this->_level3default];
+
             $prev1 = $row[$this->_level1value];
             $prev2 = $row[$this->_level2value];
         }
