@@ -41,7 +41,7 @@ In the included example, "01" is the default value of "A" and "01.3" is the defa
 
 Elements                          | Accepted Value     | Default Value     | Description
 ----------------------------------| ------------------ | ----------------- | ---------------------
-`$options['formname']`            | `String`. No space | `"ddform"`        | Form Name
+`$options['group']`               | `String`. No space | `"dd"`            | Group name of several dynamic dropdown
 `$options['select_message_1']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
 `$options['select_message_2']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
 `$options['select_message_3']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown

@@ -2,13 +2,18 @@
 class DynamicDD {
     // CUSTOM FORM
     // These can all be set independently when constructing the object
-    private $_formname         = 'ddform';
     private $_select_message_1 = "Please select";
     private $_select_message_2 = "Please select";
     private $_select_message_3 = "Please select";
     private $_select_enable    = true;
 	private $_select_attribute = "";
 	private $_dropdown_level   = 3;
+
+    /**
+     * Dynamic dropdown group name.
+     * This will be used as identifier beetween several dynamic dropdown.
+     */
+    private $group         = 'dd';
 
     /**
      * State of current field on parent change.
@@ -31,7 +36,7 @@ class DynamicDD {
     {
         extract($options);
 
-        if (isset($formname)) $this->_formname = $formname;
+        if (isset($group)) $this->group = $group;
         if (isset($formaction)) $this->_formaction = $formaction;
         if (isset($select_message_1)) $this->_select_message_1 = $select_message_1;
         if (isset($select_message_2)) $this->_select_message_2 = $select_message_2;
@@ -71,7 +76,7 @@ class DynamicDD {
         $output = '';
 
         if ($this->_dropdown_level >= 1){
-            $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
+            $output .= '<select name="' . $this->group . '_level1DD" id="' . $this->group . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
             $output .= '<option>' . $this->_select_message_1 . '</option>';
 
             $index = 0;
@@ -84,13 +89,13 @@ class DynamicDD {
         }
 
         if ($this->_dropdown_level >= 2){
-            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_2 . '" >';
+            $output .= '<select name="' . $this->group . '_level2DD" id="' . $this->group . '_level2DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_2 . '" >';
             $output .= '<option>' . $this->_select_message_2 . '</option>';
             $output .= '</select>';
         }
 
 		if ($this->_dropdown_level >= 3){
-            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_3 . '" >';
+            $output .= '<select name="' . $this->group . '_level3DD" id="' . $this->group . '_level3DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_3 . '" >';
             $output .= '<option>' . $this->_select_message_3 . '</option>';
             $output .= '</select>';
         }
@@ -105,7 +110,7 @@ class DynamicDD {
      */
     protected function generateJS($data = [])
     {
-        $data_name = "data_" . $this->_formname;
+        $data_name = "data_" . $this->group;
         $json = json_encode($data);
 
         $output = <<<"EOT"
@@ -114,9 +119,9 @@ class DynamicDD {
             var {$data_name} = {$json};
             var next = 0;
 
-            var id_1 = "#{$this->_formname}_level1DD";
-            var id_2 = "#{$this->_formname}_level2DD";
-            var id_3 = "#{$this->_formname}_level3DD";
+            var id_1 = "#{$this->group}_level1DD";
+            var id_2 = "#{$this->group}_level2DD";
+            var id_3 = "#{$this->group}_level3DD";
 
             reset(id_2);
             reset(id_3);

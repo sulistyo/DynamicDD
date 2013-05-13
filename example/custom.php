@@ -2,7 +2,7 @@
 require_once "../DynamicDD.php";
 require_once "data/seed.php";
 
-$option['formname']      = 'customform';
+$option['group']      = 'customgroup';
 $option['select_enable'] = false;
 $option['select_attribute'] = 'class="green-apple"';
 

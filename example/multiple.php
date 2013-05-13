@@ -7,9 +7,9 @@ if (!empty($_POST)){
 	print_r($_POST);
 	echo "</pre>";
 }
-$dd1 = new DynamicDD(array("formname"=>"form1"));
-$dd2 = new DynamicDD(array("formname"=>"form2"));
-$dd3 = new DynamicDD(array("formname"=>"form3"));
+$dd1 = new DynamicDD(array("group"=>"dd1"));
+$dd2 = new DynamicDD(array("group"=>"dd2"));
+$dd3 = new DynamicDD(array("group"=>"dd3"));
 ?>
 
 <!doctype html>
