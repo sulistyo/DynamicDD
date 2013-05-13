@@ -30,9 +30,6 @@ $dd3 = new DynamicDD(array("formname"=>"form3"));
             <?= $dd3->generateDD($data, null, null, null) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
-        <?= $dd1->generateJS() ?>
-        <?= $dd2->generateJS() ?>
-        <?= $dd3->generateJS() ?>
     </form>
 </div>
 </body>

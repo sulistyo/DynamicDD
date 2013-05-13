@@ -117,9 +117,12 @@ class DynamicDD {
             $output .= '</select>';
         }
 
-        return $output;
+        return $output . $this->generateJS();
     }
 
+    /**
+     * Generate javascript for content binding.
+     */
     public function generateJS()
     {
         $q = "SELECT `". $this->_level1 ."`, `". $this->_level1value ."`, `". $this->_level2 ."`, `". $this->_level2value ."`, `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` ORDER BY 2,4,6";
@@ -159,23 +162,26 @@ class DynamicDD {
             $prev1 = $row[$this->_level1value];
             $prev2 = $row[$this->_level2value];
         }
-        ?>
+
+        $data_name = "data_" . $this->_formname;
+        $json = json_encode($main);
+
+        $output = <<<EOT
         <script type="text/javascript">
         $(document).ready(function() {
-            <?php $data = "data_" . $this->_formname ?>
-            var <?= $data ?> = <?php echo json_encode($main); ?>;
+            var {$data_name} = {$json};
             var next = 0;
 
-            var id_1 = "#<?= $this->_formname;?>_level1DD";
-            var id_2 = "#<?= $this->_formname;?>_level2DD";
-            var id_3 = "#<?= $this->_formname;?>_level3DD";
+            var id_1 = "#{$this->_formname}_level1DD";
+            var id_2 = "#{$this->_formname}_level2DD";
+            var id_3 = "#{$this->_formname}_level3DD";
 
             reset(id_2);
             reset(id_3);
 
             $(id_1).on("change",function(){
                 var index = $(id_1).get(0).selectedIndex;
-                var data = <?= $data ?>.level1[index];
+                var data = {$data_name}.level1[index];
 
                 update(id_2, id_1, data, "level2");
                 reset(id_3);
@@ -184,7 +190,7 @@ class DynamicDD {
             $(id_2).on("change",function(){
                 var index = $(id_1).get(0).selectedIndex;
                 var index2 = $(id_2).get(0).selectedIndex;
-                var data = <?= $data ?>.level1[index].level2[index2];
+                var data = {$data_name}.level1[index].level2[index2];
 
                 update(id_3, id_2, data, "level3");
             });
@@ -218,7 +224,8 @@ class DynamicDD {
             }
         });
         </script>
-<?php
+EOT;
+
+        return $output;
     }
 }
-?>

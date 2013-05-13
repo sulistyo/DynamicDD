@@ -26,7 +26,6 @@ $dd = new DynamicDD(array("dropdown_level"=>2));
             <?= $dd->generateDD($data, null, null, null) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
-        <?= $dd->generateJS() ?>
     </form>
 </div>
 </body>

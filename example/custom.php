@@ -25,7 +25,6 @@ $dd = new DynamicDD($option);
             <?= $dd->generateDD($data, null, null, null) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
-        <?= $dd->generateJS() ?>
     </form>
 </div>
 </body>
