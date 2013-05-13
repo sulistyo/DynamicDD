@@ -23,15 +23,6 @@ class DynamicDD {
      */
     private $on_parent_change = "hide";
 
-    // TABLE SETTINGS
-    private $_tabledd          = 'siccode';
-    private $_level1           = 'dropdown1_name';
-    private $_level1value      = 'dropdown1_value';
-    private $_level2           = 'dropdown2_name';
-    private $_level2value      = 'dropdown2_value';
-    private $_level3           = 'dropdown3_name';
-    private $_level3value      = 'dropdown3_value';
-
     function __construct($options=array())
     {
         extract($options);
