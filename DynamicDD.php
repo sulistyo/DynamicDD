@@ -39,36 +39,16 @@ class DynamicDD {
         if(is_null($db)) {
             $db = $this->db_default;
         }
-        foreach($options as $key => $value) {
-            switch($key) {
-                case "formname":
-                $this->_formname = $value;
-                break;
-                case "formaction":
-                $this->_formaction = $value;
-                break;
-                case "select_message_1":
-                $this->_select_message_1 = $value;
-                break;
-                case "select_message_2":
-                $this->_select_message_2 = $value;
-                break;
-                case "select_message_3":
-                $this->_select_message_3 = $value;
-                break;
-                case "select_enable":
-                $this->_select_enable = $value;
-								break;
-                case "dropdown_level":
-                $this->_dropdown_level = $value;
-								break;
-                case "select_attribute":
-                $this->_select_attribute = $value;
-								break;
-                default:
-                break;
-            }
-        }
+
+        extract($options);
+        if (isset($formname)) $this->_formname = $formname;
+        if (isset($formaction)) $this->_formaction = $formaction;
+        if (isset($select_message_1)) $this->_select_message_1 = $select_message_1;
+        if (isset($select_message_2)) $this->_select_message_2 = $select_message_2;
+        if (isset($select_message_3)) $this->_select_message_3 = $select_message_3;
+        if (isset($select_enable)) $this->_select_enable = $select_enable;
+        if (isset($dropdown_level)) $this->_dropdown_level = $dropdown_level;
+        if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
 
         // assign on select change if option exist
         if (isset($options['on_select_change'])) $this->_on_select_change = $options['on_select_change'];
