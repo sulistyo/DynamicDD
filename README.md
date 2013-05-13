@@ -93,11 +93,6 @@ If you want to force the dropdown to display specific value (useful for error ha
 
     $dd->generateDD($data, "A","",""));
 
-#### generateJS()
-To generate json and javascript code, you need to call generateJS() function.
-
-    $dd->generateJS();
-
 ### Hard Dependencies
 jQuery 1.8+
 
@@ -112,7 +107,6 @@ require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD();
 $dd1->generateDD($data));
-$dd1->generateJS();
 ```
 
 ### Single - 2 Level drop down
@@ -123,7 +117,6 @@ require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD(array("dropdown_level"=>2));
 $dd1->generateDD($data));
-$dd1->generateJS();
 ```
 
 ### Multiple drop down
@@ -134,15 +127,12 @@ require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD(array('formname'='form1'));
 $dd1->generateDD($data));
-$dd1->generateJS();
 
 $dd2 = new DynamicDD(array('formname'='form2'));
 $dd2->generateDD($data));
-$dd2->generateJS();
 
 $dd3 = new DynamicDD(array('formname'='form3'));
 $dd3->generateDD($data));
-$dd3->generateJS();
 ```
 
 ### Custom drop down
@@ -158,7 +148,6 @@ $option['select_attribute'] = 'class="green-apple"';
 
 $dd = new DynamicDD($option);
 $dd->generateDD($data));
-$dd->generateJS();
 ```
 
 ### Pre-populate drop down
@@ -170,5 +159,4 @@ require_once "DynamicDD.php";
 $dd = new DynamicDD();
 // select value A for dropdown 1 and display the corresponding value accordingly
 $dd->generateDD($data, "A");
-$dd->generateJS();
 ```
