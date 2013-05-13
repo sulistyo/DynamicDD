@@ -40,16 +40,17 @@ In the included example, "01" is the default value of "A" and "01.3" is the defa
 
 #### Accepted options. These are all optionals.
 
-Elements                        | Accepted Value   | Default Value | Description
-------------------------------- | ---------------  | ------------- | ---------------------
+Elements                          | Accepted Value     | Default Value     | Description
+----------------------------------| ------------------ | ----------------- | ---------------------
 `$options['formname']`            | `String`. No space | `"ddform"`        | Form Name
 `$options['formaction']`          | `URL`              | `"#"`             | Form Action
 `$options['select_message_1']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
 `$options['select_message_2']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
 `$options['select_message_3']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
-`$options['select_enable']`       | `Boolean`          | `true`          | True to enable, False to disable
-`$options['select_attribute']`    | `String`             | `null`       | Add any custom attribute that will be appended to select tag
-`$options['dropdown_level']`      | `Integer`          | `3`             | 3 or 2
+`$options['select_enable']`       | `Boolean`          | `true`            | True to enable, False to disable
+`$options['select_attribute']`    | `String`           | `null`            | Add any custom attribute that will be appended to select tag
+`$options['dropdown_level']`      | `Integer`          | `3`               | 3 or 2
+`$options['on_parent_change']`    | `none` or `hide`   | `hide`            | State of current field on parent change
 
 ### Custom Database Connection
 
