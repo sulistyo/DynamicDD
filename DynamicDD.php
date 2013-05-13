@@ -132,7 +132,9 @@ class DynamicDD {
                 var index2 = $(id_2).get(0).selectedIndex;
                 var data = {$data_name}.level1[index].level2[index2];
 
-                update(id_3, data, "level3");
+                reset(id_3);
+
+                if (index2 !== 0) update(id_3, data, "level3");
             });
 
             function reset(selector) {
