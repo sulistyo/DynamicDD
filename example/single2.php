@@ -18,13 +18,15 @@ $dd = new DynamicDD(array("dropdown_level"=>2));
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
+<div>
     <p>Dropdown Demo - Single</p>
     <form method="post">
         <fieldset>
             <?= $dd->generateDD() ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
-        <?= $dd1->generateJS() ?>
+        <?= $dd->generateJS() ?>
     </form>
+</div>
 </body>
 </html>

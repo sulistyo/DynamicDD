@@ -18,6 +18,7 @@ $dd = new DynamicDD(['on_select_change' => 'none', 'select_attribute' => 'class=
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
+<div>
     <p>Dropdown Demo - Single</p>
     <form method="post">
         <fieldset>
@@ -26,5 +27,6 @@ $dd = new DynamicDD(['on_select_change' => 'none', 'select_attribute' => 'class=
         </fieldset>
         <?= $dd->generateJS() ?>
     </form>
+</div>
 </body>
 </html>

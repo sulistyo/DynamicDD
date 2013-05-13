@@ -18,6 +18,7 @@ $dd = new DynamicDD($option);
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
+<div>
     <p>Dropdown Demo - Custom</p>
     <form method="post">
         <fieldset>
@@ -26,5 +27,6 @@ $dd = new DynamicDD($option);
         </fieldset>
         <?= $dd->generateJS() ?>
     </form>
+</div>
 </body>
 </html>

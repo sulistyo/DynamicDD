@@ -89,13 +89,13 @@ class DynamicDD {
         }
 
         if ($this->_dropdown_level >= 2){
-            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_2 '</option>';
+            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_2 . '</option>';
 
             $q = "SELECT  DISTINCT `". $this->_level2 ."`, `". $this->_level2value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level1value."` = '".$value1."' ORDER BY 2";
             $sql = mysql_query($q);
 
             while ($row = mysql_fetch_array($sql)){
-                $sel = ($this->$row[$this->_level2value] == $value2)?"selected":"";
+                $sel = ($row[$this->_level2value] == $value2)?"selected":"";
                 $output .= '<option value="' . $row[$this->_level2value] . '" ' . $sel . '>' . $row[$this->_level2] . '</option>';
             }
 
@@ -103,7 +103,7 @@ class DynamicDD {
         }
 
 		if ($this->_dropdown_level >= 3){
-            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_3 '</option>';
+            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_3 . '</option>';
 
 		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
     		$sql = mysql_query($q);

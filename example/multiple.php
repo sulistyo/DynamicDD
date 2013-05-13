@@ -19,6 +19,7 @@ $dd3 = new DynamicDD(array("formname"=>"form3"));
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
+<div>
     <p>Dropdown Demo - Multiple</p>
     <form method="post">
         <fieldset>
@@ -31,5 +32,6 @@ $dd3 = new DynamicDD(array("formname"=>"form3"));
         <?= $dd2->generateJS() ?>
         <?= $dd3->generateJS() ?>
     </form>
+</div>
 </body>
 </html>
