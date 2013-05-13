@@ -69,13 +69,7 @@ class DynamicDD {
         if ($this->_dropdown_level >= 1){
             $output .= '<select name="' . $this->group . '_level1DD" id="' . $this->group . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
             $output .= '<option>' . $this->_select_message_1 . '</option>';
-
-            $index = 0;
-            foreach ($data as $row) {
-                $index++;
-                $output .= '<option value="' . $row[$index]['value'] . '">' . $row[$index]['title'] . '</option>';
-            }
-
+            foreach ($data['level1'] as $row) $output .= '<option value="' . $row['value'] . '">' . $row['title'] . '</option>';
             $output .= '</select>';
         }
 
