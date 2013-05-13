@@ -55,7 +55,7 @@ class DynamicDD {
         if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
 
         // assign on select change if option exist
-        if (isset($options['on_select_change'])) $this->on_parent_change = $options['on_select_change'];
+        if (isset($options['on_parent_change'])) $this->on_parent_change = $options['on_parent_change'];
 
         $this->con  = mysql_connect($db['host'],$db['user'],$db['pass'],true) or die ('Error connecting to MySQL');
         mysql_select_db($db['db'],$this->con) or die('Database '.$db['db'].' does not exist!');
@@ -79,7 +79,8 @@ class DynamicDD {
         $output = '';
 
         if ($this->_dropdown_level >= 1){
-            $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_1 . '</option>';
+            $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" >';
+            $output .= '<option>' . $this->_select_message_1 . '</option>';
 
             $q = "SELECT  DISTINCT `". $this->_level1 ."`, `". $this->_level1value ."` FROM `".$this->_tabledd."` ORDER BY 2";
             $sql = mysql_query($q);
@@ -93,7 +94,8 @@ class DynamicDD {
         }
 
         if ($this->_dropdown_level >= 2){
-            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_2 . '</option>';
+            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" >';
+            $output .= '<option>' . $this->_select_message_2 . '</option>';
 
             $q = "SELECT  DISTINCT `". $this->_level2 ."`, `". $this->_level2value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level1value."` = '".$value1."' ORDER BY 2";
             $sql = mysql_query($q);
@@ -107,7 +109,8 @@ class DynamicDD {
         }
 
 		if ($this->_dropdown_level >= 3){
-            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . '><option>' . $this->_select_message_3 . '</option>';
+            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" >';
+            $output .= '<option>' . $this->_select_message_3 . '</option>';
 
 		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
     		$sql = mysql_query($q);
@@ -167,34 +170,28 @@ class DynamicDD {
             var data<?php echo "_",$this->_formname;?> = <?php echo json_encode($main); ?>;
             var next = 0;
 
-            // generate initial display
             generateLevel(1);
 
-            <?php if ($this->on_parent_change == "hide") { ?>
-                // hide level 2 & 3 on initial display.
-                $("select#<?php echo $this->_formname;?>_level2DD").hide();
-                $("select#<?php echo $this->_formname;?>_level3DD").hide();
-            <?php }; ?>
+            $("select#<?php echo $this->_formname;?>_level2DD[data-on-parent-change=hide]").hide();
+            $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
 
             $("select#<?php echo $this->_formname;?>_level1DD").on("change",function(){
                 generateLevel(2);
-
-                // reset level 3 dropdown
                 generateLevel(3);
 
-                <?php if ($this->on_parent_change == "hide") { ?>
-                    // hide level 3 dropdown
-                    $("select#<?php echo $this->_formname;?>_level3DD").hide();
-                <?php } ?>
+                $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
             });
+
             $("select#<?php echo $this->_formname;?>_level2DD").on("change",function(){
                 generateLevel(3);
             });
+
             function generateLevel(level){
                 var index = $("select#<?php echo $this->_formname;?>_level1DD").get(0).selectedIndex;
                 var index2 = $("select#<?php echo $this->_formname;?>_level2DD").get(0).selectedIndex;
 
                 var genNext = 0;
+
                 if (level == 1){
                     <?php $select_message = ($this->_select_enable)? $this->_select_message_2 : '' ?>
                     var options = '<option value=""><?= $select_message ?><\/option>';
@@ -206,14 +203,12 @@ class DynamicDD {
                         }
                         options += '<option value="' + j.value + '" >' + j.title + '<\/option>';
                     });
-                    $("select#<?php echo $this->_formname;?>_level1DD").html(options);
 
-                    <?php if ($this->on_parent_change == "hide") { ?>
-                        // hide level 2 & 3 on level 1 changed.
-                        $("select#<?php echo $this->_formname;?>_level2DD").hide();
-                        $("select#<?php echo $this->_formname;?>_level3DD").hide();
-                    <?php }; ?>
+                    $("select#<?php echo $this->_formname;?>_level1DD").html(options);
+                    $("select#<?php echo $this->_formname;?>_level2DD[data-on-parent-change=hide]").hide();
+                    $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
                 }
+
                 if (level == 2){
                     <?php $select_message = ($this->_select_enable)? $this->_select_message_2 : '' ?>
                     var options = '<option value=""><?= $select_message ?><\/option>';
@@ -229,16 +224,12 @@ class DynamicDD {
                             });
                         }
                     }
+
                     $("select#<?php echo $this->_formname;?>_level2DD").html(options);
-
-                    <?php if ($this->on_parent_change == "hide") { ?>
-                        // show level 2 on level 1 changed.
-                        $("select#<?php echo $this->_formname;?>_level2DD").show();
-
-                        // hide level 3 on level 1 changed.
-                        $("select#<?php echo $this->_formname;?>_level3DD").hide();
-                    <?php }; ?>
+                    $("select#<?php echo $this->_formname;?>_level2DD[data-on-parent-change=hide]").show();
+                    $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
                 }
+
                 if (level == 3){
                     <?php $select_message = ($this->_select_enable)? $this->_select_message_3 : '' ?>
                     var options = '<option value=""><?= $select_message ?><\/option>';
@@ -255,12 +246,9 @@ class DynamicDD {
                         }
                     }
                     $("select#<?php echo $this->_formname;?>_level3DD").html(options);
-
-                    <?php if ($this->on_parent_change == "hide") { ?>
-                        // show level 3 on level 2 changed.
-                        $("select#<?php echo $this->_formname;?>_level3DD").show();
-                    <?php }; ?>
+                    $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").show();
                 }
+
                 return genNext;
             }
         });
