@@ -15,6 +15,7 @@ class DynamicDD {
      * State of current field on parent change.
      *
      * Possible values: none, hide.
+     * Default: hide.
      */
     private $on_parent_change = "hide";
 
@@ -52,10 +53,13 @@ class DynamicDD {
         if (isset($select_message_1)) $this->_select_message_1 = $select_message_1;
         if (isset($select_message_2)) $this->_select_message_2 = $select_message_2;
         if (isset($select_message_3)) $this->_select_message_3 = $select_message_3;
-        if (isset($select_enable)) $this->_select_enable = $select_enable;
         if (isset($dropdown_level)) $this->_dropdown_level = $dropdown_level;
         if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
         if (isset($on_parent_change)) $this->on_parent_change = $on_parent_change;
+        if (isset($select_enable)) {
+            $this->_select_enable = $select_enable;
+            if (!$this->_select_enable) $this->_select_message_1 = $this->_select_message_2 = $this->_select_message_3 = '';
+        }
 
         $this->con  = mysql_connect($db['host'],$db['user'],$db['pass'],true) or die ('Error connecting to MySQL');
         mysql_select_db($db['db'],$this->con) or die('Database '.$db['db'].' does not exist!');
@@ -85,7 +89,7 @@ class DynamicDD {
         $output = '';
 
         if ($this->_dropdown_level >= 1){
-            $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" >';
+            $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
             $output .= '<option>' . $this->_select_message_1 . '</option>';
 
             $q = "SELECT  DISTINCT `". $this->_level1 ."`, `". $this->_level1value ."` FROM `".$this->_tabledd."` ORDER BY 2";
@@ -100,7 +104,7 @@ class DynamicDD {
         }
 
         if ($this->_dropdown_level >= 2){
-            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" >';
+            $output .= '<select name="' . $this->_formname . '_level2DD" id="' . $this->_formname . '_level2DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_2 . '" >';
             $output .= '<option>' . $this->_select_message_2 . '</option>';
 
             $q = "SELECT  DISTINCT `". $this->_level2 ."`, `". $this->_level2value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level1value."` = '".$value1."' ORDER BY 2";
@@ -115,7 +119,7 @@ class DynamicDD {
         }
 
 		if ($this->_dropdown_level >= 3){
-            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" >';
+            $output .= '<select name="' . $this->_formname . '_level3DD" id="' . $this->_formname . '_level3DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_3 . '" >';
             $output .= '<option>' . $this->_select_message_3 . '</option>';
 
 		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
@@ -200,8 +204,7 @@ class DynamicDD {
                 var genNext = 0;
 
                 if (level == 1){
-                    <?php $select_message = ($this->_select_enable)? $this->_select_message_2 : '' ?>
-                    var options = '<option value=""><?= $select_message ?><\/option>';
+                    var options = '<option value="">' + $("select#<?php echo $this->_formname;?>_level1DD").attr('data-prompt') + '</option>';
 
                     $.each(data<?php echo "_",$this->_formname;?>.level1, function(i,j){
                         var sel = "";
@@ -217,8 +220,7 @@ class DynamicDD {
                 }
 
                 if (level == 2){
-                    <?php $select_message = ($this->_select_enable)? $this->_select_message_2 : '' ?>
-                    var options = '<option value=""><?= $select_message ?><\/option>';
+                    var options = '<option value="">' + $("select#<?php echo $this->_formname;?>_level2DD").attr('data-prompt') + '</option>';
 
                     if (index !== 0){
                         var d = data<?php echo "_",$this->_formname;?>.level1[index];
@@ -238,8 +240,7 @@ class DynamicDD {
                 }
 
                 if (level == 3){
-                    <?php $select_message = ($this->_select_enable)? $this->_select_message_3 : '' ?>
-                    var options = '<option value=""><?= $select_message ?><\/option>';
+                    var options = '<option value="">' + $("select#<?php echo $this->_formname;?>_level3DD").attr('data-prompt') + '</option>';
 
                     if (index2 !== 0){
                         var d = data<?php echo "_",$this->_formname;?>.level1[index].level2[index2];
