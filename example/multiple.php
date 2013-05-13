@@ -1,5 +1,7 @@
 <?php
 require_once "../DynamicDD.php";
+require_once "data/seed.php";
+
 if (!empty($_POST)){
 	echo "<pre>";
 	print_r($_POST);
@@ -23,9 +25,9 @@ $dd3 = new DynamicDD(array("formname"=>"form3"));
     <p>Dropdown Demo - Multiple</p>
     <form method="post">
         <fieldset>
-            <?= $dd1->generateDD() ?>
-            <?= $dd2->generateDD() ?>
-            <?= $dd3->generateDD() ?>
+            <?= $dd1->generateDD(null, null, null, $data) ?>
+            <?= $dd2->generateDD(null, null, null, $data) ?>
+            <?= $dd3->generateDD(null, null, null, $data) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
         <?= $dd1->generateJS() ?>

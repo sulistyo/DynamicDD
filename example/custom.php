@@ -1,8 +1,8 @@
 <?php
 require_once "../DynamicDD.php";
+require_once "data/seed.php";
 
 $option['formname']      = 'customform';
-$option['formaction']    = 'customaction.php';
 $option['select_enable'] = false;
 $option['select_attribute'] = 'class="green-apple"';
 
@@ -22,7 +22,7 @@ $dd = new DynamicDD($option);
     <p>Dropdown Demo - Custom</p>
     <form method="post">
         <fieldset>
-            <?= $dd->generateDD() ?>
+            <?= $dd->generateDD(null, null, null, $data) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
         <?= $dd->generateJS() ?>

@@ -3,7 +3,6 @@ class DynamicDD {
     // CUSTOM FORM
     // These can all be set independently when constructing the object
     private $_formname         = 'ddform';
-    private $_formaction       = '#';
     private $_select_message_1 = "Please select";
     private $_select_message_2 = "Please select";
     private $_select_message_3 = "Please select";
@@ -84,7 +83,16 @@ class DynamicDD {
         $this->_select_enable = false;
     }
 
-    public function generateDD($value1 = "", $value2 = "", $value3 = "")
+    /**
+     * Generate dynamic dropdown field.
+     *
+     * @param $value1 String Selected value for dropdown level 1.
+     * @param $value2 String Selected value for dropdown level 2.
+     * @param $value3 String Selected value for dropdown level 3.
+     * @param $data Array Data for options.
+     * @return String
+     */
+    public function generateDD($value1 = "", $value2 = "", $value3 = "", $data = [])
     {
         $output = '';
 
@@ -92,10 +100,7 @@ class DynamicDD {
             $output .= '<select name="' . $this->_formname . '_level1DD" id="' . $this->_formname . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
             $output .= '<option>' . $this->_select_message_1 . '</option>';
 
-            $q = "SELECT  DISTINCT `". $this->_level1 ."`, `". $this->_level1value ."` FROM `".$this->_tabledd."` ORDER BY 2";
-            $sql = mysql_query($q);
-
-            while ($row = mysql_fetch_array($sql)){
+            foreach ($data as $row) {
                 $sel = ($row[$this->_level1value] == $value1)?"selected":"";
                 $output .= '<option value="' . $row[$this->_level1value] . '" ' . $sel . '>' . $row[$this->_level1] . '</option>';
             }
