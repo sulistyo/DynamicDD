@@ -47,7 +47,6 @@ Elements                          | Accepted Value     | Default Value     | Des
 `$options['select_message_3']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
 `$options['select_enable']`       | `Boolean`          | `true`            | True to enable, False to disable
 `$options['select_attribute']`    | `String`           | `null`            | Add any custom attribute that will be appended to select tag
-`$options['dropdown_level']`      | `Integer`          | `3`               | 3 or 2
 `$options['on_parent_change']`    | `none` or `hide`   | `hide`            | State of current field on parent change
 
 ### Object Manipulation
@@ -83,24 +82,16 @@ jQuery 1.8+
 Example
 -------------------------
 
-### Single - 3 level drop down
+### Single drop down
 [Click here](http://edy.li/DynamicDD/example/single.php) for demo.
 
 ```php
 require_once "DynamicDD.php";
 
-$dd1 = new DynamicDD();
-$dd1->generateDD($data));
-```
-
-### Single - 2 Level drop down
-[Click here](http://edy.li/DynamicDD/example/single2.php) for demo.
-
-```php
-require_once "DynamicDD.php";
-
-$dd1 = new DynamicDD(array("dropdown_level"=>2));
-$dd1->generateDD($data));
+$dd = new DynamicDD();
+$dd->dropdown($data));
+$dd->dropdown();
+$dd->dropdown();
 ```
 
 ### Multiple drop down
@@ -109,14 +100,20 @@ $dd1->generateDD($data));
 ```php
 require_once "DynamicDD.php";
 
-$dd1 = new DynamicDD(array('formname'='form1'));
-$dd1->generateDD($data));
+$dd1 = new DynamicDD(array('group'=>'1'));
+$dd1->dropdown($data));
+$dd1->dropdown();
+$dd1->dropdown();
 
-$dd2 = new DynamicDD(array('formname'='form2'));
-$dd2->generateDD($data));
+$dd2 = new DynamicDD(array('group'=>'2'));
+$dd2->dropdown($data));
+$dd2->dropdown();
+$dd2->dropdown();
 
-$dd3 = new DynamicDD(array('formname'='form3'));
-$dd3->generateDD($data));
+$dd3 = new DynamicDD(array('group'=>'3'));
+$dd3->dropdown($data));
+$dd3->dropdown();
+$dd3->dropdown();
 ```
 
 ### Custom drop down
@@ -125,11 +122,12 @@ $dd3->generateDD($data));
 ```php
 require_once "DynamicDD.php";
 
-$option['formname']         = 'customform';
-$option['formaction']       = 'customaction.php';
+$option['group']            = 'custom';
 $option['select_enable']    = false;
 $option['select_attribute'] = 'class="green-apple"';
 
 $dd = new DynamicDD($option);
-$dd->generateDD($data));
+$dd->dropdown($data));
+$dd->dropdown();
+$dd->dropdown();
 ```

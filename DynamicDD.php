@@ -7,13 +7,22 @@ class DynamicDD {
     private $_select_message_3 = "Please select";
     private $_select_enable    = true;
 	private $_select_attribute = "";
-	private $_dropdown_level   = 3;
+
+    /**
+     * Data for select options.
+     */
+    private $data;
+
+    /**
+     * Count of dynamic dropdown generated.
+     */
+	private $count = 0;
 
     /**
      * Dynamic dropdown group name.
      * This will be used as identifier beetween several dynamic dropdown.
      */
-    private $group         = 'dd';
+    private $group = 'dd';
 
     /**
      * State of current field on parent change.
@@ -22,6 +31,11 @@ class DynamicDD {
      * Default: hide.
      */
     private $on_parent_change = "hide";
+
+    /**
+     * Boolean value of whether the javascript has already been printed.
+     */
+    private $javascript_printed = false;
 
     function __construct($options=array())
     {
@@ -32,7 +46,6 @@ class DynamicDD {
         if (isset($select_message_1)) $this->_select_message_1 = $select_message_1;
         if (isset($select_message_2)) $this->_select_message_2 = $select_message_2;
         if (isset($select_message_3)) $this->_select_message_3 = $select_message_3;
-        if (isset($dropdown_level)) $this->_dropdown_level = $dropdown_level;
         if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
         if (isset($on_parent_change)) $this->on_parent_change = $on_parent_change;
         if (isset($select_enable)) {
@@ -62,39 +75,38 @@ class DynamicDD {
      * @param $data Array Data for options.
      * @return String
      */
-    public function generateDD($data = [])
+    public function dropdown($data = [])
     {
-        $output = '';
+        // TODO: currently limit to only 3 level dropdown.
+        if ($this->count <= 3) {
+            $this->count++;
+            $message_var = '_select_message_' . $this->count;
+            $prompt = $this->$message_var;
 
-        if ($this->_dropdown_level >= 1){
-            $output .= '<select name="' . $this->group . '_level1DD" id="' . $this->group . '_level1DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_1 . '" >';
-            $output .= '<option>' . $this->_select_message_1 . '</option>';
-            foreach ($data['level1'] as $row) $output .= '<option value="' . $row['value'] . '">' . $row['title'] . '</option>';
+            $output = '';
+            $output .= '<select name="' . $this->group . '_level' . $this->count . 'DD" id="' . $this->group . '_level' . $this->count . 'DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" >';
+
+            $output .= '<option>' . $prompt . '</option>';
+            if ($this->count == 1) foreach ($data['level1'] as $row) $output .= '<option value="' . $row['value'] . '">' . $row['title'] . '</option>';
+
             $output .= '</select>';
-        }
 
-        if ($this->_dropdown_level >= 2){
-            $output .= '<select name="' . $this->group . '_level2DD" id="' . $this->group . '_level2DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_2 . '" >';
-            $output .= '<option>' . $this->_select_message_2 . '</option>';
-            $output .= '</select>';
-        }
+            if (!empty($data)) $this->data = $data;
+            $javascript = $this->javascript();
 
-		if ($this->_dropdown_level >= 3){
-            $output .= '<select name="' . $this->group . '_level3DD" id="' . $this->group . '_level3DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $this->_select_message_3 . '" >';
-            $output .= '<option>' . $this->_select_message_3 . '</option>';
-            $output .= '</select>';
+            return $output . $javascript;
         }
-
-        return $output . $this->generateJS($data);
     }
 
     /**
      * Generate javascript for content binding.
-     *
-     * @param $data Array Data for options.
      */
-    protected function generateJS($data = [])
+    protected function javascript()
     {
+        // TODO: should be checking javascript_printed NOT count.
+        if ($this->count < 3) return '';
+        $data = $this->data;
+
         $data_name = "data_" . $this->group;
         $json = json_encode($data);
 
@@ -111,7 +123,7 @@ class DynamicDD {
             reset(id_2);
             reset(id_3);
 
-            $(id_1).on("change",function(){
+            $(document).on("change", id_1, function(){
                 var index = $(id_1).get(0).selectedIndex;
                 var data = {$data_name}.level1[index];
 
@@ -121,7 +133,7 @@ class DynamicDD {
                 if (index !== 0) update(id_2, data, "level2");
             });
 
-            $(id_2).on("change",function(){
+            $(document).on("change", id_2, function(){
                 var index = $(id_1).get(0).selectedIndex;
                 var index2 = $(id_2).get(0).selectedIndex;
                 var data = {$data_name}.level1[index].level2[index2];
@@ -163,6 +175,7 @@ class DynamicDD {
         </script>
 EOT;
 
+        $this->javascript_printed = true;
         return $output;
     }
 }
