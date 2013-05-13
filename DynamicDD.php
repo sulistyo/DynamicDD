@@ -45,6 +45,7 @@ class DynamicDD {
         }
 
         extract($options);
+
         if (isset($formname)) $this->_formname = $formname;
         if (isset($formaction)) $this->_formaction = $formaction;
         if (isset($select_message_1)) $this->_select_message_1 = $select_message_1;
@@ -53,9 +54,7 @@ class DynamicDD {
         if (isset($select_enable)) $this->_select_enable = $select_enable;
         if (isset($dropdown_level)) $this->_dropdown_level = $dropdown_level;
         if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
-
-        // assign on select change if option exist
-        if (isset($options['on_parent_change'])) $this->on_parent_change = $options['on_parent_change'];
+        if (isset($on_parent_change)) $this->on_parent_change = $on_parent_change;
 
         $this->con  = mysql_connect($db['host'],$db['user'],$db['pass'],true) or die ('Error connecting to MySQL');
         mysql_select_db($db['db'],$this->con) or die('Database '.$db['db'].' does not exist!');
