@@ -98,10 +98,7 @@ class DynamicDD {
         $this->_select_enable = false;
     }
     public function generateDD($value1 = "", $value2 = "", $value3 = ""){
-        if (empty($value1)){
-            $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_1</option></select>");
-
-        } else {
+        if ($this->_dropdown_level >= 1){
             $this->echoln("  <select name=\"".$this->_formname."_level1DD\" id=\"".$this->_formname."_level1DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_1</option>");
             $q = "SELECT  DISTINCT `". $this->_level1 ."`, `". $this->_level1value ."` FROM `".$this->_tabledd."` ORDER BY 2";
             $sql = mysql_query($q);
@@ -112,9 +109,7 @@ class DynamicDD {
             $this->echoln("</select>");
         }
 
-        if (empty($value2)){
-            $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_2</option></select>");
-        } else {
+        if ($this->_dropdown_level >= 2){
             $this->echoln("  <select name=\"".$this->_formname."_level2DD\" id=\"".$this->_formname."_level2DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_2</option>");
             $q = "SELECT  DISTINCT `". $this->_level2 ."`, `". $this->_level2value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level1value."` = '".$value1."' ORDER BY 2";
             $sql = mysql_query($q);
@@ -124,19 +119,16 @@ class DynamicDD {
             }
             $this->echoln("</select>");
         }
-				if ($this->_dropdown_level == 3){
-		        if (empty($value3)){
-    		        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_3</option></select>");
-		        } else {
-    		        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_3</option>");
-        		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
-            		$sql = mysql_query($q);
-		            while ($row = mysql_fetch_array($sql)){
-    		            $sel = ($row[$this->_level3value] == $value3)?"selected":"";
-        		        echo "  <option value=\"".$row[$this->_level3value]."\" ".$sel.">".$row[$this->_level3]."</option>";
-            		}
-		            $this->echoln("</select>");
-						}
+
+		if ($this->_dropdown_level >= 3){
+	        $this->echoln("  <select name=\"".$this->_formname."_level3DD\" id=\"".$this->_formname."_level3DD\" ".$this->_select_attribute."><option value=\"\">$this->_select_message_3</option>");
+		    $q = "SELECT  DISTINCT `". $this->_level3 ."`, `". $this->_level3value ."` FROM `". $this->_tabledd ."` WHERE `".$this->_level2value."` = '".$value2."' ORDER BY 2";
+    		$sql = mysql_query($q);
+            while ($row = mysql_fetch_array($sql)){
+	            $sel = ($row[$this->_level3value] == $value3)?"selected":"";
+		        echo "  <option value=\"".$row[$this->_level3value]."\" ".$sel.">".$row[$this->_level3]."</option>";
+    		}
+            $this->echoln("</select>");
         }
     }
 
