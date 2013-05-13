@@ -163,15 +163,19 @@ class DynamicDD {
             var data<?php echo "_",$this->_formname;?> = <?php echo json_encode($main); ?>;
             var next = 0;
 
-            reset("#<?php echo $this->_formname;?>_level2DD");
-            reset("#<?php echo $this->_formname;?>_level3DD");
+            var id_1 = "#<?= $this->_formname;?>_level1DD";
+            var id_2 = "#<?= $this->_formname;?>_level2DD";
+            var id_3 = "#<?= $this->_formname;?>_level3DD";
 
-            $("select#<?php echo $this->_formname;?>_level1DD").on("change",function(){
+            reset(id_2);
+            reset(id_3);
+
+            $(id_1).on("change",function(){
                 generateLevel(2);
-                reset("#<?php echo $this->_formname;?>_level3DD");
+                reset(id_3);
             });
 
-            $("select#<?php echo $this->_formname;?>_level2DD").on("change",function(){
+            $(id_2).on("change",function(){
                 generateLevel(3);
             });
 
@@ -181,13 +185,13 @@ class DynamicDD {
             }
 
             function generateLevel(level){
-                var index = $("select#<?php echo $this->_formname;?>_level1DD").get(0).selectedIndex;
-                var index2 = $("select#<?php echo $this->_formname;?>_level2DD").get(0).selectedIndex;
+                var index = $(id_1).get(0).selectedIndex;
+                var index2 = $(id_2).get(0).selectedIndex;
 
                 var genNext = 0;
 
                 if (level == 2){
-                    var id = "#<?php echo $this->_formname;?>_level2DD";
+                    var id = id_2;
                     var options = '<option>' + $(id).attr('data-prompt') + '</option>';
                     reset(id);
 
@@ -208,7 +212,7 @@ class DynamicDD {
                 }
 
                 if (level == 3){
-                    var id = "#<?php echo $this->_formname;?>_level3DD";
+                    var id = id_3;
                     var options = '<option>' + $(id).attr('data-prompt') + '</option>';
                     reset(id);
 
