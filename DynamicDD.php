@@ -39,7 +39,8 @@ class DynamicDD {
         'db'   => 'edyli_db_siccode',
         );
 
-    function __construct($options=array(), $db=null) {
+    function __construct($options=array(), $db=null)
+    {
         if(is_null($db)) {
             $db = $this->db_default;
         }
@@ -60,21 +61,27 @@ class DynamicDD {
         mysql_select_db($db['db'],$this->con) or die('Database '.$db['db'].' does not exist!');
     }
 
-    function __destruct() {
+    function __destruct()
+    {
         mysql_close($this->con);
     }
 
-    public function setSelectMessage($which, $select_message){
+    public function setSelectMessage($which, $select_message)
+    {
         // valid value only 1 to 3
         if ($which > 3 || $which < 1) return;
 
         $var = '_select_message_' . $which;
         $this->$var = $select_message;
     }
-    public function disableSelectMessage() {
+
+    public function disableSelectMessage()
+    {
         $this->_select_enable = false;
     }
-    public function generateDD($value1 = "", $value2 = "", $value3 = ""){
+
+    public function generateDD($value1 = "", $value2 = "", $value3 = "")
+    {
         $output = '';
 
         if ($this->_dropdown_level >= 1){
@@ -125,7 +132,8 @@ class DynamicDD {
         return $output;
     }
 
-    public function generateJS(){
+    public function generateJS()
+    {
         $q = "SELECT `". $this->_level1 ."`, `". $this->_level1value ."`, `". $this->_level1default ."`, `". $this->_level2 ."`, `". $this->_level2value ."`, `". $this->_level2default ."`, `". $this->_level3 ."`, `". $this->_level3value ."`, `". $this->_level3default ."` FROM `". $this->_tabledd ."` ORDER BY 2,5,8";
         $sql = mysql_query($q);
         // error checking query
