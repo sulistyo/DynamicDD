@@ -121,8 +121,10 @@ class DynamicDD {
                 var index = $(id_1).get(0).selectedIndex;
                 var data = {$data_name}.level1[index];
 
-                update(id_2, id_1, data, "level2");
+                reset(id_2);
                 reset(id_3);
+
+                if (index !== 0) update(id_2, data, "level2");
             });
 
             $(id_2).on("change",function(){
@@ -130,7 +132,7 @@ class DynamicDD {
                 var index2 = $(id_2).get(0).selectedIndex;
                 var data = {$data_name}.level1[index].level2[index2];
 
-                update(id_3, id_2, data, "level3");
+                update(id_3, data, "level3");
             });
 
             function reset(selector) {
@@ -144,18 +146,19 @@ class DynamicDD {
              * current : jQuery selector
              * parent : jQuery selector
              * data : key value array
-             * key : data index
+             * key : data index e.g. data[key]
+             * value : value index name e.g. data[key][value]
+             * title : title index name e.g. data[key][title]
              */
-            function update(current, parent, data, key) {
-                var index = $(parent).get(0).selectedIndex;
+            function update(current, data, key, value, title) {
+                value = typeof value !== 'undefined' ? value : 'value';
+                title = typeof title !== 'undefined' ? title : 'title';
+
                 var options = '<option>' + $(current).attr('data-prompt') + '</option>';
 
-                reset(current);
-                if (index !== 0){
-                    $.each(data[key], function(i,j){
-                        options += '<option value="' + j.value + '" >' + j.title + '</option>';
-                    });
-                }
+                $.each(data[key], function(i,j){
+                    options += '<option value="' + j[value] + '" >' + j[title] + '</option>';
+                });
 
                 $(current).html(options);
                 $(current + "[data-on-parent-change=hide]").show();
