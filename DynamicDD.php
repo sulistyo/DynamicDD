@@ -163,19 +163,22 @@ class DynamicDD {
             var data<?php echo "_",$this->_formname;?> = <?php echo json_encode($main); ?>;
             var next = 0;
 
-            $("select#<?php echo $this->_formname;?>_level2DD[data-on-parent-change=hide]").hide();
-            $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
+            reset("#<?php echo $this->_formname;?>_level2DD");
+            reset("#<?php echo $this->_formname;?>_level3DD");
 
             $("select#<?php echo $this->_formname;?>_level1DD").on("change",function(){
                 generateLevel(2);
-                generateLevel(3);
-
-                $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
+                reset("#<?php echo $this->_formname;?>_level3DD");
             });
 
             $("select#<?php echo $this->_formname;?>_level2DD").on("change",function(){
                 generateLevel(3);
             });
+
+            function reset(selector) {
+                $(selector).html('<option>' + $(selector).attr('data-prompt') + '</option>');
+                $(selector + "[data-on-parent-change=hide]").hide();
+            }
 
             function generateLevel(level){
                 var index = $("select#<?php echo $this->_formname;?>_level1DD").get(0).selectedIndex;
@@ -184,7 +187,9 @@ class DynamicDD {
                 var genNext = 0;
 
                 if (level == 2){
-                    var options = '<option value="">' + $("select#<?php echo $this->_formname;?>_level2DD").attr('data-prompt') + '</option>';
+                    var id = "#<?php echo $this->_formname;?>_level2DD";
+                    var options = '<option>' + $(id).attr('data-prompt') + '</option>';
+                    reset(id);
 
                     if (index !== 0){
                         var d = data<?php echo "_",$this->_formname;?>.level1[index];
@@ -198,13 +203,14 @@ class DynamicDD {
                         }
                     }
 
-                    $("select#<?php echo $this->_formname;?>_level2DD").html(options);
-                    $("select#<?php echo $this->_formname;?>_level2DD[data-on-parent-change=hide]").show();
-                    $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").hide();
+                    $(id).html(options);
+                    $(id + "[data-on-parent-change=hide]").show();
                 }
 
                 if (level == 3){
-                    var options = '<option value="">' + $("select#<?php echo $this->_formname;?>_level3DD").attr('data-prompt') + '</option>';
+                    var id = "#<?php echo $this->_formname;?>_level3DD";
+                    var options = '<option>' + $(id).attr('data-prompt') + '</option>';
+                    reset(id);
 
                     if (index2 !== 0){
                         var d = data<?php echo "_",$this->_formname;?>.level1[index].level2[index2];
@@ -217,8 +223,8 @@ class DynamicDD {
                             });
                         }
                     }
-                    $("select#<?php echo $this->_formname;?>_level3DD").html(options);
-                    $("select#<?php echo $this->_formname;?>_level3DD[data-on-parent-change=hide]").show();
+                    $(id).html(options);
+                    $(id + "[data-on-parent-change=hide]").show();
                 }
 
                 return genNext;
