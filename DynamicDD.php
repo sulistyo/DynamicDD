@@ -92,7 +92,7 @@ class DynamicDD {
      * @param $value3 String Selected value for dropdown level 3.
      * @return String
      */
-    public function generateDD($data = [], $value1 = "", $value2 = "", $value3 = "", )
+    public function generateDD($data = [], $value1 = "", $value2 = "", $value3 = "")
     {
         $output = '';
 
