@@ -160,7 +160,8 @@ class DynamicDD {
         ?>
         <script type="text/javascript">
         $(document).ready(function() {
-            var data<?php echo "_",$this->_formname;?> = <?php echo json_encode($main); ?>;
+            <?php $data = "data_" . $this->_formname ?>
+            var <?= $data ?> = <?php echo json_encode($main); ?>;
             var next = 0;
 
             var id_1 = "#<?= $this->_formname;?>_level1DD";
@@ -171,12 +172,19 @@ class DynamicDD {
             reset(id_3);
 
             $(id_1).on("change",function(){
-                generateLevel(2);
+                var index = $(id_1).get(0).selectedIndex;
+                var data = <?= $data ?>.level1[index];
+
+                update(id_2, id_1, data, "level2");
                 reset(id_3);
             });
 
             $(id_2).on("change",function(){
-                generateLevel(3);
+                var index = $(id_1).get(0).selectedIndex;
+                var index2 = $(id_2).get(0).selectedIndex;
+                var data = <?= $data ?>.level1[index].level2[index2];
+
+                update(id_3, id_2, data, "level3");
             });
 
             function reset(selector) {
@@ -184,54 +192,27 @@ class DynamicDD {
                 $(selector + "[data-on-parent-change=hide]").hide();
             }
 
-            function generateLevel(level){
-                var index = $(id_1).get(0).selectedIndex;
-                var index2 = $(id_2).get(0).selectedIndex;
+            /**
+             * Update select option.
+             *
+             * current : jQuery selector
+             * parent : jQuery selector
+             * data : key value array
+             * key : data index
+             */
+            function update(current, parent, data, key) {
+                var index = $(parent).get(0).selectedIndex;
+                var options = '<option>' + $(current).attr('data-prompt') + '</option>';
 
-                var genNext = 0;
-
-                if (level == 2){
-                    var id = id_2;
-                    var options = '<option>' + $(id).attr('data-prompt') + '</option>';
-                    reset(id);
-
-                    if (index !== 0){
-                        var d = data<?php echo "_",$this->_formname;?>.level1[index];
-                        if (index > 0) {
-                            $.each(d.level2, function(i,j){
-                                if(j.default > 0) {
-                                    genNext = 1;
-                                }
-                                options += '<option value="' + j.value + '" >' + j.title + '<\/option>';
-                            });
-                        }
-                    }
-
-                    $(id).html(options);
-                    $(id + "[data-on-parent-change=hide]").show();
+                reset(current);
+                if (index !== 0){
+                    $.each(data[key], function(i,j){
+                        options += '<option value="' + j.value + '" >' + j.title + '</option>';
+                    });
                 }
 
-                if (level == 3){
-                    var id = id_3;
-                    var options = '<option>' + $(id).attr('data-prompt') + '</option>';
-                    reset(id);
-
-                    if (index2 !== 0){
-                        var d = data<?php echo "_",$this->_formname;?>.level1[index].level2[index2];
-                        if (index2 > 0) {
-                            $.each(d.level3, function(i,j){
-                                if(j.default > 0) {
-                                    genNext = 1;
-                                }
-                                options += '<option value="' + j.value + '" >' + j.title + '<\/option>';
-                            });
-                        }
-                    }
-                    $(id).html(options);
-                    $(id + "[data-on-parent-change=hide]").show();
-                }
-
-                return genNext;
+                $(current).html(options);
+                $(current + "[data-on-parent-change=hide]").show();
             }
         });
         </script>
