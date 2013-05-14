@@ -4,7 +4,7 @@ This is a PHP class that will generate json and javascript code to read the json
 
 [Click here](http://edy.li/dynamicdd/) for demo.
 
-## Example Installation
+### Example Installation
 
 1. Run sql files inside database folder
 2. [**Optional**] Open example/data/seed.php and modify the default database connection.
@@ -17,6 +17,13 @@ $db = array(
     'db'   => 'db_siccode',
 );
 ```
+
+### Assumptions
+
+Following are assumptions on how we are going to use this.
+
+* We assume that the data is maintained by the application, not this class.
+* We assume that the dropdown is output sequencially from parent to grand children, not randomized or reverse.
 
 ## Class Documentation
 
@@ -147,3 +154,5 @@ $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
 * Only support single children.
 * Only support single parent.
 * Only support 3 level dropdown.
+* Only support array associative for data.
+* Only support sequential output from parent, children to grandchildren.
