@@ -153,7 +153,7 @@ class DynamicDD {
 
             $(document).on('change', id_1, function(){
                 var current = id_1;
-                var children = id_2;
+                var children = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-child') + ']';
 
                 var index = $(current).get(0).selectedIndex;
 
@@ -162,30 +162,32 @@ class DynamicDD {
 
                 if (index !== 0) {
                     var current_key = $(current).attr('data-key');
+                    var child = $(current).attr('data-child');
 
                     var data = {$data_name}[current_key][index];
-                    update(children, data, 'level2');
+                    update(child, data);
                 }
             });
 
             $(document).on('change', id_2, function(){
-                var index = $(id_1).get(0).selectedIndex;
-                var parent_data = {$data_name}['level1'][index];
+                var index1 = $(id_1).get(0).selectedIndex;
+                var parent_data = {$data_name}['level1'][index1];
 
                 // TODO: refactor code below to a single event handler for all dynamic dropdown.
                 var current = id_2;
-                var children = id_3;
+                var children = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-child') + ']';
 
-                var index2 = $(current).get(0).selectedIndex;
+                var index = $(current).get(0).selectedIndex;
 
                 reset(children);
                 $(children).trigger('change');
 
-                if (index2 !== 0) {
+                if (index !== 0) {
                     var current_key = $(current).attr('data-key');
+                    var child = $(current).attr('data-child');
 
-                    var data = parent_data[current_key][index2];
-                    update(children, data, 'level3');
+                    var data = parent_data[current_key][index];
+                    update(child, data);
                 }
             });
 
@@ -204,18 +206,19 @@ class DynamicDD {
              * value : value index name e.g. data[key][value]
              * title : title index name e.g. data[key][title]
              */
-            function update(current, data, key, value, title) {
+            function update(key, data, value, title) {
                 value = typeof value !== 'undefined' ? value : 'value';
                 title = typeof title !== 'undefined' ? title : 'title';
 
-                var options = '<option>' + $(current).attr('data-prompt') + '</option>';
+                var selector = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' +  key + ']';
+                var options = '<option>' + $(selector).attr('data-prompt') + '</option>';
 
                 $.each(data[key], function(index, option){
                     options += '<option value="' + option[value] + '" >' + option[title] + '</option>';
                 });
 
-                $(current).html(options);
-                $(current + "[data-on-parent-change=hide]").show();
+                $(selector).html(options);
+                $(selector + "[data-on-parent-change=hide]").show();
             }
         });
         </script>
