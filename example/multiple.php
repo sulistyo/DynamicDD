@@ -25,13 +25,13 @@ $dd3 = new DynamicDD(array("group"=>"dd3"));
     <p>Dropdown Demo - Multiple</p>
     <form method="post">
         <fieldset>
-            <?= $dd1->dropdown($data) ?>
+            <?= $dd1->dropdown(['data' => $data]) ?>
             <?= $dd1->dropdown() ?>
             <?= $dd1->dropdown() ?>
-            <?= $dd2->dropdown($data) ?>
+            <?= $dd2->dropdown(['data' => $data]) ?>
             <?= $dd2->dropdown() ?>
             <?= $dd2->dropdown() ?>
-            <?= $dd3->dropdown($data) ?>
+            <?= $dd3->dropdown(['data' => $data]) ?>
             <?= $dd3->dropdown() ?>
             <?= $dd3->dropdown() ?>
             <input type="submit" value="Send" name="submit" />

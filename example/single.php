@@ -23,7 +23,7 @@ $dd = new DynamicDD();
     <p>Dropdown Demo - Single</p>
     <form method="post">
         <fieldset>
-            <?= $dd->dropdown($data) ?>
+            <?= $dd->dropdown(['data' => $data]) ?>
             <?= $dd->dropdown() ?>
             <?= $dd->dropdown() ?>
             <input type="submit" value="Send" name="submit" />

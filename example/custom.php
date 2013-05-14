@@ -22,9 +22,9 @@ $dd = new DynamicDD($option);
     <p>Dropdown Demo - Custom</p>
     <form method="post">
         <fieldset>
-            <?= $dd->dropdown($data) ?>
-            <?= $dd->dropdown() ?>
-            <?= $dd->dropdown() ?>
+            <?= $dd->dropdown(['data' => $data, 'prompt' => 'Select a category']) ?>
+            <?= $dd->dropdown(['prompt' => 'Select a sub category']) ?>
+            <?= $dd->dropdown(['prompt' => 'Select a type']) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
     </form>

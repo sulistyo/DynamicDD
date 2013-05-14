@@ -2,11 +2,13 @@
 class DynamicDD {
     // CUSTOM FORM
     // These can all be set independently when constructing the object
-    private $_select_message_1 = "Please select";
-    private $_select_message_2 = "Please select";
-    private $_select_message_3 = "Please select";
     private $_select_enable    = true;
 	private $_select_attribute = "";
+
+    /**
+     * Select prompt message.
+     */
+    private $prompt = 'Please select';
 
     /**
      * Data for select options.
@@ -37,30 +39,26 @@ class DynamicDD {
      */
     private $javascript_printed = false;
 
-    function __construct($options=array())
+    /**
+     * Available options:
+     * - group : String. Group name of several dynamic dropdown field.
+     * - prompt : String. Select prompt message.
+     * - select_attribute : String. HTML attributes for dropdown field. e.g. 'class="shinny" style="z-index:1"'
+     * - on_parent_change : String. Available value: none, hide. Current field state on parent select change.
+     * - select_enable : Boolean. Enable/disable select prompt.
+     */
+    public function __construct($options = [])
     {
         extract($options);
 
         if (isset($group)) $this->group = $group;
-        if (isset($formaction)) $this->_formaction = $formaction;
-        if (isset($select_message_1)) $this->_select_message_1 = $select_message_1;
-        if (isset($select_message_2)) $this->_select_message_2 = $select_message_2;
-        if (isset($select_message_3)) $this->_select_message_3 = $select_message_3;
+        if (isset($prompt)) $this->prompt = $prompt;
         if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
         if (isset($on_parent_change)) $this->on_parent_change = $on_parent_change;
         if (isset($select_enable)) {
             $this->_select_enable = $select_enable;
-            if (!$this->_select_enable) $this->_select_message_1 = $this->_select_message_2 = $this->_select_message_3 = '';
+            if (!$this->_select_enable) $this->prompt = '';
         }
-    }
-
-    public function setSelectMessage($which, $select_message)
-    {
-        // valid value only 1 to 3
-        if ($which > 3 || $which < 1) return;
-
-        $var = '_select_message_' . $which;
-        $this->$var = $select_message;
     }
 
     public function disableSelectMessage()
@@ -72,29 +70,34 @@ class DynamicDD {
      * Generate dynamic dropdown field.
      * TODO: Assign selected value.
      *
-     * @param $data Array Data for options.
+     * Available parameter for params
+     * - prompt : String. Select prompt message.
+     * - data : Array. Data for option.
+     *
+     * @param $params Array.
      * @return String
      */
-    public function dropdown($data = [])
+    public function dropdown($params = [])
     {
         // TODO: currently limit to only 3 level dropdown.
         if ($this->count <= 3) {
+            extract($params);
             $this->count++;
-            $message_var = '_select_message_' . $this->count;
-            $prompt = $this->$message_var;
+
+            if (empty($prompt)) $prompt = $this->prompt;
 
             $output = '';
             $output .= '<select name="' . $this->group . '_level' . $this->count . 'DD" id="' . $this->group . '_level' . $this->count . 'DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" >';
 
             $output .= '<option>' . $prompt . '</option>';
-            if ($this->count == 1) foreach ($data['level1'] as $row) $output .= '<option value="' . $row['value'] . '">' . $row['title'] . '</option>';
+            if ($this->count == 1)
+                foreach ($data['level1'] as $row)
+                    $output .= '<option value="' . $row['value'] . '">' . $row['title'] . '</option>';
 
             $output .= '</select>';
 
             if (!empty($data)) $this->data = $data;
-            $javascript = $this->javascript();
-
-            return $output . $javascript;
+            return $output . $this->javascript();
         }
     }
 
