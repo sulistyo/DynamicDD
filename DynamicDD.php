@@ -134,20 +134,16 @@ class DynamicDD {
         <script type="text/javascript">
         $(document).ready(function() {
             var {$data_name} = {$json};
-            var next = 0;
 
             var id_1 = "#{$this->group}_level1DD";
             var id_2 = "#{$this->group}_level2DD";
-            var id_3 = "#{$this->group}_level3DD";
-
-            reset(id_2);
-            reset(id_3);
 
             // generate data-child attribute on parent dropdown
             $.each($('[data-plugin=DynamicDD][data-group={$this->group}][data-parent]'), function(index, item) {
                 var parent_key = $(item).attr('data-parent');
                 var current_key = $(item).attr('data-key');
 
+                reset('#' + $(item).attr('id'));
                 $('[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + parent_key + ']').attr('data-child', current_key);
             })
 
