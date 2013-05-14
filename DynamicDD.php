@@ -73,6 +73,7 @@ class DynamicDD {
      * Available parameter for params
      * - prompt : String. Select prompt message.
      * - data : Array. Data for option.
+     * - name : String. Name for select field.
      *
      * @param $params Array.
      * @return String
@@ -82,12 +83,16 @@ class DynamicDD {
         // TODO: currently limit to only 3 level dropdown.
         if ($this->count <= 3) {
             extract($params);
+
+            // Validate required parameters
+            if (empty($name)) throw new Exception('Dropdown name is required.');
+
             $this->count++;
 
             if (empty($prompt)) $prompt = $this->prompt;
 
             $output = '';
-            $output .= '<select name="' . $this->group . '_level' . $this->count . 'DD" id="' . $this->group . '_level' . $this->count . 'DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" >';
+            $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" >';
 
             $output .= '<option>' . $prompt . '</option>';
             if ($this->count == 1)
