@@ -61,7 +61,42 @@ Disable select message.
 
 ### Data Source
 
-The data needed should be supplied as associative array.
+The data needed should be supplied as array associative as follows.
+
+```php
+$data = [
+    'categories' => [
+        'AG' => [
+            'value' => 'AG',
+            'title' => 'AGRICULTURE, FORESTRY AND FISHING',
+            'sub_categories' => [
+                'FRS' => [
+                    'value' => 'FRS',
+                    'title' => 'Forestry and logging'
+                    'types' => [
+                        'SILV' => [
+                            'value' => 'SILV',
+                            'title' => 'Silviculture and other forestry activities'
+                        ],
+                        'MINI' => [
+                            'value' => 'MINI',
+                            'title' => 'Mining of hard coal'
+                        ]
+                    ]
+                ],
+                'MNG' => [
+                    'value' => 'MNG',
+                    'title' => 'Mining of coal and lignite'
+                ]
+            ]
+        ]
+        'MI' => [
+            'value' => 'MI',
+            'title' => 'MINING AND QUARRYING'
+        ]
+    ]
+];
+```
 
 ```php
 $sql = mysql_query("SELECT `title`, `value` FROM siccode");
