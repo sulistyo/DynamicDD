@@ -25,15 +25,15 @@ $dd3 = new DynamicDD(array("group"=>"dd3"));
     <p>Dropdown Demo - Multiple</p>
     <form method="post">
         <fieldset>
-            <?= $dd1->dropdown(['data' => $data, 'name' => 'company_1[category]']) ?>
-            <?= $dd1->dropdown(['name' => 'company_1[sub_category]']) ?>
-            <?= $dd1->dropdown(['name' => 'company_1[type]']) ?>
-            <?= $dd2->dropdown(['data' => $data, 'name' => 'company_2[category]']) ?>
-            <?= $dd2->dropdown(['name' => 'company_2[sub_category]']) ?>
-            <?= $dd2->dropdown(['name' => 'company_2[type]']) ?>
-            <?= $dd3->dropdown(['data' => $data, 'name' => 'company_3[category]']) ?>
-            <?= $dd3->dropdown(['name' => 'company_3[sub_category]']) ?>
-            <?= $dd3->dropdown(['name' => 'company_3[type]']) ?>
+            <?= $dd1->dropdown(['data' => $data, 'key' => 'level1', 'name' => 'company_1[category]']) ?>
+            <?= $dd1->dropdown(['key' => 'level2', 'name' => 'company_1[sub_category]']) ?>
+            <?= $dd1->dropdown(['key' => 'level3', 'name' => 'company_1[type]']) ?>
+            <?= $dd2->dropdown(['key' => 'level1', 'data' => $data, 'name' => 'company_2[category]']) ?>
+            <?= $dd2->dropdown(['key' => 'level2', 'name' => 'company_2[sub_category]']) ?>
+            <?= $dd2->dropdown(['key' => 'level3', 'name' => 'company_2[type]']) ?>
+            <?= $dd3->dropdown(['key' => 'level1', 'data' => $data, 'name' => 'company_3[category]']) ?>
+            <?= $dd3->dropdown(['key' => 'level2', 'name' => 'company_3[sub_category]']) ?>
+            <?= $dd3->dropdown(['key' => 'level3', 'name' => 'company_3[type]']) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
     </form>

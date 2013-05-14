@@ -86,17 +86,18 @@ class DynamicDD {
 
             // Validate required parameters
             if (empty($name)) throw new Exception('Dropdown name is required.');
+            if (empty($key)) throw new Exception('Dropdown key is required.');
 
             $this->count++;
 
             if (empty($prompt)) $prompt = $this->prompt;
 
             $output = '';
-            $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ' . $this->_select_attribute . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" >';
+            $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ' . ' data-key="' . $key . '" ' . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ' . $this->_select_attribute . ' >';
 
             $output .= '<option>' . $prompt . '</option>';
             if ($this->count == 1)
-                foreach ($data['level1'] as $row)
+                foreach ($data[$key] as $row)
                     $output .= '<option value="' . $row['value'] . '">' . $row['title'] . '</option>';
 
             $output .= '</select>';
@@ -131,24 +132,42 @@ class DynamicDD {
             reset(id_2);
             reset(id_3);
 
-            $(document).on("change", id_1, function(){
-                var index = $(id_1).get(0).selectedIndex;
-                var data = {$data_name}.level1[index];
+            $(document).on('change', id_1, function(){
+                var current = id_1;
+                var children = id_2;
 
-                reset(id_2);
-                reset(id_3);
+                var index = $(current).get(0).selectedIndex;
 
-                if (index !== 0) update(id_2, data, "level2");
+                reset(children);
+                $(children).trigger('change');
+
+                if (index !== 0) {
+                    var current_key = $(current).attr('data-key');
+
+                    var data = {$data_name}[current_key][index];
+                    update(children, data, 'level2');
+                }
             });
 
-            $(document).on("change", id_2, function(){
+            $(document).on('change', id_2, function(){
                 var index = $(id_1).get(0).selectedIndex;
-                var index2 = $(id_2).get(0).selectedIndex;
-                var data = {$data_name}.level1[index].level2[index2];
+                var parent_data = {$data_name}['level1'][index];
 
-                reset(id_3);
+                // TODO: refactor code below to a single event handler for all dynamic dropdown.
+                var current = id_2;
+                var children = id_3;
 
-                if (index2 !== 0) update(id_3, data, "level3");
+                var index2 = $(current).get(0).selectedIndex;
+
+                reset(children);
+                $(children).trigger('change');
+
+                if (index2 !== 0) {
+                    var current_key = $(current).attr('data-key');
+
+                    var data = parent_data[current_key][index2];
+                    update(children, data, 'level3');
+                }
             });
 
             function reset(selector) {
@@ -172,8 +191,8 @@ class DynamicDD {
 
                 var options = '<option>' + $(current).attr('data-prompt') + '</option>';
 
-                $.each(data[key], function(i,j){
-                    options += '<option value="' + j[value] + '" >' + j[title] + '</option>';
+                $.each(data[key], function(index, option){
+                    options += '<option value="' + option[value] + '" >' + option[title] + '</option>';
                 });
 
                 $(current).html(options);

@@ -89,9 +89,9 @@ Example
 require_once "DynamicDD.php";
 
 $dd = new DynamicDD();
-$dd->dropdown($data));
-$dd->dropdown();
-$dd->dropdown();
+$dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+$dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+$dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
 ```
 
 ### Multiple drop down
@@ -101,19 +101,19 @@ $dd->dropdown();
 require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD(array('group'=>'1'));
-$dd1->dropdown($data));
-$dd1->dropdown();
-$dd1->dropdown();
+$dd1->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+$dd1->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+$dd1->dropdown(['name' => 'company[type]', 'key' => 'type']);
 
 $dd2 = new DynamicDD(array('group'=>'2'));
-$dd2->dropdown($data));
-$dd2->dropdown();
-$dd2->dropdown();
+$dd2->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+$dd2->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+$dd2->dropdown(['name' => 'company[type]', 'key' => 'type']);
 
 $dd3 = new DynamicDD(array('group'=>'3'));
-$dd3->dropdown($data));
-$dd3->dropdown();
-$dd3->dropdown();
+$dd3->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+$dd3->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+$dd3->dropdown(['name' => 'company[type]', 'key' => 'type']);
 ```
 
 ### Custom drop down
@@ -127,7 +127,13 @@ $option['select_enable']    = false;
 $option['select_attribute'] = 'class="green-apple"';
 
 $dd = new DynamicDD($option);
-$dd->dropdown($data));
-$dd->dropdown();
-$dd->dropdown();
+$dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+$dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+$dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
 ```
+
+### Limitation
+
+* Only support single children.
+* Only support single parent.
+* Only support 3 level dropdown.

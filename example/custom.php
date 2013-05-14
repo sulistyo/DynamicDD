@@ -22,9 +22,9 @@ $dd = new DynamicDD($option);
     <p>Dropdown Demo - Custom</p>
     <form method="post">
         <fieldset>
-            <?= $dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'name' => 'company[category]']) ?>
-            <?= $dd->dropdown(['prompt' => 'Select a sub category', 'name' => 'company[sub_category]']) ?>
-            <?= $dd->dropdown(['prompt' => 'Select a type', 'name' => 'company[type]']) ?>
+            <?= $dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'key' => 'level1', 'name' => 'company[category]']) ?>
+            <?= $dd->dropdown(['prompt' => 'Select a sub category', 'key' => 'level2', 'name' => 'company[sub_category]']) ?>
+            <?= $dd->dropdown(['prompt' => 'Select a type', 'key' => 'level3', 'name' => 'company[type]']) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
     </form>

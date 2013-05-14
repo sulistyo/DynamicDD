@@ -23,9 +23,9 @@ $dd = new DynamicDD();
     <p>Dropdown Demo - Single</p>
     <form method="post">
         <fieldset>
-            <?= $dd->dropdown(['data' => $data, 'name' => 'company[category]']) ?>
-            <?= $dd->dropdown(['name' => 'company[sub_category]']) ?>
-            <?= $dd->dropdown(['name' => 'company[type]']) ?>
+            <?= $dd->dropdown(['data' => $data, 'key' => 'level1', 'name' => 'company[category]']) ?>
+            <?= $dd->dropdown(['key' => 'level2', 'name' => 'company[sub_category]']) ?>
+            <?= $dd->dropdown(['key' => 'level3', 'name' => 'company[type]']) ?>
             <input type="submit" value="Send" name="submit" />
         </fieldset>
     </form>
