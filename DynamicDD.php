@@ -11,6 +11,11 @@ class DynamicDD {
     private $prompt = 'Please select';
 
     /**
+     * Array of dropdown key name. Index start from 1.
+     */
+    private $keys;
+
+    /**
      * Data for select options.
      */
     private $data;
@@ -89,11 +94,17 @@ class DynamicDD {
             if (empty($key)) throw new Exception('Dropdown key is required.');
 
             $this->count++;
+            $this->keys[$this->count] = $key;
 
             if (empty($prompt)) $prompt = $this->prompt;
 
             $output = '';
-            $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ' . ' data-key="' . $key . '" ' . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ' . $this->_select_attribute . ' >';
+            $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ';
+            if ($this->count > 1) $output .= ' data-parent="' . $this->keys[$this->count - 1] . '" ';
+            // data attributes
+            $output .= ' data-plugin="DynamicDD" data-key="' . $key . '" ' . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ';
+            // custom html attributes
+            $output .= $this->_select_attribute . ' >';
 
             $output .= '<option>' . $prompt . '</option>';
             if ($this->count == 1)
@@ -131,6 +142,14 @@ class DynamicDD {
 
             reset(id_2);
             reset(id_3);
+
+            // generate data-child attribute on parent dropdown
+            $.each($('[data-plugin=DynamicDD][data-parent]'), function(index, item) {
+                var parent_key = $(item).attr('data-parent');
+                var current_key = $(item).attr('data-key');
+
+                $('[data-plugin=DynamicDD][data-key=' + parent_key + ']').attr('data-child', current_key);
+            })
 
             $(document).on('change', id_1, function(){
                 var current = id_1;
