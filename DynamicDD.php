@@ -100,9 +100,12 @@ class DynamicDD {
 
             $output = '';
             $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ';
+            // generate data-parent only to childrens
             if ($this->count > 1) $output .= ' data-parent="' . $this->keys[$this->count - 1] . '" ';
             // data attributes
             $output .= ' data-plugin="DynamicDD" data-group="' . $this->group . '" data-key="' . $key . '" data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ';
+            // generate data-cache only to root
+            if ($this->count == 1) $output .= " data-cache='" . json_encode($data) . "' ";
             // custom html attributes
             $output .= $this->_select_attribute . ' >';
 
@@ -125,15 +128,12 @@ class DynamicDD {
     {
         // TODO: should be checking javascript_printed NOT count.
         if ($this->count < 3) return '';
-        $data = $this->data;
 
         $data_name = "data_" . $this->group;
-        $json = json_encode($data);
-
         $output = <<<"EOT"
         <script type="text/javascript">
         $(document).ready(function() {
-            var {$data_name} = {$json};
+            var {$data_name} = $('[data-plugin=DynamicDD][data-group={$this->group}]').not('[data-parent]').data('cache');
 
             var id_1 = "#{$this->group}_level1DD";
             var id_2 = "#{$this->group}_level2DD";
