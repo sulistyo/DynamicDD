@@ -133,7 +133,8 @@ class DynamicDD {
         $output = <<<"EOT"
         <script type="text/javascript">
         $(document).ready(function() {
-            var {$data_name} = $('[data-plugin=DynamicDD][data-group={$this->group}]').not('[data-parent]').data('cache');
+            if (typeof value == 'undefined') var cache = [];
+            cache['{$this->group}'] = $('[data-plugin=DynamicDD][data-group={$this->group}]').not('[data-parent]').data('cache');
 
             var id_1 = "#{$this->group}_level1DD";
             var id_2 = "#{$this->group}_level2DD";
@@ -160,14 +161,14 @@ class DynamicDD {
                     var current_key = $(current).attr('data-key');
                     var child = $(current).attr('data-child');
 
-                    var data = {$data_name}[current_key][index];
+                    var data = cache['{$this->group}'][current_key][index];
                     update(child, data);
                 }
             });
 
             $(document).on('change', id_2, function(){
                 var index1 = $(id_1).get(0).selectedIndex;
-                var parent_data = {$data_name}['level1'][index1];
+                var parent_data = cache['{$this->group}']['level1'][index1];
 
                 // TODO: refactor code below to a single event handler for all dynamic dropdown.
                 var current = id_2;
