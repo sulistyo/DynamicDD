@@ -39,25 +39,15 @@ In the included example, "01" is the default value of "A" and "01.3" is the defa
 
 #### Accepted options. These are all optionals.
 
-Elements                          | Accepted Value     | Default Value     | Description
-----------------------------------| ------------------ | ----------------- | ---------------------
-`$options['group']`               | `String`. No space | `"dd"`            | Group name of several dynamic dropdown
-`$options['select_message_1']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
-`$options['select_message_2']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
-`$options['select_message_3']`    | `String`           | `"Please Select"` | Custom select message for the 1st dropdown
-`$options['select_enable']`       | `Boolean`          | `true`            | True to enable, False to disable
-`$options['select_attribute']`    | `String`           | `null`            | Add any custom attribute that will be appended to select tag
-`$options['on_parent_change']`    | `none` or `hide`   | `hide`            | State of current field on parent change
+Options              | Accepted Value     | Default Value     | Description
+---------------------|------------------- | ----------------- | -----------
+`'group'`            | `String`           | `'dd'`            | Group name of several dynamic dropdown
+`'prompt'`           | `String`           | `'Please Select'` | Custom select message for dropdown
+`'select_enable'`    | `Boolean`          | `true`            | True to enable, False to disable
+`'select_attribute'` | `String`           | `null`            | Add any custom attribute that will be appended to select tag
+`'on_parent_change'` | `String`           | `hide`            | State of current field on parent change. Available option: hide or none.
 
 ### Object Manipulation
-
-#### setSelectMessage($which, $message)
-
-Set custom select message for the dropdown.
-
-Option `$which` Accepted value is 1,2 or 3.
-
-Option `$message` Accepted any HTML encoded string.
 
 #### disableSelect()
 Disable select message.
@@ -73,8 +63,28 @@ while ($row = mysql_fetch_array($sql)) $data[] = $row;
 
 ### Generate Dropdown
 
-#### generateDD($data)
-To generate initial dropdown, you need to call `generateDD($data)` function.
+#### How To Use
+To generate initial dropdown, you need to call `dropdown` function.
+
+```php
+$dd = new DynamicDD();
+$dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+$dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+$dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
+```
+
+### The API
+
+Following is parameters available in dropdown.
+
+    DynamicDD::dropdown($params = [])
+
+Parameters | Data Type | Default           | Description
+-----------|-----------|-------------------|------------
+`'data'`   | `Array`   | `null`            | Data for select options
+`'prompt'` | `String`  | `'Select option'` | Select prompt message for dropdown
+`'name'`   | `String`  | **Required**      | HTML attribute name for dropdown
+`'key'`    | `String`  | **Required**      | Key used to access data array
 
 ### Hard Dependencies
 jQuery 1.8+
