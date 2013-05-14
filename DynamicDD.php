@@ -102,7 +102,7 @@ class DynamicDD {
             $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ';
             if ($this->count > 1) $output .= ' data-parent="' . $this->keys[$this->count - 1] . '" ';
             // data attributes
-            $output .= ' data-plugin="DynamicDD" data-key="' . $key . '" ' . ' data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ';
+            $output .= ' data-plugin="DynamicDD" data-group="' . $this->group . '" data-key="' . $key . '" data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ';
             // custom html attributes
             $output .= $this->_select_attribute . ' >';
 
@@ -144,11 +144,11 @@ class DynamicDD {
             reset(id_3);
 
             // generate data-child attribute on parent dropdown
-            $.each($('[data-plugin=DynamicDD][data-parent]'), function(index, item) {
+            $.each($('[data-plugin=DynamicDD][data-group={$this->group}][data-parent]'), function(index, item) {
                 var parent_key = $(item).attr('data-parent');
                 var current_key = $(item).attr('data-key');
 
-                $('[data-plugin=DynamicDD][data-key=' + parent_key + ']').attr('data-child', current_key);
+                $('[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + parent_key + ']').attr('data-child', current_key);
             })
 
             $(document).on('change', id_1, function(){
