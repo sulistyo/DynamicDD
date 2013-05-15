@@ -164,19 +164,19 @@ $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
 require_once "DynamicDD.php";
 
 $dd1 = new DynamicDD(array('group'=>'1'));
-$dd1->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
-$dd1->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
-$dd1->dropdown(['name' => 'company[type]', 'key' => 'type']);
+$dd1->dropdown(['data' => $data, 'name' => 'company_1[category]', 'key' => 'category']));
+$dd1->dropdown(['name' => 'company_1[sub_category]', 'key' => 'sub_category']);
+$dd1->dropdown(['name' => 'company_1[type]', 'key' => 'type']);
 
 $dd2 = new DynamicDD(array('group'=>'2'));
-$dd2->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
-$dd2->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
-$dd2->dropdown(['name' => 'company[type]', 'key' => 'type']);
+$dd2->dropdown(['data' => $data, 'name' => 'company_2[category]', 'key' => 'category']));
+$dd2->dropdown(['name' => 'company_2[sub_category]', 'key' => 'sub_category']);
+$dd2->dropdown(['name' => 'company_2[type]', 'key' => 'type']);
 
 $dd3 = new DynamicDD(array('group'=>'3'));
-$dd3->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
-$dd3->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
-$dd3->dropdown(['name' => 'company[type]', 'key' => 'type']);
+$dd3->dropdown(['data' => $data, 'name' => 'company_3[category]', 'key' => 'category']));
+$dd3->dropdown(['name' => 'company_3[sub_category]', 'key' => 'sub_category']);
+$dd3->dropdown(['name' => 'company_3[type]', 'key' => 'type']);
 ```
 
 ### Custom drop down
@@ -185,12 +185,13 @@ $dd3->dropdown(['name' => 'company[type]', 'key' => 'type']);
 ```php
 require_once "DynamicDD.php";
 
-$option['group']            = 'custom';
+$option['group'] = 'custom';
+$option['prompt'] = 'Select an option';
+$option['on_parent_change'] = 'none';
 $option['custom'] = ['class' => 'gloomy', 'style' => 'z-index:7;'];
 
 $dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'key' => 'category', 'name' => 'company[category]']);
-$dd->dropdown(['prompt' => 'Select a sub category', 'key' => 'sub_category', 'name' => 'company[sub_category]']);
-$dd->dropdown(['prompt' => 'Select a type', 'key' => 'type', 'name' => 'company[type]']);
+$dd->dropdown(['prompt' => '', 'key' => 'sub_category', 'name' => 'company[sub_category]']);
 ```
 
 ### Limitation

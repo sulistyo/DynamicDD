@@ -103,7 +103,8 @@ class DynamicDD {
      * Available parameter for params
      * - prompt : String. Select prompt message.
      * - data : Array. Data for option.
-     * - name : String. Name for select field.
+     * - name : String. Name for select field. Required.
+     * - key : String. Key for select field. Required.
      *
      * @param $params Array.
      * @return String
@@ -135,6 +136,15 @@ class DynamicDD {
             // generate data-cache only to root
             if ($this->count == 1) $output .= " data-cache='" . json_encode($data) . "' ";
 
+            // hide children dropdown if it's configured to do so
+            if ($this->on_parent_change == "hide" && $this->count > 1) {
+                if (isset($this->custom['style'])) {
+                    $this->custom['style'] = 'display:none;' . $this->custom['style'];
+                } else {
+                    $this->custom['style'] = 'display:none;';
+                }
+            }
+
             // custom html attributes
             $this->removeCustomDataAttributes($this->custom);
             $output .= $this->customAttributes($this->custom) . ' >';
@@ -147,7 +157,7 @@ class DynamicDD {
             $output .= '</select>';
 
             if (!empty($data)) $this->data = $data;
-            return $output . $this->javascript();
+            return $this->javascript() . $output;
         }
     }
 
@@ -157,7 +167,7 @@ class DynamicDD {
     protected function javascript()
     {
         // TODO: should be checking javascript_printed NOT count.
-        if ($this->count < 3) return '';
+        if ($this->javascript_printed) return '';
 
         $data_name = "data_" . $this->group;
         $output = <<<"EOT"
@@ -174,7 +184,7 @@ class DynamicDD {
                 var parent_key = $(item).attr('data-parent');
                 var current_key = $(item).attr('data-key');
 
-                reset('#' + $(item).attr('id'));
+                // reset('#' + $(item).attr('id'));
                 $('[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + parent_key + ']').attr('data-child', current_key);
             })
 
