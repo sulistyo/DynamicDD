@@ -184,7 +184,6 @@ class DynamicDD {
                 var parent_key = $(item).attr('data-parent');
                 var current_key = $(item).attr('data-key');
 
-                // reset('#' + $(item).attr('id'));
                 $('[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + parent_key + ']').attr('data-child', current_key);
             })
 

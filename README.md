@@ -4,20 +4,6 @@ This is a PHP class that will generate json and javascript code to read the json
 
 [Click here](http://edy.li/dynamicdd/) for demo.
 
-### Example Installation
-
-1. Run sql files inside database folder
-2. [**Optional**] Open example/data/seed.php and modify the default database connection.
-
-```php
-$db = array(
-    'host' => 'localhost',
-    'user' => 'root',
-    'pass' => '',
-    'db'   => 'db_siccode',
-);
-```
-
 ### Assumptions
 
 Following are assumptions on how we are going to use this.
@@ -60,7 +46,7 @@ The data needed should be supplied as array associative as follows.
 ```php
 $data = [
     'key' => [
-        'ID' => [
+        index => [
             'value' => 'ID',
             'title' => 'TEXT'
         ]
@@ -73,7 +59,7 @@ In the above example, we have 4 key that need to be set properly, which are:
 Key name  | Description
 ----------|------------
 `'key'`   | This should be the object name that represents the dropdown field.
-`'ID'`    | The ID of the data, usually is the primary key, and should be unique.
+`'index'` | The numeric index of the data.
 `'value'` | This is the option value.
 `'title'` | This is the option text.
 
@@ -82,31 +68,31 @@ Following is another example of the data source used for 3 level dropdown.
 ```php
 $data = [
     'category' => [
-        'AG' => [
+        1 => [
             'value' => 'AG',
             'title' => 'AGRICULTURE, FORESTRY AND FISHING',
             'sub_category' => [
-                'FRS' => [
+                1 => [
                     'value' => 'FRS',
-                    'title' => 'Forestry and logging'
+                    'title' => 'Forestry and logging',
                     'type' => [
-                        'SILV' => [
+                        1 => [
                             'value' => 'SILV',
                             'title' => 'Silviculture and other forestry activities'
                         ],
-                        'MINI' => [
+                        2 => [
                             'value' => 'MINI',
                             'title' => 'Mining of hard coal'
                         ]
                     ]
                 ],
-                'MNG' => [
+                2 => [
                     'value' => 'MNG',
                     'title' => 'Mining of coal and lignite'
                 ]
             ]
-        ]
-        'MI' => [
+        ],
+        2 => [
             'value' => 'MI',
             'title' => 'MINING AND QUARRYING'
         ]
