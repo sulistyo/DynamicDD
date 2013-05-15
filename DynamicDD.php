@@ -187,32 +187,20 @@ class DynamicDD {
                 $('[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + parent_key + ']').attr('data-child', current_key);
             })
 
-            $(document).on('change', id_1, function(){
-                var current = id_1;
-                var children = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-child') + ']';
+            $(document).on('change', id_1 + ', ' + id_2, function(){
+                var has_no_parent = ($(this).is('[data-parent]'))? false : true;
 
-                var index = $(current).get(0).selectedIndex;
-
-                reset(children);
-                $(children).trigger('change');
-
-                if (index !== 0) {
-                    var current_key = $(current).attr('data-key');
-                    var child = $(current).attr('data-child');
-
-                    var data = cache['{$this->group}'][current_key][index];
-                    update(child, data);
+                if (has_no_parent) {
+                    var parent_data = cache['{$this->group}'];
+                } else {
+                    var index1 = $(id_1).get(0).selectedIndex;
+                    var parent_data = cache['{$this->group}']['level1'][index1];
                 }
-            });
 
-            $(document).on('change', id_2, function(){
-                var index1 = $(id_1).get(0).selectedIndex;
-                var parent_data = cache['{$this->group}']['level1'][index1];
+                var current = $(this);
 
                 // TODO: refactor code below to a single event handler for all dynamic dropdown.
-                var current = id_2;
                 var children = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-child') + ']';
-
                 var index = $(current).get(0).selectedIndex;
 
                 reset(children);
