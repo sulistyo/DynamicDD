@@ -50,14 +50,8 @@ Options              | Accepted Value     | Default Value     | Description
 ---------------------|------------------- | ----------------- | -----------
 `'group'`            | `String`           | `'dd'`            | Group name of several dynamic dropdown
 `'prompt'`           | `String`           | `'Please Select'` | Custom select message for dropdown
-`'select_enable'`    | `Boolean`          | `true`            | True to enable, False to disable
 `'custom'`           | `Array`            | `null`            | Add any custom html attribute that will be appended to select tag
 `'on_parent_change'` | `String`           | `hide`            | State of current field on parent change. Available option: hide or none.
-
-### Object Manipulation
-
-#### disableSelect()
-Disable select message.
 
 ### Data Source
 
@@ -192,13 +186,11 @@ $dd3->dropdown(['name' => 'company[type]', 'key' => 'type']);
 require_once "DynamicDD.php";
 
 $option['group']            = 'custom';
-$option['select_enable']    = false;
-$option['select_attribute'] = 'class="green-apple"';
+$option['custom'] = ['class' => 'gloomy', 'style' => 'z-index:7;'];
 
-$dd = new DynamicDD($option);
-$dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
-$dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
-$dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
+$dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'key' => 'category', 'name' => 'company[category]']);
+$dd->dropdown(['prompt' => 'Select a sub category', 'key' => 'sub_category', 'name' => 'company[sub_category]']);
+$dd->dropdown(['prompt' => 'Select a type', 'key' => 'type', 'name' => 'company[type]']);
 ```
 
 ### Limitation

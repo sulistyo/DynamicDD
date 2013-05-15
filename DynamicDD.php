@@ -1,9 +1,5 @@
 <?php
 class DynamicDD {
-    // CUSTOM FORM
-    // These can all be set independently when constructing the object
-    private $_select_enable    = true;
-
     /**
      * Select prompt message.
      */
@@ -62,18 +58,8 @@ class DynamicDD {
 
         if (isset($group)) $this->group = $group;
         if (isset($prompt)) $this->prompt = $prompt;
-        if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
         if (isset($on_parent_change)) $this->on_parent_change = $on_parent_change;
         if (isset($custom)) $this->custom = $custom;
-        if (isset($select_enable)) {
-            $this->_select_enable = $select_enable;
-            if (!$this->_select_enable) $this->prompt = '';
-        }
-    }
-
-    public function disableSelectMessage()
-    {
-        $this->_select_enable = false;
     }
 
     /**
@@ -135,7 +121,7 @@ class DynamicDD {
             $this->count++;
             $this->keys[$this->count] = $key;
 
-            if (empty($prompt)) $prompt = $this->prompt;
+            if (!isset($prompt)) $prompt = $this->prompt;
 
             $output = '';
             $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ';
