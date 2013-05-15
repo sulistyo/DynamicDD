@@ -5,6 +5,7 @@ require_once "data/seed.php";
 $option['group']      = 'customgroup';
 $option['select_enable'] = false;
 $option['select_attribute'] = 'class="green-apple"';
+$option['custom'] = ['class' => 'gloomy', 'style' => 'z-index:7;'];
 
 $dd = new DynamicDD($option);
 ?>

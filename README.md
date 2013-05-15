@@ -51,7 +51,7 @@ Options              | Accepted Value     | Default Value     | Description
 `'group'`            | `String`           | `'dd'`            | Group name of several dynamic dropdown
 `'prompt'`           | `String`           | `'Please Select'` | Custom select message for dropdown
 `'select_enable'`    | `Boolean`          | `true`            | True to enable, False to disable
-`'select_attribute'` | `String`           | `null`            | Add any custom attribute that will be appended to select tag
+`'custom'`           | `Array`            | `null`            | Add any custom html attribute that will be appended to select tag
 `'on_parent_change'` | `String`           | `hide`            | State of current field on parent change. Available option: hide or none.
 
 ### Object Manipulation

@@ -3,7 +3,6 @@ class DynamicDD {
     // CUSTOM FORM
     // These can all be set independently when constructing the object
     private $_select_enable    = true;
-	private $_select_attribute = "";
 
     /**
      * Select prompt message.
@@ -45,12 +44,17 @@ class DynamicDD {
     private $javascript_printed = false;
 
     /**
+     * Custom html attributes in array associative.
+     */
+    private $custom;
+
+    /**
      * Available options:
      * - group : String. Group name of several dynamic dropdown field.
      * - prompt : String. Select prompt message.
-     * - select_attribute : String. HTML attributes for dropdown field. e.g. 'class="shinny" style="z-index:1"'
      * - on_parent_change : String. Available value: none, hide. Current field state on parent select change.
      * - select_enable : Boolean. Enable/disable select prompt.
+     * - custom : Array. Custom html attributes in array associative.
      */
     public function __construct($options = [])
     {
@@ -60,6 +64,7 @@ class DynamicDD {
         if (isset($prompt)) $this->prompt = $prompt;
         if (isset($select_attribute)) $this->_select_attribute = $select_attribute;
         if (isset($on_parent_change)) $this->on_parent_change = $on_parent_change;
+        if (isset($custom)) $this->custom = $custom;
         if (isset($select_enable)) {
             $this->_select_enable = $select_enable;
             if (!$this->_select_enable) $this->prompt = '';
@@ -69,6 +74,40 @@ class DynamicDD {
     public function disableSelectMessage()
     {
         $this->_select_enable = false;
+    }
+
+    /**
+     * Generate custom html attributes.
+     *
+     * @param $custom Array of String
+     * @return String
+     */
+    protected function customAttributes($custom)
+    {
+        $attributes = '';
+        if (!empty($custom)) {
+            foreach ($custom as $key => $value) {
+              $attributes .= $key . '="' . $value . '" ';
+            };
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Remove internal data attributes.
+     *
+     * @param &$custom Reference of custom html attributes.
+     */
+    protected function removeCustomDataAttributes(&$custom)
+    {
+        if (isset($custom['data-plugin'])) unset($custom['data-plugin']);
+        if (isset($custom['data-group'])) unset($custom['data-group']);
+        if (isset($custom['data-key'])) unset($custom['data-key']);
+        if (isset($custom['data-child'])) unset($custom['data-child']);
+        if (isset($custom['data-parent'])) unset($custom['data-parent']);
+        if (isset($custom['data-prompt'])) unset($custom['data-prompt']);
+        if (isset($custom['data-on-parent-change'])) unset($custom['data-on-parent-change']);
     }
 
     /**
@@ -100,14 +139,19 @@ class DynamicDD {
 
             $output = '';
             $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ';
+
             // generate data-parent only to childrens
             if ($this->count > 1) $output .= ' data-parent="' . $this->keys[$this->count - 1] . '" ';
+
             // data attributes
             $output .= ' data-plugin="DynamicDD" data-group="' . $this->group . '" data-key="' . $key . '" data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ';
+
             // generate data-cache only to root
             if ($this->count == 1) $output .= " data-cache='" . json_encode($data) . "' ";
+
             // custom html attributes
-            $output .= $this->_select_attribute . ' >';
+            $this->removeCustomDataAttributes($this->custom);
+            $output .= $this->customAttributes($this->custom) . ' >';
 
             $output .= '<option>' . $prompt . '</option>';
             if ($this->count == 1)
