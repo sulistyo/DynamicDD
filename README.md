@@ -65,15 +65,37 @@ The data needed should be supplied as array associative as follows.
 
 ```php
 $data = [
-    'categories' => [
+    'key' => [
+        'ID' => [
+            'value' => 'ID',
+            'title' => 'TEXT'
+        ]
+    ]
+];
+```
+
+In the above example, we have 4 key that need to be set properly, which are:
+
+Key name  | Description
+----------|------------
+`'key'`   | This should be the object name that represents the dropdown field.
+`'ID'`    | The ID of the data, usually is the primary key, and should be unique.
+`'value'` | This is the option value.
+`'title'` | This is the option text.
+
+Following is another example of the data source used for 3 level dropdown.
+
+```php
+$data = [
+    'category' => [
         'AG' => [
             'value' => 'AG',
             'title' => 'AGRICULTURE, FORESTRY AND FISHING',
-            'sub_categories' => [
+            'sub_category' => [
                 'FRS' => [
                     'value' => 'FRS',
                     'title' => 'Forestry and logging'
-                    'types' => [
+                    'type' => [
                         'SILV' => [
                             'value' => 'SILV',
                             'title' => 'Silviculture and other forestry activities'
@@ -96,11 +118,6 @@ $data = [
         ]
     ]
 ];
-```
-
-```php
-$sql = mysql_query("SELECT `title`, `value` FROM siccode");
-while ($row = mysql_fetch_array($sql)) $data[] = $row;
 ```
 
 ### Generate Dropdown
