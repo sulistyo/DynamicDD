@@ -45,15 +45,15 @@ require_once 'data/seed.php';
                             <h2>How it works</h2>
                         </div>
                         <p>Include jquery <em>(if you haven't done it)</em>.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 <?= htmlentities('<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>') ?>
 </pre>
                         <p>Require it once wherever you want, usually where your app starts.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 require_once 'DynamicDD.php';
 </pre>
                         <p>Prepare your data somewhere in your app in array associative format.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $data = [
     'category' => [
         1 => [
@@ -64,7 +64,7 @@ $data = [
 ];
 </pre>
                         <p>In your page, initialize it and run the <code>dropdown()</code> function with the required parameters.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $dd = new DynamicDD();
 echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
 </pre>
@@ -79,7 +79,7 @@ echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'ca
                             <h2>Data source</h2>
                         </div>
                         <p>This class requires the data in array associative form with predefined structure as follows.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $data = [
     'key' => [
         index => [
@@ -117,7 +117,7 @@ $data = [
                             </tbody>
                         </table>
                         <p>Following is another example of the data source used for 3 level dropdown. This is also the data source we are going to use for the rest of this documentation.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $data = [
     'category' => [
         1 => [
@@ -194,7 +194,7 @@ $data = [
                             </tbody>
                         </table>
                         <p>Let's create another example with a more complete set of dynamic dropdown using the data seed.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $dd = new DynamicDD([
     'group' => '02_1',
     'prompt' => 'Select an option',
@@ -219,7 +219,7 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                             <?= $dd_02_1->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
                         </div>
                         <p>If you omit <code>on_parent_change</code> parameter, it will be rendered using it's default option, which is <code>hide</code>.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $dd = new DynamicDD([
     'group' => '02_2',
     'prompt' => 'Select an option',
@@ -284,7 +284,7 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                             </tbody>
                         </table>
                         <p>So far we have used 3 of all parameters, let's try the rest of it.</p>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 $dd = new DynamicDD(['group' => 'example_prompt']);
 
 echo $dd->dropdown([
@@ -346,7 +346,7 @@ echo $dd->dropdown([
 </form>
 EOT;
 ?>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 <?= htmlentities($script); ?>
 </pre>
                         <div class="well">
@@ -426,7 +426,7 @@ EOT;
 </form>
 EOT;
 ?>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums pre-scrollable">
 <?= htmlentities($script); ?>
 </pre>
                         <div class="well">
