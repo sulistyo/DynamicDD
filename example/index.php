@@ -6,11 +6,10 @@ require_once 'data/seed.php';
 <html>
     <head>
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="css/shCore.css" rel="stylesheet" type="text/css" />
-        <link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <link href="//twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet" media="screen">
         <style type="text/css">section{padding-top:30px;}</style>
     </head>
-    <body style="padding-top:40px" id="top" data-spy="scroll" data-target="#sidebar" data-offset="200">
+    <body style="padding-top:40px" id="top" data-spy="scroll" data-target="#sidebar">
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <a class="brand" href="//github.com/sulistyo/DynamicDD" style="margin-left:0">DynamicDD</a>
@@ -39,29 +38,29 @@ require_once 'data/seed.php';
                             <h2>Let's see how it really works.</h2>
                         </div>
                         <p>Include jquery to the bottom of the page, just before <code>&lt;/body&gt;</code> <em>(if you haven't done it)</em>.</p>
-                        <pre class="brush: html">
-                            <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-                        </pre>
+<pre class="prettyprint linenums">
+<?= htmlentities('<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>') ?>
+</pre>
                         <p>Require it once wherever you want, usually where your app starts.</p>
-                        <pre class="brush: php">
-                            require_once 'DynamicDD.php';
-                        </pre>
+<pre class="prettyprint linenums">
+require_once 'DynamicDD.php';
+</pre>
                         <p>Prepare your data somewhere in your app in array associative format.</p>
-                        <pre class="brush: php">
-                            $data = [
-                                'category' => [
-                                    1 => [
-                                        'value' => 'AG',
-                                        'title' => 'AGRICULTURE, FORESTRY AND FISHING'
-                                    ]
-                                ]
-                            ];
-                        </pre>
+<pre class="prettyprint linenums">
+$data = [
+    'category' => [
+        1 => [
+            'value' => 'AG',
+            'title' => 'AGRICULTURE, FORESTRY AND FISHING'
+        ]
+    ]
+];
+</pre>
                         <p>In your page, initialize it and run the <code>dropdown()</code> function with the required parameters.</p>
-                        <pre class="brush: php">
-                            $dd = new DynamicDD();
-                            echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
-                        </pre>
+<pre class="prettyprint linenums">
+$dd = new DynamicDD();
+echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
+</pre>
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_01 = new DynamicDD(); ?>
@@ -73,16 +72,16 @@ require_once 'data/seed.php';
                             <h2>The data source needed.</h2>
                         </div>
                         <p>This class requires the data in array associative form with predefined structure as follows.</p>
-                        <pre class="brush: php">
-                            $data = [
-                                'key' => [
-                                    index => [
-                                        'value' => 'ID',
-                                        'title' => 'TEXT'
-                                    ]
-                                ]
-                            ];
-                        </pre>
+<pre class="prettyprint linenums">
+$data = [
+    'key' => [
+        index => [
+            'value' => 'ID',
+            'title' => 'TEXT'
+        ]
+    ]
+];
+</pre>
                         <p>In the above example, we have 4 keys that need to be set properly</p>
                         <table class="table table-striped table-hover">
                             <thead>
@@ -111,40 +110,40 @@ require_once 'data/seed.php';
                             </tbody>
                         </table>
                         <p>Following is another example of the data source used for 3 level dropdown. This is also the data source we are going to use for the rest of this documentation.</p>
-                        <pre class="brush: php">
-                            $data = [
-                                'category' => [
-                                    1 => [
-                                        'value' => 'AG',
-                                        'title' => 'AGRICULTURE, FORESTRY AND FISHING',
-                                        'sub_category' => [
-                                            1 => [
-                                                'value' => 'FRS',
-                                                'title' => 'Forestry and logging',
-                                                'type' => [
-                                                    1 => [
-                                                        'value' => 'SILV',
-                                                        'title' => 'Silviculture and other forestry activities'
-                                                    ],
-                                                    2 => [
-                                                        'value' => 'MINI',
-                                                        'title' => 'Mining of hard coal'
-                                                    ]
-                                                ]
-                                            ],
-                                            2 => [
-                                                'value' => 'MNG',
-                                                'title' => 'Mining of coal and lignite'
-                                            ]
-                                        ]
-                                    ],
-                                    2 => [
-                                        'value' => 'MI',
-                                        'title' => 'MINING AND QUARRYING'
-                                    ]
-                                ]
-                            ];
-                        </pre>
+<pre class="prettyprint linenums">
+$data = [
+    'category' => [
+        1 => [
+            'value' => 'AG',
+            'title' => 'AGRICULTURE, FORESTRY AND FISHING',
+            'sub_category' => [
+                1 => [
+                    'value' => 'FRS',
+                    'title' => 'Forestry and logging',
+                    'type' => [
+                        1 => [
+                            'value' => 'SILV',
+                            'title' => 'Silviculture and other forestry activities'
+                        ],
+                        2 => [
+                            'value' => 'MINI',
+                            'title' => 'Mining of hard coal'
+                        ]
+                    ]
+                ],
+                2 => [
+                    'value' => 'MNG',
+                    'title' => 'Mining of coal and lignite'
+                ]
+            ]
+        ],
+        2 => [
+            'value' => 'MI',
+            'title' => 'MINING AND QUARRYING'
+        ]
+    ]
+];
+</pre>
                     </section>
                     <section id="configurations">
                         <div class="page-header">
@@ -188,18 +187,18 @@ require_once 'data/seed.php';
                             </tbody>
                         </table>
                         <p>Let's create another example with a more complete set of dynamic dropdown using the data seed.</p>
-                        <pre class="brush: php">
-                            $dd = new DynamicDD([
-                                'group' => '02_1',
-                                'prompt' => 'Select an option',
-                                'custom' => ['class' => 'span3'],
-                                'on_parent_change' => 'none'
-                            ]);
+<pre class="prettyprint linenums">
+$dd = new DynamicDD([
+    'group' => '02_1',
+    'prompt' => 'Select an option',
+    'custom' => ['class' => 'span3'],
+    'on_parent_change' => 'none'
+]);
 
-                            echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
-                            echo $dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
-                            echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
-                        </pre>
+echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
+echo $dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
+</pre>
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_02_1 = new DynamicDD([
@@ -213,17 +212,17 @@ require_once 'data/seed.php';
                             <?= $dd_02_1->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
                         </div>
                         <p>If you omit <code>on_parent_change</code> parameter, it will be rendered using it's default option, which is <code>hide</code>.</p>
-                        <pre class="brush: php">
-                            $dd = new DynamicDD([
-                                'group' => '02_2',
-                                'prompt' => 'Select an option',
-                                'custom' => ['class' => 'span4']
-                            ]);
+<pre class="prettyprint linenums">
+$dd = new DynamicDD([
+    'group' => '02_2',
+    'prompt' => 'Select an option',
+    'custom' => ['class' => 'span4']
+]);
 
-                            echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
-                            echo $dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
-                            echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
-                        </pre>
+echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']);
+echo $dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
+</pre>
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_02_2 = new DynamicDD([
@@ -242,10 +241,11 @@ require_once 'data/seed.php';
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <!-- twitter bootstrap -->
         <script src="js/bootstrap.min.js"></script>
-        <!-- syntax highlight -->
-        <script type="text/javascript" src="js/shCore.js"></script>
-        <script src="js/shBrushPhp.js" type="text/javascript"></script>
-        <script src="js/shBrushXml.js" type="text/javascript"></script>
-        <script>$(document).ready(function(e){SyntaxHighlighter.all();})</script>
+        <!-- prettify -->
+        <script src="//twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js" type="text/javascript"></script>
+        <script>
+            // make code pretty
+            window.prettyPrint && prettyPrint();
+        </script>
     </body>
 </html>
