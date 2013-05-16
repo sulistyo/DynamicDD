@@ -22,11 +22,11 @@ require_once 'data/seed.php';
         <div class="container-fluid">
             <div class="row-fluid" style="padding-top:20px;">
                 <div class="span3" id="sidebar">
-                    <ul class="nav nav-list affix">
-                        <li class="nav-header">How it works</li>
-                        <li><a href="#how-it-works">Let's see how it really works</a></li>
-                        <li><a href="#data-source">The data source needed</a></li>
-                        <li><a href="#configurations">Let's configure the class</a></li>
+                    <ul class="nav nav-list affix well" style="width:280px">
+                        <li class="nav-header">Documentation</li>
+                        <li><a href="#how-it-works">How it works</a></li>
+                        <li><a href="#data-source">Data source</a></li>
+                        <li><a href="#configurations">Configuration</a></li>
                     </ul>
                 </div>
                 <div class="span9">
@@ -35,7 +35,7 @@ require_once 'data/seed.php';
                     </header>
                     <section id="how-it-works">
                         <div class="page-header">
-                            <h2>Let's see how it really works.</h2>
+                            <h2>How it works</h2>
                         </div>
                         <p>Include jquery to the bottom of the page, just before <code>&lt;/body&gt;</code> <em>(if you haven't done it)</em>.</p>
 <pre class="prettyprint linenums">
@@ -69,7 +69,7 @@ echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'ca
                     </section>
                     <section id="data-source">
                         <div class="page-header">
-                            <h2>The data source needed.</h2>
+                            <h2>Data source</h2>
                         </div>
                         <p>This class requires the data in array associative form with predefined structure as follows.</p>
 <pre class="prettyprint linenums">
@@ -147,7 +147,7 @@ $data = [
                     </section>
                     <section id="configurations">
                         <div class="page-header">
-                            <h2>Let's configure the class.</h2>
+                            <h2>Configuration</h2>
                         </div>
                         <p>There are several configuration can be setup on class initialization. Following are the available options.</p>
                         <table class="table table-striped table-hover">
