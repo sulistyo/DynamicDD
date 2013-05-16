@@ -8,6 +8,7 @@ require_once 'data/seed.php';
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="//twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet" media="screen">
         <style type="text/css">section{padding-top:30px;}</style>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     </head>
     <body style="padding-top:40px" id="top" data-spy="scroll" data-target="#sidebar">
         <div class="navbar navbar-fixed-top">
@@ -27,17 +28,19 @@ require_once 'data/seed.php';
                         <li><a href="#how-it-works">How it works</a></li>
                         <li><a href="#data-source">Data source</a></li>
                         <li><a href="#configurations">Configuration</a></li>
+                        <li><a href="#parameters">Parameters</a></li>
                     </ul>
                 </div>
                 <div class="span9">
                     <header class="hero-unit">
                         <h1>DynamicDD <small>Multiple Dynamic Dropdown</small></h1>
+                        <p>Multiple dependant dynamic dropdown generation made easy.</p>
                     </header>
                     <section id="how-it-works">
                         <div class="page-header">
                             <h2>How it works</h2>
                         </div>
-                        <p>Include jquery to the bottom of the page, just before <code>&lt;/body&gt;</code> <em>(if you haven't done it)</em>.</p>
+                        <p>Include jquery <em>(if you haven't done it)</em>.</p>
 <pre class="prettyprint linenums">
 <?= htmlentities('<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>') ?>
 </pre>
@@ -235,10 +238,79 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                             <?= $dd_02_2->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
                         </div>
                     </section>
+                    <section id="parameters">
+                        <div class="page-header">
+                            <h2>Parameters</h2>
+                        </div>
+                        <p>The <code>dropdown</code> function accept several parameters, some of them we have used previously. Following are the accepted parameters.</p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Parameters</th>
+                                    <th>Data Type</th>
+                                    <th>Default</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>Array</td>
+                                    <td>null</td>
+                                    <td>Data for select options.</td>
+                                </tr>
+                                <tr>
+                                    <td>prompt</td>
+                                    <td>String</td>
+                                    <td>Please select</td>
+                                    <td>Select prompt message for dropdown.</td>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>String</td>
+                                    <td><b>Required</b></td>
+                                    <td>HTML attribute name for dropdown.</td>
+                                </tr>
+                                <tr>
+                                    <td>key</td>
+                                    <td>String</td>
+                                    <td><b>Required</b></td>
+                                    <td>Key used to access data array.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>So far we have used 3 of all parameters, let's try the rest of it.</p>
+<pre class="prettyprint linenums">
+$dd = new DynamicDD(['group' => 'example_prompt']);
+
+echo $dd->dropdown([
+    'data' => $data,
+    'name' => 'company[category]',
+    'key' => 'category',
+    'prompt' => 'Select a category'
+]);
+echo $dd->dropdown([
+    'name' => 'company[sub_category]',
+    'key' => 'sub_category',
+    'prompt' => 'Select a sub category'
+]);
+echo $dd->dropdown([
+    'name' => 'company[type]',
+    'key' => 'type',
+    'prompt' => 'Select a type'
+]);
+</pre>
+                        <div class="well">
+                            <legend>HTML rendered as follows:</legend>
+                            <?php $dd_prompt = new DynamicDD(['group' => 'example_prompt']); ?>
+                            <?= $dd_prompt->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1', 'prompt' => 'Select a category']); ?>
+                            <?= $dd_prompt->dropdown(['name' => 'company[sub_category]', 'key' => 'level2', 'prompt' => 'Select a sub category']); ?>
+                            <?= $dd_prompt->dropdown(['name' => 'company[type]', 'key' => 'level3', 'prompt' => 'Select a type']); ?>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <!-- twitter bootstrap -->
         <script src="js/bootstrap.min.js"></script>
         <!-- prettify -->
