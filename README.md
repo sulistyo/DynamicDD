@@ -2,31 +2,25 @@
 
 This is a PHP class that will generate json and javascript code to read the json and translate it into 3-level dynamic dropdown where the value of dropdown 3 depend on the value of dropdown 2 and the value of dropdown 2 depend on the value of dropdown 1. This class also support default value of the dropdown
 
-Demo: http://edy.li/dynamicdd/
+[Click here](http://edy.li/dynamicdd/) for demo.
 
-## Installation
+### Assumptions
 
-1. Run sql files inside database folder
-2. [**Optional**] Open class DynamicDD.php and modify the default database connection. This can also be set during the object creation.
+Following are assumptions on how we are going to use this.
 
-    	private $db_default = array(
-        'host' => 'localhost',
-        'user' => 'root',
-        'pass' => '',
-        'db'   => 'db_siccode',
-        );
-        
+* We assume that the data is maintained by the application, not this class.
+* We assume that the dropdown is output sequencially from parent to grand children, not randomized or reverse.
 
 ## Class Documentation
 
-### Overview 
+### Overview
 
-This class will only handle up to 3 level deep dropdown and using the db structure as described on the included sql file. 
+This class will only handle up to 3 level deep dropdown and using the db structure as described on the included sql file.
 
 It will pull the data from mysql database, generate json object, and generate javascript code to automatically handle the on change event.
 This class also generate dropdown from php and handle the submission of the form.
 
-You can change the default value of the dropdown by changing the default value from 0 to 1. Keep in mind, if there are more than 2 values are selected, the last one will takes precedent. 
+You can change the default value of the dropdown by changing the default value from 0 to 1. Keep in mind, if there are more than 2 values are selected, the last one will takes precedent.
 
 In the included example, "01" is the default value of "A" and "01.3" is the default value of "01". Therefore, if you select "A", then "01" and "01.3" are automatically selected. Likewise, "02.2" is the default value of "02". So if "02" is selected, "02.2" will be selected as well.
 
@@ -34,56 +28,102 @@ In the included example, "01" is the default value of "A" and "01.3" is the defa
 
 #### Object Creation
 
-    __construct($options=array(), $db=null) 
+    __construct($options=array())
 
-##### Accepted options. These are all optionals.
+#### Accepted options. These are all optionals.
 
-Elements                        | Accepted Value   | Default Value | Description
-------------------------------- | ---------------  | ------------- | ---------------------
-$options['formname']            | String. No space | ddform        | Form Name
-$options['formaction']          | URL              | #             | Form Action 
-$options['select_message_1']    | String           | Please Select | Custom select message for the 1st dropdown
-$options['select_message_2']    | String           | Please Select | Custom select message for the 1st dropdown
-$options['select_message_3']    | String           | Please Select | Custom select message for the 1st dropdown
-$options['select_enable']       | Boolean          | True          | True to enable, False to disable
-$options['select_attribute']    | String 	         | <empty>       | Add any custom attribute that will be appended to select tag
-$options['dropdown_level']      | Integer          | 3             | 3 or 2
+Options              | Accepted Value     | Default Value     | Description
+---------------------|------------------- | ----------------- | -----------
+`'group'`            | `String`           | `'dd'`            | Group name of several dynamic dropdown
+`'prompt'`           | `String`           | `'Please Select'` | Custom select message for dropdown
+`'custom'`           | `Array`            | `null`            | Add any custom html attribute that will be appended to select tag
+`'on_parent_change'` | `String`           | `hide`            | State of current field on parent change. Available option: hide or none.
 
-##### Custom Database Connection
+### Data Source
 
-    $customdb = array(
-        'host' => 'localhost',
-        'user' => 'customuser',
-        'pass' => 'custompass',
-        'db'   => 'customdatabase',
-        );
+The data needed should be supplied as array associative as follows.
 
-#### Object Manipulation
+```php
+$data = [
+    'key' => [
+        index => [
+            'value' => 'ID',
+            'title' => 'TEXT'
+        ]
+    ]
+];
+```
 
-##### setSelectMessage($which, $message) 
-Set custom select message for the dropdown.
+In the above example, we have 4 key that need to be set properly, which are:
 
-Option *$which* 
-Accepted value is 1,2 or 3
-Option *$message*
-Accepted any HTML encoded string.
+Key name  | Description
+----------|------------
+`'key'`   | This should be the object name that represents the dropdown field.
+`'index'` | The numeric index of the data.
+`'value'` | This is the option value.
+`'title'` | This is the option text.
 
-##### disableSelect()
-Disable select message.
+Following is another example of the data source used for 3 level dropdown.
 
-#### Generate Dropdown
+```php
+$data = [
+    'category' => [
+        1 => [
+            'value' => 'AG',
+            'title' => 'AGRICULTURE, FORESTRY AND FISHING',
+            'sub_category' => [
+                1 => [
+                    'value' => 'FRS',
+                    'title' => 'Forestry and logging',
+                    'type' => [
+                        1 => [
+                            'value' => 'SILV',
+                            'title' => 'Silviculture and other forestry activities'
+                        ],
+                        2 => [
+                            'value' => 'MINI',
+                            'title' => 'Mining of hard coal'
+                        ]
+                    ]
+                ],
+                2 => [
+                    'value' => 'MNG',
+                    'title' => 'Mining of coal and lignite'
+                ]
+            ]
+        ],
+        2 => [
+            'value' => 'MI',
+            'title' => 'MINING AND QUARRYING'
+        ]
+    ]
+];
+```
 
-##### generateDD()
-To generate initial dropdown, you need to call generateDD() function.
+### Generate Dropdown
 
-if you want to force the dropdown to display specific value (useful for error handling) you can also specify the argument when generating the dropdown
-	
-	$dd->generateDD("A","",""));
+#### How To Use
+To generate initial dropdown, you need to call `dropdown` function.
 
-##### generateJS()
-To generate json and javascript code, you need to call generateJS() function.
+```php
+$dd = new DynamicDD();
+echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+echo $dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
+```
 
-	$dd->generateJS();
+### The API
+
+Following is parameters available in dropdown.
+
+    DynamicDD::dropdown($params = [])
+
+Parameters | Data Type | Default           | Description
+-----------|-----------|-------------------|------------
+`'data'`   | `Array`   | `null`            | Data for select options
+`'prompt'` | `String`  | `'Select option'` | Select prompt message for dropdown
+`'name'`   | `String`  | **Required**      | HTML attribute name for dropdown
+`'key'`    | `String`  | **Required**      | Key used to access data array
 
 ### Hard Dependencies
 jQuery 1.8+
@@ -91,57 +131,59 @@ jQuery 1.8+
 Example
 -------------------------
 
-1. [Single - 3 level](http://edy.li/DynamicDD/example/single.php) drop down
-   
-    	<?php 
-    	  require_once "DynamicDD.php";        
-    	  $dd1 = new DynamicDD();      
-				$dd1->generateDD());
-				$dd1->generateJS();
-    	?> 
+### Single drop down
+[Click here](http://edy.li/DynamicDD/example/single.php) for demo.
 
-2. [Single - 2 level](http://edy.li/DynamicDD/example/single2.php) drop down
-   
-    	<?php 
-    	  require_once "DynamicDD.php";        
-				$dd1 = new DynamicDD(array("dropdown_level"=>2));
-				$dd1->generateDD());
-				$dd1->generateJS();
-    	?> 
+```php
+require_once "DynamicDD.php";
 
-3. [Multiple](http://edy.li/DynamicDD/example/multiple.php) drop down 
+$dd = new DynamicDD();
+echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']));
+echo $dd->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']);
+echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
+```
 
-    	<?php 
-	    require_once "DynamicDD.php";         
-	    $dd1 = new DynamicDD(array('formname'='form1'));   
-			$dd1->generateDD());
-			$dd1->generateJS();
-	    $dd2 = new DynamicDD(array('formname'='form2'));   
-			$dd2->generateDD());
-			$dd2->generateJS();
-	    $dd3 = new DynamicDD(array('formname'='form3'));   
-			$dd3->generateDD());
-			$dd3->generateJS();
-	    ?> 
-	    
-4. [Custom](http://edy.li/DynamicDD/example/custom.php) drop down
+### Multiple drop down
+[Click here](http://edy.li/DynamicDD/example/multiple.php) for demo.
 
-		<?php 
-	    require_once "DynamicDD.php";         // include class DynamicDD.php
-      $option['formname']      = 'customform';
-      $option['formaction']    = 'customaction.php';
-      $option['select_enable'] = false;
-      $option['select_attribute'] = 'class="green-apple"';
-	    $dd = new DynamicDD($option);    
-			$dd->generateDD());
-			$dd->generateJS();
-    ?>
+```php
+require_once "DynamicDD.php";
 
-5. [Pre-Populate](http://edy.li/DynamicDD/example/prepopulate.php) drop down
+$dd1 = new DynamicDD(array('group'=>'1'));
+echo $dd1->dropdown(['data' => $data, 'name' => 'company_1[category]', 'key' => 'category']));
+echo $dd1->dropdown(['name' => 'company_1[sub_category]', 'key' => 'sub_category']);
+echo $dd1->dropdown(['name' => 'company_1[type]', 'key' => 'type']);
 
-		<?php 
-      require_once "DynamicDD.php";         // include class DynamicDD.php
-      $dd = new DynamicDD();    
-      $dd->generateDD("A");                 // select value A for dropdown 1 and display the corresponding value accordingly
-      $dd->generateJS();
-    ?>
+$dd2 = new DynamicDD(array('group'=>'2'));
+echo $dd2->dropdown(['data' => $data, 'name' => 'company_2[category]', 'key' => 'category']));
+echo $dd2->dropdown(['name' => 'company_2[sub_category]', 'key' => 'sub_category']);
+echo $dd2->dropdown(['name' => 'company_2[type]', 'key' => 'type']);
+
+$dd3 = new DynamicDD(array('group'=>'3'));
+echo $dd3->dropdown(['data' => $data, 'name' => 'company_3[category]', 'key' => 'category']));
+echo $dd3->dropdown(['name' => 'company_3[sub_category]', 'key' => 'sub_category']);
+echo $dd3->dropdown(['name' => 'company_3[type]', 'key' => 'type']);
+```
+
+### Custom drop down
+[Click here](http://edy.li/DynamicDD/example/custom.php) for demo.
+
+```php
+require_once "DynamicDD.php";
+
+$option['group'] = 'custom';
+$option['prompt'] = 'Select an option';
+$option['on_parent_change'] = 'none';
+$option['custom'] = ['class' => 'gloomy', 'style' => 'z-index:7;'];
+
+echo $dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'key' => 'category', 'name' => 'company[category]']);
+echo $dd->dropdown(['prompt' => '', 'key' => 'sub_category', 'name' => 'company[sub_category]']);
+```
+
+### Limitation
+
+* Only support single children.
+* Only support single parent.
+* Only support 3 level dropdown.
+* Only support array associative for data.
+* Only support sequential output from parent, children to grandchildren.
