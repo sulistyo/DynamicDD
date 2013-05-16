@@ -31,12 +31,13 @@ require_once 'data/seed.php';
                         <li><a href="#parameters">Parameters</a></li>
                         <li class="nav-header">Example</li>
                         <li><a href="#simple">Simple</a></li>
+                        <li><a href="#custom">Custom</a></li>
                     </ul>
                 </div>
                 <div class="span9">
                     <header class="hero-unit">
                         <h1>DynamicDD <small>Multiple Dynamic Dropdown</small></h1>
-                        <p>Multiple dependant dynamic dropdown generation made easy.</p>
+                        <p>Multiple dependant up to 3-level dynamic dropdown generation made easy.</p>
                     </header>
                     <section id="how-it-works">
                         <div class="page-header">
@@ -377,6 +378,99 @@ EOT;
                             </form>
                         </div>
                     </section>
+                    <section id="custom">
+                        <div class="page-header">
+                            <h2>Custom</h2>
+                        </div>
+                        <p>Sometimes you need to configure as much as you want so that your application requirement for the dropdown fullfiled. Following are the case where you need to configure the select prompt, on parent change behavior to not hide children dropdown, and dropdown level to only reach 2 level.</p>
+<?php $script = <<<'EOT'
+<form class="form-horizontal">
+    <?php $dd_custom = new DynamicDD([
+        'group' => 'example_custom',
+        'prompt' => 'Select an option',
+        'custom' => [
+            'class' => 'span6',
+            'data-toggle' => 'tooltip',
+            'data-delay' => '500',
+            'data-title' => 'Select an option.'
+        ],
+        'on_parent_change' => 'none'
+    ]) ?>
+    <div class="control-group">
+        <label class="control-label">Category</label>
+        <div class="controls">
+            <?= $dd_custom->dropdown([
+                'data' => $data,
+                'prompt' => 'Select a category',
+                'name' => 'company[category]',
+                'key' => 'category'
+            ]) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Sub category</label>
+        <div class="controls">
+            <?= $dd_custom->dropdown([
+                'prompt' => 'Select a sub category',
+                'name' => 'company[sub_category]',
+                'key' => 'sub_category'
+            ]) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="button" class="btn">Submit</button>
+        </div>
+    </div>
+</form>
+EOT;
+?>
+<pre class="prettyprint linenums">
+<?= htmlentities($script); ?>
+</pre>
+                        <div class="well">
+                            <legend>HTML rendered as follows:</legend>
+                            <form class="form-horizontal">
+                                <?php $dd_custom = new DynamicDD([
+                                    'group' => 'example_custom',
+                                    'prompt' => 'Select an option',
+                                    'custom' => [
+                                        'class' => 'span6',
+                                        'data-toggle' => 'tooltip',
+                                        'data-delay' => '500',
+                                        'data-title' => 'Select an option.'
+                                    ],
+                                    'on_parent_change' => 'none'
+                                ]) ?>
+                                <div class="control-group">
+                                    <label class="control-label">Category</label>
+                                    <div class="controls">
+                                        <?= $dd_custom->dropdown([
+                                            'data' => $data,
+                                            'prompt' => 'Select a category',
+                                            'name' => 'company[category]',
+                                            'key' => 'level1'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Sub category</label>
+                                    <div class="controls">
+                                        <?= $dd_custom->dropdown([
+                                            'prompt' => 'Select a sub category',
+                                            'name' => 'company[sub_category]',
+                                            'key' => 'level2'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button type="button" class="btn">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -387,6 +481,9 @@ EOT;
         <script>
             // make code pretty
             window.prettyPrint && prettyPrint();
+            $(document).tooltip({
+                selector: "[data-toggle=tooltip]"
+            })
         </script>
     </body>
 </html>
