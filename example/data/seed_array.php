@@ -31,3 +31,43 @@ $data = [
         ]
     ]
 ];
+
+$data_alt_01 = [
+    'level1' => [
+        1 => ['value' => 'US', 'title' => 'United States'],
+        2 => ['value' => 'UK', 'title' => 'United Kingdom']
+    ]
+];
+
+$data_alt_02 = [
+    'level1' => [
+        1 => [
+            'value' => 'PAR',
+            'title' => 'Partnerships',
+            'level2' => [
+                1 => [
+                    'value' => 'LLP',
+                    'title' => 'Limited liability partnership'
+                ],
+                2 => [
+                    'value' => 'LP',
+                    'title' => 'Limited partnership'
+                ]
+            ]
+        ],
+        2 => [
+            'value' => 'COM',
+            'title' => 'Companies',
+            'level2' => [
+                1 => [
+                    'value' => 'LTD',
+                    'title' => 'Private company limited'
+                ],
+                2 => [
+                    'value' => 'PLC',
+                    'title' => 'Public limited company'
+                ]
+            ]
+        ]
+    ]
+];
