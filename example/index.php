@@ -29,6 +29,8 @@ require_once 'data/seed.php';
                         <li><a href="#data-source">Data source</a></li>
                         <li><a href="#configurations">Configuration</a></li>
                         <li><a href="#parameters">Parameters</a></li>
+                        <li class="nav-header">Example</li>
+                        <li><a href="#simple">Simple</a></li>
                     </ul>
                 </div>
                 <div class="span9">
@@ -306,6 +308,73 @@ echo $dd->dropdown([
                             <?= $dd_prompt->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1', 'prompt' => 'Select a category']); ?>
                             <?= $dd_prompt->dropdown(['name' => 'company[sub_category]', 'key' => 'level2', 'prompt' => 'Select a sub category']); ?>
                             <?= $dd_prompt->dropdown(['name' => 'company[type]', 'key' => 'level3', 'prompt' => 'Select a type']); ?>
+                        </div>
+                    </section>
+                    <section id="simple">
+                        <div class="page-header">
+                            <h2>Simple</h2>
+                        </div>
+                        <p>Following is an example of how it can be implemented in a simple form with single instance.</p>
+<?php $script = <<<'EOT'
+<form class="form-horizontal">
+    <?php $dd_simple = new DynamicDD(['group' => 'example_simple']) ?>
+    <div class="control-group">
+        <label class="control-label">Category</label>
+        <div class="controls">
+            <?= $dd_simple->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Sub category</label>
+        <div class="controls">
+            <?= $dd_simple->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Type</label>
+        <div class="controls">
+            <?= $dd_simple->dropdown(['name' => 'company[type]', 'key' => 'type']) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="button" class="btn">Submit</button>
+        </div>
+    </div>
+</form>
+EOT;
+?>
+<pre class="prettyprint linenums">
+<?= htmlentities($script); ?>
+</pre>
+                        <div class="well">
+                            <legend>HTML rendered as follows:</legend>
+                            <form class="form-horizontal">
+                                <?php $dd_simple = new DynamicDD(['group' => 'example_simple']) ?>
+                                <div class="control-group">
+                                    <label class="control-label">Category</label>
+                                    <div class="controls">
+                                        <?= $dd_simple->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Sub category</label>
+                                    <div class="controls">
+                                        <?= $dd_simple->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Type</label>
+                                    <div class="controls">
+                                        <?= $dd_simple->dropdown(['name' => 'company[type]', 'key' => 'level3']) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button type="button" class="btn">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </section>
                 </div>
