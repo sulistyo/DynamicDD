@@ -10,7 +10,7 @@ require_once 'data/seed.php';
         <link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
         <style type="text/css">section{padding-top:30px;}</style>
     </head>
-    <body style="padding-top:40px" data-spy="scroll" data-target="#sidebar" data-offset="200" id="top">
+    <body style="padding-top:40px" id="top" data-spy="scroll" data-target="#sidebar" data-offset="200">
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <a class="brand" href="//github.com/sulistyo/DynamicDD" style="margin-left:0">DynamicDD</a>
@@ -21,21 +21,22 @@ require_once 'data/seed.php';
           </div>
         </div>
         <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span3" style="padding-top:20px;" id="sidebar">
+            <div class="row-fluid" style="padding-top:20px;">
+                <div class="span3" id="sidebar">
                     <ul class="nav nav-list affix">
                         <li class="nav-header">How it works</li>
                         <li><a href="#how-it-works">Let's see how it really works</a></li>
+                        <li><a href="#data-source">The data source needed</a></li>
                         <li><a href="#configurations">Let's configure the class</a></li>
                     </ul>
                 </div>
-                <div class="span9" style="padding-top:20px;">
+                <div class="span9">
                     <header class="hero-unit">
                         <h1>DynamicDD <small>Multiple Dynamic Dropdown</small></h1>
                     </header>
                     <section id="how-it-works">
                         <div class="page-header">
-                            <h2><small>#01.</small> Let's see how it really works.</h2>
+                            <h2>Let's see how it really works.</h2>
                         </div>
                         <p>Include jquery to the bottom of the page, just before <code>&lt;/body&gt;</code> <em>(if you haven't done it)</em>.</p>
                         <pre class="brush: html">
@@ -67,9 +68,87 @@ require_once 'data/seed.php';
                             <?= $dd_01->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
                         </div>
                     </section>
+                    <section id="data-source">
+                        <div class="page-header">
+                            <h2>The data source needed.</h2>
+                        </div>
+                        <p>This class requires the data in array associative form with predefined structure as follows.</p>
+                        <pre class="brush: php">
+                            $data = [
+                                'key' => [
+                                    index => [
+                                        'value' => 'ID',
+                                        'title' => 'TEXT'
+                                    ]
+                                ]
+                            ];
+                        </pre>
+                        <p>In the above example, we have 4 keys that need to be set properly</p>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Key name</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>This should be the object name that represents the dropdown field.</td>
+                                </tr>
+                                <tr>
+                                    <td>index</td>
+                                    <td>The numeric index of the data</td>
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>This is the option value</td>
+                                </tr>
+                                <tr>
+                                    <td>title</td>
+                                    <td>This is the option text</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Following is another example of the data source used for 3 level dropdown. This is also the data source we are going to use for the rest of this documentation.</p>
+                        <pre class="brush: php">
+                            $data = [
+                                'category' => [
+                                    1 => [
+                                        'value' => 'AG',
+                                        'title' => 'AGRICULTURE, FORESTRY AND FISHING',
+                                        'sub_category' => [
+                                            1 => [
+                                                'value' => 'FRS',
+                                                'title' => 'Forestry and logging',
+                                                'type' => [
+                                                    1 => [
+                                                        'value' => 'SILV',
+                                                        'title' => 'Silviculture and other forestry activities'
+                                                    ],
+                                                    2 => [
+                                                        'value' => 'MINI',
+                                                        'title' => 'Mining of hard coal'
+                                                    ]
+                                                ]
+                                            ],
+                                            2 => [
+                                                'value' => 'MNG',
+                                                'title' => 'Mining of coal and lignite'
+                                            ]
+                                        ]
+                                    ],
+                                    2 => [
+                                        'value' => 'MI',
+                                        'title' => 'MINING AND QUARRYING'
+                                    ]
+                                ]
+                            ];
+                        </pre>
+                    </section>
                     <section id="configurations">
                         <div class="page-header">
-                            <h2><small>#02.</small> Let's configure the class.</h2>
+                            <h2>Let's configure the class.</h2>
                         </div>
                         <p>There are several configuration can be setup on class initialization. Following are the available options.</p>
                         <table class="table table-striped table-hover">
@@ -167,6 +246,6 @@ require_once 'data/seed.php';
         <script type="text/javascript" src="js/shCore.js"></script>
         <script src="js/shBrushPhp.js" type="text/javascript"></script>
         <script src="js/shBrushXml.js" type="text/javascript"></script>
-        <script>$(document).ready(function(e){SyntaxHighlighter.all()})</script>
+        <script>$(document).ready(function(e){SyntaxHighlighter.all();})</script>
     </body>
 </html>
