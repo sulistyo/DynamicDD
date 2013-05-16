@@ -2,7 +2,7 @@
 
 This is a PHP class that will generate json and javascript code to read the json and translate it into 3-level dynamic dropdown where the value of dropdown 3 depend on the value of dropdown 2 and the value of dropdown 2 depend on the value of dropdown 1. This class also support default value of the dropdown
 
-[Click here](http://edy.li/dynamicdd/) for demo.
+[Click here](http://edy.li/DynamicDD/example/) for demo.
 
 ### Assumptions
 
