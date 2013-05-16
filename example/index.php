@@ -32,12 +32,13 @@ require_once 'data/seed.php';
                         <li class="nav-header">Example</li>
                         <li><a href="#simple">Simple</a></li>
                         <li><a href="#custom">Custom</a></li>
+                        <li><a href="#multiple">Multiple</a></li>
                     </ul>
                 </div>
                 <div class="span9">
                     <header class="hero-unit">
                         <h1>DynamicDD <small>Multiple Dynamic Dropdown</small></h1>
-                        <p>Multiple dependant up to 3-level dynamic dropdown generation made easy.</p>
+                        <p>Multiple dependencies up to 3-level dynamic dropdown generation made easy.</p>
                     </header>
                     <section id="how-it-works">
                         <div class="page-header">
@@ -463,6 +464,178 @@ EOT;
                                         ]) ?>
                                     </div>
                                 </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button type="button" class="btn">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <section id="multiple">
+                        <div class="page-header">
+                            <h2>Multiple</h2>
+                        </div>
+                        <p>In this example we are going to use several set/group of dynamic dropdown within a single form with a different level of dependencies on each group. This can also be applied to multiple form on multiple instance on the same page.</p>
+<?php $script = <<<'EOT'
+<form class="form-horizontal">
+    <?php $dd_multiple_country = new DynamicDD(['group' => 'example_multiple_country']) ?>
+    <div class="control-group">
+        <label class="control-label">Country</label>
+        <div class="controls">
+            <?= $dd_multiple_country->dropdown([
+                'data' => $data_alt_01,
+                'name' => 'company[country]',
+                'prompt' => 'Select a country',
+                'key' => 'country'
+            ]) ?>
+        </div>
+    </div>
+    <hr />
+    <?php $dd_multiple_entity = new DynamicDD(['group' => 'example_multiple_entity']) ?>
+    <div class="control-group">
+        <label class="control-label">Entity category</label>
+        <div class="controls">
+            <?= $dd_multiple_entity->dropdown([
+                'data' => $data_alt_02,
+                'name' => 'company[entity_category]',
+                'prompt' => 'Select a category',
+                'key' => 'category'
+            ]) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Entity type</label>
+        <div class="controls">
+            <?= $dd_multiple_entity->dropdown([
+                'data' => $data_alt_02,
+                'name' => 'company[entity_type]',
+                'prompt' => 'Select a type',
+                'key' => 'type'
+            ]) ?>
+        </div>
+    </div>
+    <hr />
+    <?php $dd_multiple_business = new DynamicDD(['group' => 'example_multiple_business']) ?>
+    <div class="control-group">
+        <label class="control-label">Business category</label>
+        <div class="controls">
+            <?= $dd_multiple_business->dropdown([
+                'data' => $data,
+                'name' => 'company[business_category]',
+                'prompt' => 'Select a category',
+                'key' => 'category'
+            ]) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Business sub category</label>
+        <div class="controls">
+            <?= $dd_multiple_business->dropdown([
+                'data' => $data,
+                'name' => 'company[business_sub_category]',
+                'prompt' => 'Select a sub category',
+                'key' => 'sub_category'
+            ]) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Business type</label>
+        <div class="controls">
+            <?= $dd_multiple_business->dropdown([
+                'data' => $data,
+                'name' => 'company[business_type]',
+                'prompt' => 'Select a type',
+                'key' => 'type'
+            ]) ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="button" class="btn">Submit</button>
+        </div>
+    </div>
+</form>
+EOT;
+?>
+<pre class="prettyprint linenums pre-scrollable">
+<?= htmlentities($script) ?>
+</pre>
+                        <div class="well">
+                            <legend>HTML rendered as follows:</legend>
+                            <form class="form-horizontal">
+                                <?php $dd_multiple_country = new DynamicDD(['group' => 'example_multiple_country']) ?>
+                                <div class="control-group">
+                                    <label class="control-label">Country</label>
+                                    <div class="controls">
+                                        <?= $dd_multiple_country->dropdown([
+                                            'data' => $data_alt_01,
+                                            'name' => 'company[country]',
+                                            'prompt' => 'Select a country',
+                                            'key' => 'level1'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <hr />
+                                <?php $dd_multiple_entity = new DynamicDD(['group' => 'example_multiple_entity']) ?>
+                                <div class="control-group">
+                                    <label class="control-label">Entity category</label>
+                                    <div class="controls">
+                                        <?= $dd_multiple_entity->dropdown([
+                                            'data' => $data_alt_02,
+                                            'name' => 'company[entity_category]',
+                                            'prompt' => 'Select a category',
+                                            'key' => 'level1'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Entity type</label>
+                                    <div class="controls">
+                                        <?= $dd_multiple_entity->dropdown([
+                                            'data' => $data_alt_02,
+                                            'name' => 'company[entity_type]',
+                                            'prompt' => 'Select a type',
+                                            'key' => 'level2'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <hr />
+                                <?php $dd_multiple_business = new DynamicDD(['group' => 'example_multiple_business']) ?>
+                                <div class="control-group">
+                                    <label class="control-label">Business category</label>
+                                    <div class="controls">
+                                        <?= $dd_multiple_business->dropdown([
+                                            'data' => $data,
+                                            'name' => 'company[business_category]',
+                                            'prompt' => 'Select a category',
+                                            'key' => 'level1'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Business sub category</label>
+                                    <div class="controls">
+                                        <?= $dd_multiple_business->dropdown([
+                                            'data' => $data,
+                                            'name' => 'company[business_sub_category]',
+                                            'prompt' => 'Select a sub category',
+                                            'key' => 'level2'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Business type</label>
+                                    <div class="controls">
+                                        <?= $dd_multiple_business->dropdown([
+                                            'data' => $data,
+                                            'name' => 'company[business_type]',
+                                            'prompt' => 'Select a type',
+                                            'key' => 'level3'
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <hr />
                                 <div class="control-group">
                                     <div class="controls">
                                         <button type="button" class="btn">Submit</button>
