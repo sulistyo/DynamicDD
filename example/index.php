@@ -154,18 +154,18 @@ $data = [
                         <p>There's also an alternate for data seed for different level of dropdown that we are going to use for example with multiple instance in a single form.</p>
 <pre class="prettyprint linenums pre-scrollable">
 $data_alt_01 = [
-    'level1' => [
+    'country' => [
         1 => ['value' => 'US', 'title' => 'United States'],
         2 => ['value' => 'UK', 'title' => 'United Kingdom']
     ]
 ];
 
 $data_alt_02 = [
-    'level1' => [
+    'category' => [
         1 => [
             'value' => 'PAR',
             'title' => 'Partnerships',
-            'level2' => [
+            'type' => [
                 1 => [
                     'value' => 'LLP',
                     'title' => 'Limited liability partnership'
@@ -179,7 +179,7 @@ $data_alt_02 = [
         2 => [
             'value' => 'COM',
             'title' => 'Companies',
-            'level2' => [
+            'type' => [
                 1 => [
                     'value' => 'LTD',
                     'title' => 'Private company limited'
