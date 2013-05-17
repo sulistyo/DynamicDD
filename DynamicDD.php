@@ -93,6 +93,7 @@ class DynamicDD {
         if (isset($custom['data-child'])) unset($custom['data-child']);
         if (isset($custom['data-parent'])) unset($custom['data-parent']);
         if (isset($custom['data-prompt'])) unset($custom['data-prompt']);
+        if (isset($custom['data-value'])) unset($custom['data-value']);
         if (isset($custom['data-on-parent-change'])) unset($custom['data-on-parent-change']);
     }
 
@@ -104,8 +105,9 @@ class DynamicDD {
      * - prompt : String. Select prompt message.
      * - data : Array. Data for option.
      * - name : String. Name for select field. Required.
-     * - id : String. Id for select field. Default to $group_$name.
      * - key : String. Key for select field. Required.
+     * - id : String. Id for select field. Default to $group_$name.
+     * - value : String. Selected value for select field.
      *
      * @param $params Array.
      * @return String
@@ -127,14 +129,14 @@ class DynamicDD {
             if (empty($id)) $id = $this->group . '_' . str_replace(']', '', str_replace('[', '_', $name));
             if (empty($prompt)) $prompt = $this->prompt;
 
-            $output = '';
-            $output .= '<select name="' . $name . '" id="' . $id . '" ';
+            $output = '<select name="' . $name . '" id="' . $id . '" ';
 
             // generate data-parent only to childrens
             if ($this->count > 1) $output .= ' data-parent="' . $this->keys[$this->count - 1] . '" ';
 
             // data attributes
             $output .= ' data-plugin="DynamicDD" data-group="' . $this->group . '" data-key="' . $key . '" data-on-parent-change="' . $this->on_parent_change . '" data-prompt="' . $prompt . '" ';
+            if (!empty($value)) $output .= ' data-value="' . $value . '" ';
 
             // generate data-cache only to root
             if ($this->count == 1) $output .= " data-cache='" . json_encode($data) . "' ";
@@ -216,6 +218,14 @@ class DynamicDD {
                     update(child, data);
                 }
             });
+
+            // change selected value if preset
+            $.each($('[data-plugin=DynamicDD][data-group={$this->group}]'), function(index, item){
+                if ($(item).is('[data-value]')) {
+                    $(item).val($(item).attr('data-value'));
+                    $(item).trigger('change');
+                }
+            })
 
             function reset(selector) {
                 $(selector).html('<option>' + $(selector).attr('data-prompt') + '</option>');
