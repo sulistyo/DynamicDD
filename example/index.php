@@ -318,6 +318,12 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                     <td>HTML attribute name for dropdown.</td>
                                 </tr>
                                 <tr>
+                                    <td>id</td>
+                                    <td>String</td>
+                                    <td><b>{$group}_{$name}</b></td>
+                                    <td>HTML attribute id for dropdown.</td>
+                                </tr>
+                                <tr>
                                     <td>key</td>
                                     <td>String</td>
                                     <td><b>Required</b></td>
@@ -332,16 +338,19 @@ $dd = new DynamicDD(['group' => 'example_prompt']);
 echo $dd->dropdown([
     'data' => $data,
     'name' => 'company[category]',
+    'id' => 'example_prompt_category',
     'key' => 'category',
     'prompt' => 'Select a category'
 ]);
 echo $dd->dropdown([
     'name' => 'company[sub_category]',
+    'id' => 'example_prompt_sub_category',
     'key' => 'sub_category',
     'prompt' => 'Select a sub category'
 ]);
 echo $dd->dropdown([
     'name' => 'company[type]',
+    'id' => 'example_prompt_type',
     'key' => 'type',
     'prompt' => 'Select a type'
 ]);
@@ -349,9 +358,25 @@ echo $dd->dropdown([
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_prompt = new DynamicDD(['group' => 'example_prompt']); ?>
-                            <?= $dd_prompt->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1', 'prompt' => 'Select a category']); ?>
-                            <?= $dd_prompt->dropdown(['name' => 'company[sub_category]', 'key' => 'level2', 'prompt' => 'Select a sub category']); ?>
-                            <?= $dd_prompt->dropdown(['name' => 'company[type]', 'key' => 'level3', 'prompt' => 'Select a type']); ?>
+                            <?= $dd_prompt->dropdown([
+                                'data' => $data,
+                                'name' => 'company[category]',
+                                'id' => 'example_prompt_category',
+                                'key' => 'level1',
+                                'prompt' => 'Select a category'
+                            ]); ?>
+                            <?= $dd_prompt->dropdown([
+                                'name' => 'company[sub_category]',
+                                'id' => 'example_prompt_sub_category',
+                                'key' => 'level2',
+                                'prompt' => 'Select a sub category'
+                            ]); ?>
+                            <?= $dd_prompt->dropdown([
+                                'name' => 'company[type]',
+                                'id' => 'example_prompt_type',
+                                'key' => 'level3',
+                                'prompt' => 'Select a type'
+                            ]); ?>
                         </div>
                     </section>
                     <section id="simple">
@@ -446,6 +471,7 @@ EOT;
                 'data' => $data,
                 'prompt' => 'Select a category',
                 'name' => 'company[category]',
+                'id' => 'example_custom_category',
                 'key' => 'category'
             ]) ?>
         </div>
@@ -456,6 +482,7 @@ EOT;
             <?= $dd_custom->dropdown([
                 'prompt' => 'Select a sub category',
                 'name' => 'company[sub_category]',
+                'id' => 'example_custom_sub_category',
                 'key' => 'sub_category'
             ]) ?>
         </div>
@@ -492,6 +519,7 @@ EOT;
                                             'data' => $data,
                                             'prompt' => 'Select a category',
                                             'name' => 'company[category]',
+                                            'id' => 'example_custom_category',
                                             'key' => 'level1'
                                         ]) ?>
                                     </div>
@@ -502,6 +530,7 @@ EOT;
                                         <?= $dd_custom->dropdown([
                                             'prompt' => 'Select a sub category',
                                             'name' => 'company[sub_category]',
+                                            'id' => 'example_custom_sub_category',
                                             'key' => 'level2'
                                         ]) ?>
                                     </div>
