@@ -123,6 +123,7 @@ Parameters | Data Type | Default           | Description
 `'data'`   | `Array`   | `null`            | Data for select options
 `'prompt'` | `String`  | `'Select option'` | Select prompt message for dropdown
 `'name'`   | `String`  | **Required**      | HTML attribute name for dropdown
+`'id'`     | `String`  | {$group}_{$name}  | HTML attribute id for dropdown
 `'key'`    | `String`  | **Required**      | Key used to access data array
 
 ### Hard Dependencies
@@ -176,8 +177,20 @@ $option['prompt'] = 'Select an option';
 $option['on_parent_change'] = 'none';
 $option['custom'] = ['class' => 'gloomy', 'style' => 'z-index:7;'];
 
-echo $dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'key' => 'category', 'name' => 'company[category]']);
-echo $dd->dropdown(['prompt' => '', 'key' => 'sub_category', 'name' => 'company[sub_category]']);
+$dd = new DynamicDD($option);
+echo $dd->dropdown([
+    'data' => $data,
+    'prompt' => 'Select a category',
+    'key' => 'category',
+    'name' => 'company[category]',
+    'id' => 'company_category'
+]);
+echo $dd->dropdown([
+    'prompt' => '',
+    'key' => 'sub_category',
+    'name' => 'company[sub_category]',
+    'id' => 'company_sub_category'
+]);
 ```
 
 ### Limitation
