@@ -189,15 +189,16 @@ class DynamicDD {
 
             $(document).on('change', '[data-plugin=DynamicDD][data-group={$this->group}]', function(){
                 var current = $(this);
-                var has_no_parent = ($(this).is('[data-parent]'))? false : true;
+                if (!$(current).is('[data-child]')) return;
 
-                if (has_no_parent) {
-                    var parent_data = cache['{$this->group}'];
+                var has_parent = ($(this).is('[data-parent]'))? true : false;
+                if (has_parent) {
+                    var parent_selector = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-parent') + ']';
+                    var parent_index = $(parent_selector).get(0).selectedIndex;
+                    var parent_key = $(parent_selector).attr('data-key');
+                    var parent_data = cache['{$this->group}'][parent_key][parent_index];
                 } else {
-                    // get parent selected index
-                    var parent = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-parent') + ']';
-                    var parent_index = $(parent).get(0).selectedIndex;
-                    var parent_data = cache['{$this->group}']['level1'][parent_index];
+                    var parent_data = cache['{$this->group}'];
                 }
 
                 // TODO: refactor code below to a single event handler for all dynamic dropdown.

@@ -1,14 +1,14 @@
 <?php
 $data = [
-    'level1' => [
+    'category' => [
         1 => [
             'value' => 'AG',
             'title' => 'AGRICULTURE, FORESTRY AND FISHING',
-            'level2' => [
+            'sub_category' => [
                 1 => [
                     'value' => 'FRS',
                     'title' => 'Forestry and logging',
-                    'level3' => [
+                    'type' => [
                         1 => [
                             'value' => 'SILV',
                             'title' => 'Silviculture and other forestry activities'
@@ -33,18 +33,18 @@ $data = [
 ];
 
 $data_alt_01 = [
-    'level1' => [
+    'country' => [
         1 => ['value' => 'US', 'title' => 'United States'],
         2 => ['value' => 'UK', 'title' => 'United Kingdom']
     ]
 ];
 
 $data_alt_02 = [
-    'level1' => [
+    'category' => [
         1 => [
             'value' => 'PAR',
             'title' => 'Partnerships',
-            'level2' => [
+            'type' => [
                 1 => [
                     'value' => 'LLP',
                     'title' => 'Limited liability partnership'
@@ -58,7 +58,7 @@ $data_alt_02 = [
         2 => [
             'value' => 'COM',
             'title' => 'Companies',
-            'level2' => [
+            'type' => [
                 1 => [
                     'value' => 'LTD',
                     'title' => 'Private company limited'

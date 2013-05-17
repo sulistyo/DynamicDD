@@ -71,7 +71,7 @@ echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'ca
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_01 = new DynamicDD(); ?>
-                            <?= $dd_01->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
+                            <?= $dd_01->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']); ?>
                         </div>
                     </section>
                     <section id="data-source">
@@ -256,9 +256,9 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                 'custom' => ['class' => 'span4'],
                                 'on_parent_change' => 'none'
                             ]); ?>
-                            <?= $dd_02_1->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
-                            <?= $dd_02_1->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']); ?>
-                            <?= $dd_02_1->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
+                            <?= $dd_02_1->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']); ?>
+                            <?= $dd_02_1->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']); ?>
+                            <?= $dd_02_1->dropdown(['name' => 'company[type]', 'key' => 'type']); ?>
                         </div>
                         <p>If you omit <code>on_parent_change</code> parameter, it will be rendered using it's default option, which is <code>hide</code>.</p>
 <pre class="prettyprint linenums pre-scrollable">
@@ -279,9 +279,9 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                 'prompt' => 'Select an option',
                                 'custom' => ['class' => 'span4']
                             ]); ?>
-                            <?= $dd_02_2->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
-                            <?= $dd_02_2->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']); ?>
-                            <?= $dd_02_2->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
+                            <?= $dd_02_2->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']); ?>
+                            <?= $dd_02_2->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']); ?>
+                            <?= $dd_02_2->dropdown(['name' => 'company[type]', 'key' => 'type']); ?>
                         </div>
                     </section>
                     <section id="parameters">
@@ -362,19 +362,19 @@ echo $dd->dropdown([
                                 'data' => $data,
                                 'name' => 'company[category]',
                                 'id' => 'example_prompt_category',
-                                'key' => 'level1',
+                                'key' => 'category',
                                 'prompt' => 'Select a category'
                             ]); ?>
                             <?= $dd_prompt->dropdown([
                                 'name' => 'company[sub_category]',
                                 'id' => 'example_prompt_sub_category',
-                                'key' => 'level2',
+                                'key' => 'sub_category',
                                 'prompt' => 'Select a sub category'
                             ]); ?>
                             <?= $dd_prompt->dropdown([
                                 'name' => 'company[type]',
                                 'id' => 'example_prompt_type',
-                                'key' => 'level3',
+                                'key' => 'type',
                                 'prompt' => 'Select a type'
                             ]); ?>
                         </div>
@@ -423,19 +423,19 @@ EOT;
                                 <div class="control-group">
                                     <label class="control-label">Category</label>
                                     <div class="controls">
-                                        <?= $dd_simple->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']) ?>
+                                        <?= $dd_simple->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']) ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Sub category</label>
                                     <div class="controls">
-                                        <?= $dd_simple->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']) ?>
+                                        <?= $dd_simple->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']) ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Type</label>
                                     <div class="controls">
-                                        <?= $dd_simple->dropdown(['name' => 'company[type]', 'key' => 'level3']) ?>
+                                        <?= $dd_simple->dropdown(['name' => 'company[type]', 'key' => 'type']) ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -520,7 +520,7 @@ EOT;
                                             'prompt' => 'Select a category',
                                             'name' => 'company[category]',
                                             'id' => 'example_custom_category',
-                                            'key' => 'level1'
+                                            'key' => 'category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -531,7 +531,7 @@ EOT;
                                             'prompt' => 'Select a sub category',
                                             'name' => 'company[sub_category]',
                                             'id' => 'example_custom_sub_category',
-                                            'key' => 'level2'
+                                            'key' => 'sub_category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -643,7 +643,7 @@ EOT;
                                             'data' => $data_alt_01,
                                             'name' => 'company[country]',
                                             'prompt' => 'Select a country',
-                                            'key' => 'level1'
+                                            'key' => 'country'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -656,7 +656,7 @@ EOT;
                                             'data' => $data_alt_02,
                                             'name' => 'company[entity_category]',
                                             'prompt' => 'Select a category',
-                                            'key' => 'level1'
+                                            'key' => 'category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -667,7 +667,7 @@ EOT;
                                             'data' => $data_alt_02,
                                             'name' => 'company[entity_type]',
                                             'prompt' => 'Select a type',
-                                            'key' => 'level2'
+                                            'key' => 'type'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -680,7 +680,7 @@ EOT;
                                             'data' => $data,
                                             'name' => 'company[business_category]',
                                             'prompt' => 'Select a category',
-                                            'key' => 'level1'
+                                            'key' => 'category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -691,7 +691,7 @@ EOT;
                                             'data' => $data,
                                             'name' => 'company[business_sub_category]',
                                             'prompt' => 'Select a sub category',
-                                            'key' => 'level2'
+                                            'key' => 'sub_category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -702,7 +702,7 @@ EOT;
                                             'data' => $data,
                                             'name' => 'company[business_type]',
                                             'prompt' => 'Select a type',
-                                            'key' => 'level3'
+                                            'key' => 'type'
                                         ]) ?>
                                     </div>
                                 </div>
