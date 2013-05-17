@@ -104,6 +104,7 @@ class DynamicDD {
      * - prompt : String. Select prompt message.
      * - data : Array. Data for option.
      * - name : String. Name for select field. Required.
+     * - id : String. Id for select field. Default to $group_$name.
      * - key : String. Key for select field. Required.
      *
      * @param $params Array.
@@ -122,10 +123,12 @@ class DynamicDD {
             $this->count++;
             $this->keys[$this->count] = $key;
 
-            if (!isset($prompt)) $prompt = $this->prompt;
+            // Default value
+            if (empty($id)) $id = $this->group . '_' . str_replace(']', '', str_replace('[', '_', $name));
+            if (empty($prompt)) $prompt = $this->prompt;
 
             $output = '';
-            $output .= '<select name="' . $name . '" id="' . $this->group . '_level' . $this->count . 'DD" ';
+            $output .= '<select name="' . $name . '" id="' . $id . '" ';
 
             // generate data-parent only to childrens
             if ($this->count > 1) $output .= ' data-parent="' . $this->keys[$this->count - 1] . '" ';
@@ -176,9 +179,6 @@ class DynamicDD {
             if (typeof value == 'undefined') var cache = [];
             cache['{$this->group}'] = $('[data-plugin=DynamicDD][data-group={$this->group}]').not('[data-parent]').data('cache');
 
-            var id_1 = "#{$this->group}_level1DD";
-            var id_2 = "#{$this->group}_level2DD";
-
             // generate data-child attribute on parent dropdown
             $.each($('[data-plugin=DynamicDD][data-group={$this->group}][data-parent]'), function(index, item) {
                 var parent_key = $(item).attr('data-parent');
@@ -187,17 +187,18 @@ class DynamicDD {
                 $('[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + parent_key + ']').attr('data-child', current_key);
             })
 
-            $(document).on('change', id_1 + ', ' + id_2, function(){
+            $(document).on('change', '[data-plugin=DynamicDD][data-group={$this->group}]', function(){
+                var current = $(this);
                 var has_no_parent = ($(this).is('[data-parent]'))? false : true;
 
                 if (has_no_parent) {
                     var parent_data = cache['{$this->group}'];
                 } else {
-                    var index1 = $(id_1).get(0).selectedIndex;
-                    var parent_data = cache['{$this->group}']['level1'][index1];
+                    // get parent selected index
+                    var parent = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-parent') + ']';
+                    var parent_index = $(parent).get(0).selectedIndex;
+                    var parent_data = cache['{$this->group}']['level1'][parent_index];
                 }
-
-                var current = $(this);
 
                 // TODO: refactor code below to a single event handler for all dynamic dropdown.
                 var children = '[data-plugin=DynamicDD][data-group={$this->group}][data-key=' + $(current).attr('data-child') + ']';
