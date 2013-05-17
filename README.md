@@ -123,8 +123,9 @@ Parameters | Data Type | Default           | Description
 `'data'`   | `Array`   | `null`            | Data for select options
 `'prompt'` | `String`  | `'Select option'` | Select prompt message for dropdown
 `'name'`   | `String`  | **Required**      | HTML attribute name for dropdown
-`'id'`     | `String`  | {$group}_{$name}  | HTML attribute id for dropdown
 `'key'`    | `String`  | **Required**      | Key used to access data array
+`'id'`     | `String`  | {$group}_{$name}  | HTML attribute id for dropdown
+`'value'`  | `String`  | `null`            | Predefined value for dropdown
 
 ### Hard Dependencies
 jQuery 1.8+
@@ -183,13 +184,15 @@ echo $dd->dropdown([
     'prompt' => 'Select a category',
     'key' => 'category',
     'name' => 'company[category]',
-    'id' => 'company_category'
+    'id' => 'company_category',
+    'value' => 'AG'
 ]);
 echo $dd->dropdown([
     'prompt' => '',
     'key' => 'sub_category',
     'name' => 'company[sub_category]',
-    'id' => 'company_sub_category'
+    'id' => 'company_sub_category',
+    'value' => 'FRS'
 ]);
 ```
 

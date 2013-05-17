@@ -318,16 +318,22 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                     <td>HTML attribute name for dropdown.</td>
                                 </tr>
                                 <tr>
-                                    <td>id</td>
-                                    <td>String</td>
-                                    <td><b>{$group}_{$name}</b></td>
-                                    <td>HTML attribute id for dropdown.</td>
-                                </tr>
-                                <tr>
                                     <td>key</td>
                                     <td>String</td>
                                     <td><b>Required</b></td>
                                     <td>Key used to access data array.</td>
+                                </tr>
+                                <tr>
+                                    <td>id</td>
+                                    <td>String</td>
+                                    <td>{$group}_{$name}</td>
+                                    <td>HTML attribute id for dropdown.</td>
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>String</td>
+                                    <td>null</td>
+                                    <td>Predefined value for dropdown.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -340,19 +346,22 @@ echo $dd->dropdown([
     'name' => 'company[category]',
     'id' => 'example_prompt_category',
     'key' => 'category',
-    'prompt' => 'Select a category'
+    'prompt' => 'Select a category',
+    'value' => 'AG'
 ]);
 echo $dd->dropdown([
     'name' => 'company[sub_category]',
     'id' => 'example_prompt_sub_category',
     'key' => 'sub_category',
-    'prompt' => 'Select a sub category'
+    'prompt' => 'Select a sub category',
+    'value' => 'FRS'
 ]);
 echo $dd->dropdown([
     'name' => 'company[type]',
     'id' => 'example_prompt_type',
     'key' => 'type',
-    'prompt' => 'Select a type'
+    'prompt' => 'Select a type',
+    'value' => 'SILV'
 ]);
 </pre>
                         <div class="well">
@@ -363,19 +372,22 @@ echo $dd->dropdown([
                                 'name' => 'company[category]',
                                 'id' => 'example_prompt_category',
                                 'key' => 'category',
-                                'prompt' => 'Select a category'
+                                'prompt' => 'Select a category',
+                                'value' => 'AG'
                             ]); ?>
                             <?= $dd_prompt->dropdown([
                                 'name' => 'company[sub_category]',
                                 'id' => 'example_prompt_sub_category',
                                 'key' => 'sub_category',
-                                'prompt' => 'Select a sub category'
+                                'prompt' => 'Select a sub category',
+                                'value' => 'FRS'
                             ]); ?>
                             <?= $dd_prompt->dropdown([
                                 'name' => 'company[type]',
                                 'id' => 'example_prompt_type',
                                 'key' => 'type',
-                                'prompt' => 'Select a type'
+                                'prompt' => 'Select a type',
+                                'value' => 'SILV'
                             ]); ?>
                         </div>
                     </section>
