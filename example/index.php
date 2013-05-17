@@ -450,7 +450,7 @@ EOT;
                         <div class="page-header">
                             <h2>Custom</h2>
                         </div>
-                        <p>Sometimes you need to configure as much as you want so that your application requirement for the dropdown fullfiled. Following are the case where you need to configure the select prompt, on parent change behavior to not hide children dropdown, and dropdown level to only reach 2 level.</p>
+                        <p>Sometimes you need to configure as much as you want so that your application requirement for the dropdown fullfiled. Following are the case where you need to configure the select prompt, on parent change behavior to not hide children dropdown, set predefined value for each dropdown and dropdown level to only reach 2 level.</p>
 <?php $script = <<<'EOT'
 <form class="form-horizontal">
     <?php $dd_custom = new DynamicDD([
@@ -472,7 +472,8 @@ EOT;
                 'prompt' => 'Select a category',
                 'name' => 'company[category]',
                 'id' => 'example_custom_category',
-                'key' => 'category'
+                'key' => 'category',
+                'value' => 'AG'
             ]) ?>
         </div>
     </div>
@@ -483,7 +484,8 @@ EOT;
                 'prompt' => 'Select a sub category',
                 'name' => 'company[sub_category]',
                 'id' => 'example_custom_sub_category',
-                'key' => 'sub_category'
+                'key' => 'sub_category',
+                'value' => 'FRS'
             ]) ?>
         </div>
     </div>
@@ -520,7 +522,8 @@ EOT;
                                             'prompt' => 'Select a category',
                                             'name' => 'company[category]',
                                             'id' => 'example_custom_category',
-                                            'key' => 'category'
+                                            'key' => 'category',
+                                            'value' => 'AG'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -531,7 +534,8 @@ EOT;
                                             'prompt' => 'Select a sub category',
                                             'name' => 'company[sub_category]',
                                             'id' => 'example_custom_sub_category',
-                                            'key' => 'sub_category'
+                                            'key' => 'sub_category',
+                                            'value' => 'FRS'
                                         ]) ?>
                                     </div>
                                 </div>
