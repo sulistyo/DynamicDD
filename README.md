@@ -124,6 +124,8 @@ Parameters | Data Type | Default           | Description
 `'prompt'` | `String`  | `'Select option'` | Select prompt message for dropdown
 `'name'`   | `String`  | **Required**      | HTML attribute name for dropdown
 `'key'`    | `String`  | **Required**      | Key used to access data array
+`'id'`     | `String`  | {$group}_{$name}  | HTML attribute id for dropdown
+`'value'`  | `String`  | `null`            | Predefined value for dropdown
 
 ### Hard Dependencies
 jQuery 1.8+
@@ -176,8 +178,22 @@ $option['prompt'] = 'Select an option';
 $option['on_parent_change'] = 'none';
 $option['custom'] = ['class' => 'gloomy', 'style' => 'z-index:7;'];
 
-echo $dd->dropdown(['data' => $data, 'prompt' => 'Select a category', 'key' => 'category', 'name' => 'company[category]']);
-echo $dd->dropdown(['prompt' => '', 'key' => 'sub_category', 'name' => 'company[sub_category]']);
+$dd = new DynamicDD($option);
+echo $dd->dropdown([
+    'data' => $data,
+    'prompt' => 'Select a category',
+    'key' => 'category',
+    'name' => 'company[category]',
+    'id' => 'company_category',
+    'value' => 'AG'
+]);
+echo $dd->dropdown([
+    'prompt' => '',
+    'key' => 'sub_category',
+    'name' => 'company[sub_category]',
+    'id' => 'company_sub_category',
+    'value' => 'FRS'
+]);
 ```
 
 ### Limitation

@@ -71,7 +71,7 @@ echo $dd->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'ca
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_01 = new DynamicDD(); ?>
-                            <?= $dd_01->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
+                            <?= $dd_01->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']); ?>
                         </div>
                     </section>
                     <section id="data-source">
@@ -256,9 +256,9 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                 'custom' => ['class' => 'span4'],
                                 'on_parent_change' => 'none'
                             ]); ?>
-                            <?= $dd_02_1->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
-                            <?= $dd_02_1->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']); ?>
-                            <?= $dd_02_1->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
+                            <?= $dd_02_1->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']); ?>
+                            <?= $dd_02_1->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']); ?>
+                            <?= $dd_02_1->dropdown(['name' => 'company[type]', 'key' => 'type']); ?>
                         </div>
                         <p>If you omit <code>on_parent_change</code> parameter, it will be rendered using it's default option, which is <code>hide</code>.</p>
 <pre class="prettyprint linenums pre-scrollable">
@@ -279,9 +279,9 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                 'prompt' => 'Select an option',
                                 'custom' => ['class' => 'span4']
                             ]); ?>
-                            <?= $dd_02_2->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']); ?>
-                            <?= $dd_02_2->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']); ?>
-                            <?= $dd_02_2->dropdown(['name' => 'company[type]', 'key' => 'level3']); ?>
+                            <?= $dd_02_2->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']); ?>
+                            <?= $dd_02_2->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']); ?>
+                            <?= $dd_02_2->dropdown(['name' => 'company[type]', 'key' => 'type']); ?>
                         </div>
                     </section>
                     <section id="parameters">
@@ -323,6 +323,18 @@ echo $dd->dropdown(['name' => 'company[type]', 'key' => 'type']);
                                     <td><b>Required</b></td>
                                     <td>Key used to access data array.</td>
                                 </tr>
+                                <tr>
+                                    <td>id</td>
+                                    <td>String</td>
+                                    <td>{$group}_{$name}</td>
+                                    <td>HTML attribute id for dropdown.</td>
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>String</td>
+                                    <td>null</td>
+                                    <td>Predefined value for dropdown.</td>
+                                </tr>
                             </tbody>
                         </table>
                         <p>So far we have used 3 of all parameters, let's try the rest of it.</p>
@@ -332,26 +344,51 @@ $dd = new DynamicDD(['group' => 'example_prompt']);
 echo $dd->dropdown([
     'data' => $data,
     'name' => 'company[category]',
+    'id' => 'example_prompt_category',
     'key' => 'category',
-    'prompt' => 'Select a category'
+    'prompt' => 'Select a category',
+    'value' => 'AG'
 ]);
 echo $dd->dropdown([
     'name' => 'company[sub_category]',
+    'id' => 'example_prompt_sub_category',
     'key' => 'sub_category',
-    'prompt' => 'Select a sub category'
+    'prompt' => 'Select a sub category',
+    'value' => 'FRS'
 ]);
 echo $dd->dropdown([
     'name' => 'company[type]',
+    'id' => 'example_prompt_type',
     'key' => 'type',
-    'prompt' => 'Select a type'
+    'prompt' => 'Select a type',
+    'value' => 'SILV'
 ]);
 </pre>
                         <div class="well">
                             <legend>HTML rendered as follows:</legend>
                             <?php $dd_prompt = new DynamicDD(['group' => 'example_prompt']); ?>
-                            <?= $dd_prompt->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1', 'prompt' => 'Select a category']); ?>
-                            <?= $dd_prompt->dropdown(['name' => 'company[sub_category]', 'key' => 'level2', 'prompt' => 'Select a sub category']); ?>
-                            <?= $dd_prompt->dropdown(['name' => 'company[type]', 'key' => 'level3', 'prompt' => 'Select a type']); ?>
+                            <?= $dd_prompt->dropdown([
+                                'data' => $data,
+                                'name' => 'company[category]',
+                                'id' => 'example_prompt_category',
+                                'key' => 'category',
+                                'prompt' => 'Select a category',
+                                'value' => 'AG'
+                            ]); ?>
+                            <?= $dd_prompt->dropdown([
+                                'name' => 'company[sub_category]',
+                                'id' => 'example_prompt_sub_category',
+                                'key' => 'sub_category',
+                                'prompt' => 'Select a sub category',
+                                'value' => 'FRS'
+                            ]); ?>
+                            <?= $dd_prompt->dropdown([
+                                'name' => 'company[type]',
+                                'id' => 'example_prompt_type',
+                                'key' => 'type',
+                                'prompt' => 'Select a type',
+                                'value' => 'SILV'
+                            ]); ?>
                         </div>
                     </section>
                     <section id="simple">
@@ -398,19 +435,19 @@ EOT;
                                 <div class="control-group">
                                     <label class="control-label">Category</label>
                                     <div class="controls">
-                                        <?= $dd_simple->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'level1']) ?>
+                                        <?= $dd_simple->dropdown(['data' => $data, 'name' => 'company[category]', 'key' => 'category']) ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Sub category</label>
                                     <div class="controls">
-                                        <?= $dd_simple->dropdown(['name' => 'company[sub_category]', 'key' => 'level2']) ?>
+                                        <?= $dd_simple->dropdown(['name' => 'company[sub_category]', 'key' => 'sub_category']) ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">Type</label>
                                     <div class="controls">
-                                        <?= $dd_simple->dropdown(['name' => 'company[type]', 'key' => 'level3']) ?>
+                                        <?= $dd_simple->dropdown(['name' => 'company[type]', 'key' => 'type']) ?>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -425,7 +462,7 @@ EOT;
                         <div class="page-header">
                             <h2>Custom</h2>
                         </div>
-                        <p>Sometimes you need to configure as much as you want so that your application requirement for the dropdown fullfiled. Following are the case where you need to configure the select prompt, on parent change behavior to not hide children dropdown, and dropdown level to only reach 2 level.</p>
+                        <p>Sometimes you need to configure as much as you want so that your application requirement for the dropdown fullfiled. Following are the case where you need to configure the select prompt, on parent change behavior to not hide children dropdown, set predefined value for each dropdown and dropdown level to only reach 2 level.</p>
 <?php $script = <<<'EOT'
 <form class="form-horizontal">
     <?php $dd_custom = new DynamicDD([
@@ -446,7 +483,9 @@ EOT;
                 'data' => $data,
                 'prompt' => 'Select a category',
                 'name' => 'company[category]',
-                'key' => 'category'
+                'id' => 'example_custom_category',
+                'key' => 'category',
+                'value' => 'AG'
             ]) ?>
         </div>
     </div>
@@ -456,7 +495,9 @@ EOT;
             <?= $dd_custom->dropdown([
                 'prompt' => 'Select a sub category',
                 'name' => 'company[sub_category]',
-                'key' => 'sub_category'
+                'id' => 'example_custom_sub_category',
+                'key' => 'sub_category',
+                'value' => 'FRS'
             ]) ?>
         </div>
     </div>
@@ -492,7 +533,9 @@ EOT;
                                             'data' => $data,
                                             'prompt' => 'Select a category',
                                             'name' => 'company[category]',
-                                            'key' => 'level1'
+                                            'id' => 'example_custom_category',
+                                            'key' => 'category',
+                                            'value' => 'AG'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -502,7 +545,9 @@ EOT;
                                         <?= $dd_custom->dropdown([
                                             'prompt' => 'Select a sub category',
                                             'name' => 'company[sub_category]',
-                                            'key' => 'level2'
+                                            'id' => 'example_custom_sub_category',
+                                            'key' => 'sub_category',
+                                            'value' => 'FRS'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -614,7 +659,7 @@ EOT;
                                             'data' => $data_alt_01,
                                             'name' => 'company[country]',
                                             'prompt' => 'Select a country',
-                                            'key' => 'level1'
+                                            'key' => 'country'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -627,7 +672,7 @@ EOT;
                                             'data' => $data_alt_02,
                                             'name' => 'company[entity_category]',
                                             'prompt' => 'Select a category',
-                                            'key' => 'level1'
+                                            'key' => 'category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -638,7 +683,7 @@ EOT;
                                             'data' => $data_alt_02,
                                             'name' => 'company[entity_type]',
                                             'prompt' => 'Select a type',
-                                            'key' => 'level2'
+                                            'key' => 'type'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -651,7 +696,7 @@ EOT;
                                             'data' => $data,
                                             'name' => 'company[business_category]',
                                             'prompt' => 'Select a category',
-                                            'key' => 'level1'
+                                            'key' => 'category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -662,7 +707,7 @@ EOT;
                                             'data' => $data,
                                             'name' => 'company[business_sub_category]',
                                             'prompt' => 'Select a sub category',
-                                            'key' => 'level2'
+                                            'key' => 'sub_category'
                                         ]) ?>
                                     </div>
                                 </div>
@@ -673,7 +718,7 @@ EOT;
                                             'data' => $data,
                                             'name' => 'company[business_type]',
                                             'prompt' => 'Select a type',
-                                            'key' => 'level3'
+                                            'key' => 'type'
                                         ]) ?>
                                     </div>
                                 </div>
